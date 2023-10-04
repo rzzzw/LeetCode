@@ -24,10 +24,21 @@ class Solution {
             if (digit < 0 || digit > 9) break;
 
             int newRes = res * 10 + digit;
-            // check the boundary
-            if (Integer.MAX_VALUE / 10 < res || (Integer.MAX_VALUE / 10 == res && Integer.MAX_VALUE % 10 < digit)) {
+            
+            // --------- check the boundary -------------
+            
+            // Method 1:
+            // if (Integer.MAX_VALUE / 10 < res || (Integer.MAX_VALUE / 10 == res && Integer.MAX_VALUE % 10 < digit)) {
+            //     return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            // }
+            
+            // method 2:
+            if (newRes / 10 != res) {
                 return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
+            
+            // ------------------------------------------
+            
             res = newRes;
             idx++;
         }
