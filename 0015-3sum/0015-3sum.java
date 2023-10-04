@@ -5,7 +5,6 @@ class Solution {
             return res;
         }
         
-        int target = 0;
         Arrays.sort(nums);
         
         for (int i = 0; i < nums.length - 2; i++) {
@@ -16,7 +15,8 @@ class Solution {
             int j = i + 1;
             int k = nums.length - 1;
             while (j < k) {
-                if (nums[i] + nums[j] + nums[k] == target) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == 0) {
                     res.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     j++;
                     k--;
@@ -27,16 +27,16 @@ class Solution {
                         k--;
                     }
                     
-                } else if (nums[i] + nums[j] + nums[k] < target) {
+                } else if (sum < 0) {
                     j++;
-                    while (j < k && nums[j] == nums[j - 1]) {
-                        j++;
-                    }
+                    // while (j < k && nums[j] == nums[j - 1]) {
+                    //     j++;
+                    // }
                 } else {
                     k--;
-                    while (j < k && nums[k] == nums[k + 1]) {
-                        k--;
-                    }
+                    // while (j < k && nums[k] == nums[k + 1]) {
+                    //     k--;
+                    // }
                 }
             }
         }
