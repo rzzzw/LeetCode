@@ -3,41 +3,25 @@ class Solution {
         if (s == null || s.length() == 0 || numRows == 1 || numRows >= s.length()) {
             return s;
         }
-        int n = s.length();
-        int numCols =(int)Math.ceil(n / (numRows + (numRows - 2.0))) * (numRows - 1);
-
-        char[][] arr = new char[numRows][numCols];
-        
-        int curRow = 0; 
-        int curCol = 0;
-        int stringIdx = 0;
-        while (stringIdx < n) {
-            while (curRow < numRows && stringIdx < n) {
-                arr[curRow][curCol] = s.charAt(stringIdx);
-                curRow++;
-                stringIdx++;
-            }
-            
-            curRow -= 2;
-            curCol++;
-            
-            while (curRow > 0 && curCol < numCols && stringIdx < n) {
-                arr[curRow][curCol] = s.charAt(stringIdx);
-                curRow--;
-                curCol++;
-                stringIdx++;
-            }
+        char[] c = s.toCharArray();
+        int len = s.length();
+        StringBuilder[] sb = new StringBuilder[numRows];
+        for (int i = 0; i < sb.length; i++) {
+            sb[i] = new StringBuilder();
         }
         
-        StringBuilder sb = new StringBuilder();
-        for (char[] row : arr) {
-            for (char ch : row) {
-                if (ch != '\0') {
-                    sb.append(ch);
-                }
+        int idx = 0;
+        while (idx < len) {
+            for (int i = 0; i < numRows && idx < len; i++) {
+                sb[i].append(c[idx++]);
+            }
+            for (int i = numRows - 2; i >= 1 && idx < len; i--) {
+                sb[i].append(c[idx++]);
             }
         }
-        return sb.toString();
-        
+        for (int i = 1; i < sb.length; i++) {
+            sb[0].append(sb[i]);
+        }
+        return sb[0].toString();
     }
 }
