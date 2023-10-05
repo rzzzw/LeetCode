@@ -73,23 +73,5 @@ next jump:      0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
                 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
                 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
-
-        int n = stones.length;
-        boolean[][] dp = new boolean[n][n];
-        dp[0][0] = true;
-
-        for (int k = 1; k < n; k++) {       // first jump = 1; assum jump k + 1 (the maximum jump) every time
-            if (stones[k] - stones[k - 1] > k) return false;
-        }
-
-        for (int i = 1; i < n; i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                int dist = stones[i] - stones[j];
-                if (dist > j + 1)  break;
-                dp[dist][i] = dp[dist - 1][j] || dp[dist][j] || dp[dist + 1][j];
-                if (i == n - 1 && dp[dist][i]) return true;
-            }
-        }
-        return false;
                 
 */
