@@ -2,7 +2,7 @@ class Solution {
     public boolean canCross(int[] stones) {
         int n = stones.length;
         boolean[][] dp = new boolean[n][n];
-        dp[1][0] = true;
+        dp[0][0] = true;
 
         for (int k = 1; k < n; k++) {       // first jump = 1; assum jump k + 1 (the maximum jump) every time
             if (stones[k] - stones[k - 1] > k) return false;
