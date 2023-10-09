@@ -7,14 +7,15 @@ class Solution {
             pairs[i][1] = cost[i];
         }
         
-        Arrays.sort(pairs, (a, b) -> a[0] - b[0]);
+        Arrays.sort(pairs, (a, b) -> a[0] - b[0]);        
         
         // idx      0  1  2  3
         // num      1  2  3  5
         // cost     2 14  3  1
         // pref_L   2 16 19
         // left        2 18 18+19*2=56
-                
+        
+        
         long[] left = new long[n];
         long preSumLeft = pairs[0][1];
         for (int i = 1; i < n; i++) {
@@ -29,10 +30,11 @@ class Solution {
             preSumRight += pairs[i][1];
         }
         
-        long res = Long.MAX_VALUE;
+        long res = right[0] + left[0];
         for (int i = 0; i < n; i++) {
-            long tmp = left[i] + right[i];
-            res = tmp < res ? tmp : res;
+            if (right[i] + left[i] < res) {
+                res = right[i] + left[i];
+            }            
         }
         return res;
     }
