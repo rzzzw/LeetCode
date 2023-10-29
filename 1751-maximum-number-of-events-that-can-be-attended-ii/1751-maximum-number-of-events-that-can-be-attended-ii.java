@@ -17,15 +17,15 @@ class Solution {
 
                
                  */
-                int prevEnd = lastHigherBoundIdx(events, events[i-1][0]); // O(logn)
-                dp[i][t] = Math.max(dp[i-1][t], dp[prevEnd][t-1] + events[i-1][2]);
+                int prevNonOverlappingEvent = searchEvent(events, events[i-1][0]) - 1; // O(logn)
+                dp[i][t] = Math.max(dp[i-1][t], dp[prevNonOverlappingEvent + 1][t-1] + events[i-1][2]); // dp[] idx off by 1, so prevNonOverlappingEvent+1
                 res = Math.max(res, dp[i][t]);
             }
         }
         return res;
     }
 
-    private int lastHigherBoundIdx(int[][] events, int target) { 
+    private int searchEvent(int[][] events, int target) {  // find the first event with ending point >= target
         int left = 0;
         int right = events.length - 1;
         while (left < right) {
