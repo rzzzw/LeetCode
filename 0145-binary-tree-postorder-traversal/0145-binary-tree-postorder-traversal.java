@@ -23,7 +23,7 @@ class Solution {
         
         while (!stack.isEmpty()) {
             TreeNode cur = stack.peekFirst();
-            if (prev == null || cur == prev.left || cur == prev.right) {
+            if (prev == null || cur == prev.left || cur == prev.right) {        // 1st visit to cur
                 if (cur.left != null) {
                     stack.offerFirst(cur.left);
                 } else if (cur.right != null) {
@@ -32,7 +32,7 @@ class Solution {
                     res.add(cur.val);
                     stack.pollFirst();
                 }
-            } else if (prev == cur.left) {
+            } else if (prev == cur.left) {      // 2nd visit to cur, back from left subtree
                 if (cur.right != null) {
                     stack.offerFirst(cur.right);
                 } else {
@@ -40,7 +40,7 @@ class Solution {
                     stack.pollFirst();
                 }
                 
-            } else {
+            } else {                            // 3rd visit to cur, back from right subtree
                 res.add(cur.val);
                 stack.pollFirst();
             }
@@ -62,7 +62,7 @@ stack: 1 2
 prev: 5
 cur: 2
 
-res: 4 5
+res: 4 5 2  ...
 
 */
 
