@@ -15,11 +15,13 @@ class Solution {
         }
         int size = 0;
         ListNode cur = head;
+        // traverse the list to get the size.
         while (cur != null) {
             size++;
             cur = cur.next;
         }
-
+        
+        // traverse the list again to remove the required node
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         cur = dummy;
@@ -36,4 +38,5 @@ class Solution {
 len = 5 ==> idx = 5 - 2 = 3
 TC: O(2L) ~ O(L)
 SC: O(1)
+
 */
