@@ -48,11 +48,33 @@ class Solution {
         
     }
     
-    private void helper(TreeNode root, int idx, int[] minMax) {
+    private void helper(TreeNode root, int idx, int[] minMax) {     // find the min_max range
         if (root == null) return;
-        minMax[0] = Math.min(minMax[0], idx);
-        minMax[1] = Math.max(minMax[1], idx);
+        minMax[0] = Math.min(minMax[0], idx); // min
+        minMax[1] = Math.max(minMax[1], idx); // max
         helper(root.left, idx - 1, minMax);
         helper(root.right, idx + 1, minMax);
     }
 }
+
+/*
+         3
+       /   \ 
+      9     20
+      |    /  \
+      |  15    7
+      |        |
+      |        |
+    --|--|--|--|-> 
+     -1  0  1  2
+     min       max
+     
+idx   0  1  2  3
+    
+root_idx == -min == 1
+
+
+*/
+    
+    
+    
