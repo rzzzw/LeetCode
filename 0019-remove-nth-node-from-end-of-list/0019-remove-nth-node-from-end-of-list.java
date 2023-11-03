@@ -34,5 +34,6 @@ class Solution {
 
 /*
 len = 5 ==> idx = 5 - 2 = 3
-
+TC: O(2L) ~ O(L)
+SC: O(1)
 */
