@@ -33,6 +33,32 @@ class Solution {
 
 // TC： O(k^n)
 
+//// before pruning:
+// class Solution {
+//     public int distributeCookies(int[] cookies, int k) {
+//         int[] distribution = new int[k]; 
+//         int[] minimumMax = new int[]{Integer.MAX_VALUE};
+//         dfs(cookies, k, 0, distribution, minimumMax);
+//         return minimumMax[0];
+//     }
+
+//     private void dfs(int[] cookies, int k, int curCookieIdx, int[] distribution, int[] minimumMax) {
+//         if (curCookieIdx == cookies.length) {
+//             int max = 0;
+//             for (int i : distribution) {
+//                 max = Math.max(max, i);
+//             }
+//             minimumMax[0] = Math.min(minimumMax[0], max);
+//             return;
+//         }
+        
+//         for (int i = 0; i < k; i++) {
+//             distribution[i] += cookies[curCookieIdx];
+//             dfs(cookies, k, curCookieIdx + 1, distribution, minimumMax);
+//             distribution[i] -= cookies[curCookieIdx];
+//         }
+//     }
+// }
 
 
 // class Solution {
@@ -69,28 +95,3 @@ class Solution {
 // }
 
 
-// class Solution {
-//     public int distributeCookies(int[] cookies, int k) {
-//         int[] distribution = new int[k]; 
-//         int[] minimumMax = new int[]{Integer.MAX_VALUE};
-//         dfs(cookies, k, 0, distribution, minimumMax);
-//         return minimumMax[0];
-//     }
-
-//     private void dfs(int[] cookies, int k, int curCookieIdx, int[] distribution, int[] minimumMax) {
-//         if (curCookieIdx == cookies.length) {
-//             int max = 0;
-//             for (int i : distribution) {
-//                 max = Math.max(max, i);
-//             }
-//             minimumMax[0] = Math.min(minimumMax[0], max);
-//             return;
-//         }
-        
-//         for (int i = 0; i < k; i++) {
-//             distribution[i] += cookies[curCookieIdx];
-//             dfs(cookies, k, curCookieIdx + 1, distribution, minimumMax);
-//             distribution[i] -= cookies[curCookieIdx];
-//         }
-//     }
-// }
