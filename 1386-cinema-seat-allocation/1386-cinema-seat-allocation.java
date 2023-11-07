@@ -11,7 +11,8 @@ class Solution {
             int count = ((number & 0b11110) == 0 ? 1 : 0) + ((number & 0b111100000) == 0 ? 1 : 0); 
                                 
                                             //4567
-            res += (count == 0 && (number & 0b1111000) == 0) ? 1 : count;
+            res += (count == 0 && (number & 0b1111000) == 0) ? 1 : count; 
+                // attention: must put "count == 0" as a condition, otherwise it only count 1 instead of 2 for "00 0000 00" scenario
          
         }
         return res + 2 * (n - map.size());                                                         
