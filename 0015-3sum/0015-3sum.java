@@ -4,14 +4,13 @@ class Solution {
         if (nums == null || nums.length < 3) {
             return res;
         }
-        
+
         Arrays.sort(nums);
-        
         for (int i = 0; i < nums.length - 2; i++) {
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
-            
+
             int j = i + 1;
             int k = nums.length - 1;
             while (j < k) {
@@ -26,7 +25,6 @@ class Solution {
                     while (j < k && nums[k] == nums[k + 1]) {
                         k--;
                     }
-                    
                 } else if (sum < 0) {
                     j++;
                 } else {
@@ -35,7 +33,6 @@ class Solution {
             }
         }
         return res;
-    
     }
 }
 
@@ -49,6 +46,5 @@ class Solution {
               .........
               
    (n-1) + (n-2) +...+ 1 = (1+n-1)(n-1)/2 => n^2
-        
-        
+            
 */
