@@ -13,22 +13,22 @@ class Solution {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
         
-        ListNode prev = dummy;
+        ListNode pre = dummy;  // dummy will be used to return the result, can iterate with dummy directly, or you'll lost the linkage
         while (head != null && head.next != null) {
-            ListNode firstNode = head;
-            ListNode secondNode = head.next;
+            ListNode first = head;
+            ListNode second = head.next;
             
-            prev.next = secondNode;
-            firstNode.next = secondNode.next;
-            secondNode.next = firstNode;
+            pre.next = second;
+            first.next = second.next;
+            second.next = first;
             
-            prev = firstNode;
-            head = firstNode.next;
+            pre = first;
+            head = first.next;
         }
         return dummy.next;
+        
     }
 }
 
 /*
-
 */
