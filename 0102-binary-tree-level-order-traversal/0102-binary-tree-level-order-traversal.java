@@ -19,38 +19,27 @@ class Solution {
         if (root == null) {
             return res;
         }
-        
-        Queue<TreeNode> q = new ArrayDeque<>();
-        q.offer(root);
-        while (!q.isEmpty()) {
-            List<Integer> curLayer = new ArrayList<>();
-            int size = q.size();
-            while (size > 0) {
-                TreeNode cur = q.poll();
-                if (cur.left != null) {
-                    q.offer(cur.left);
-                }
-                if (cur.right != null) {
-                    q.offer(cur.right);
-                }
-                curLayer.add(cur.val);
-                size--;
-            }
-            res.add(curLayer);
-        }
+        helper(root, 0, res);
         return res;
+    }
+    
+    private void helper(TreeNode node, int level, List<List<Integer>> res) {
+        if (level == res.size()) {
+            res.add(new ArrayList<Integer>());
+        }
+        res.get(level).add(node.val);
+        if (node.left != null) {
+            helper(node.left, level + 1, res);
+        }
+        if (node.right != null) {
+            helper(node.right, level + 1, res);
+        }
     }
 }
 
 /*
 
-        1
-      /   \
-     2     3
-    / \
-   4   5
-   
-[[1][2][4, 5]]
+
 
 
 
@@ -90,6 +79,17 @@ class Solution {
 // }
 
 // DFS:
+            1
+          /   \
+         2     3
+        / \
+       4   5
+
+    helper(Node5, level2, res)
+    level:    2
+    res: {{1}, {2}, {4, 5}}
+
+
 // class Solution {
 //     public List<List<Integer>> levelOrder(TreeNode root) {
 //         List<List<Integer>> res = new ArrayList<>();
