@@ -11,7 +11,7 @@ class Solution {
         
         int[][] dirs = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
         
-        int step = 0;
+        int step = 1;
         while(!q.isEmpty()) {
             int size = q.size();
             for (int i = 0; i < size; i++) {
@@ -32,7 +32,7 @@ class Solution {
                     if (rooms[x][y] != Integer.MAX_VALUE) {
                         continue;
                     }
-                    rooms[x][y] = step + 1;
+                    rooms[x][y] = step;
                     q.offer(new int[]{x, y});
                 }
             }
