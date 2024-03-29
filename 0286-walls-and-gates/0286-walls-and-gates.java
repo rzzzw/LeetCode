@@ -18,7 +18,7 @@ class Solution {
                 int[] cur = q.poll();
                 int row = cur[0];
                 int col = cur[1];
-                rooms[row][col] = Math.min(rooms[row][col], step);
+                // rooms[row][col] = Math.min(rooms[row][col], step);
                 
                 for (int[] dir : dirs){
                     int x = row + dir[0];
@@ -35,6 +35,7 @@ class Solution {
                     if (rooms[x][y] != Integer.MAX_VALUE) {
                         continue;
                     }
+                    rooms[x][y] = step + 1;
                     q.offer(new int[]{x, y});
                 }
             }
