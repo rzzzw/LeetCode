@@ -18,6 +18,16 @@ class Solution {
         Queue<TreeNode> q = new LinkedList<>();
         q.offer(root);
         while (!q.isEmpty()) {
+            /*
+            Siblings - same depth and share the same parents
+            cousins - same depth but with different parents
+            
+            for each node, read and offer its child(s) and offer a null node to reset siblings to false
+            
+            q: 
+            2 3 null
+            */
+            
             boolean siblings = false;
             boolean cousins = false;
 
@@ -44,9 +54,9 @@ class Solution {
                 }
             }
 
-            if (cousins) {
-                return false;
-            }
+            // if (cousins) {   // finished all the nodes in current depth, 1 node found, but no 2nd cousin, so return false
+            //     return false;
+            // }
         }
         return false;
     }
