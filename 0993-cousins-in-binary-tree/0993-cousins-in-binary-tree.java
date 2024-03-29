@@ -20,8 +20,8 @@ class Solution {
 		Queue<TreeNode> q = new LinkedList<>();
 		q.offer(root);
 		while(!q.isEmpty()) {
-			Boolean siblings = false;
-			Boolean cousins = false;
+			boolean siblings = false;
+			boolean cousins = false;
             int size = q.size();
             for (int i = 0; i < size; i++) {
                 TreeNode cur = q.poll();
