@@ -54,9 +54,9 @@ class Solution {
                 }
             }
 
-            // if (cousins) {   // finished all the nodes in current depth, 1 node found, but no 2nd cousin, so return false
-            //     return false;
-            // }
+            if (cousins) {   // (early return) finished all the nodes in the layer of current depth, 1 node found, but no 2nd cousin, so return false
+                return false;
+            }
         }
         return false;
     }
