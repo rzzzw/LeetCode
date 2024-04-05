@@ -1,21 +1,34 @@
 class Solution {
-    public String makeGood(String s) {
-        StringBuilder newS = new StringBuilder(s);
-        while (newS.length() > 1) {
-            boolean find = false;
-            for (int i = 0; i < newS.length() - 1; i++) {
-                char currChar = newS.charAt(i), nextChar = newS.charAt(i+1);
-                if (Math.abs(currChar - nextChar) == 32) {
-                    newS.deleteCharAt(i);
-                    newS.deleteCharAt(i);
-                    find = true;
-                    break;
-                }
-            }
-            if (!find) {
-                break;
-            }
+    public String makeGood(String s) {     
+        if (s.length() == 0 || s.length() == 1) {
+            return s;            
         }
-        return newS.toString();
+
+        StringBuilder sb = new StringBuilder(s);
+
+        int i = 0;
+
+        
+        while (i < sb.length() - 1)
+        {
+            char leftChar = sb.charAt(i);
+            char rightChar = sb.charAt(i + 1);
+
+            if (Math.abs(leftChar - rightChar) == 32)
+            {
+                sb.delete(i, i + 2);
+                if (i > 0) {
+                    i--;
+                }      
+            } else {
+                i++;
+            } 
+        }
+
+        return sb.toString();
     }
 }
+
+/*
+
+*/
