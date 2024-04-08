@@ -4,18 +4,23 @@ class Solution {
         if (nums == null || nums.length == 0) {
             return res;
         }
-        backTracking(nums, 0, new ArrayList<Integer>(), res);
+        
+        List<Integer> cur = new ArrayList<>();
+        helper(nums, 0, cur, res);
         return res;
     }
     
-    private void backTracking(int[] nums, int idx, List<Integer> cur, List<List<Integer>> res) {
-        res.add(new ArrayList<>(cur));
-        
-        for (int i = idx; i < nums.length; i++) {
-            cur.add(nums[i]);
-            backTracking(nums, i + 1, cur, res);
-            cur.remove(cur.size() - 1);
+    private void helper(int[] nums, int idx, List<Integer> curList, List<List<Integer>> res) {  
+        if (idx == nums.length) {
+            res.add(new ArrayList<>(curList));
+            return;
         }
+        
+        curList.add(nums[idx]);
+        helper(nums, idx + 1, curList, res);
+        curList.remove(curList.size() - 1);
+        
+        helper(nums, idx + 1, curList, res);
     }
 }
 
@@ -39,9 +44,6 @@ size = 3  solution
 Time: O(2^n)
 
 */
-
-
-
 
 //// Add or not add:
 // class Solution {
