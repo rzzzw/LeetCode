@@ -7,7 +7,7 @@ class Solution {
         Arrays.sort(nums);
         List<Integer> cur = new ArrayList<>();
         helper(nums, 0, cur, res);
-        return res;
+        return res;        
     }
     
     private void helper(int[] nums, int idx, List<Integer> cur, List<List<Integer>> res) {
@@ -20,7 +20,7 @@ class Solution {
         helper(nums, idx + 1, cur, res);
         cur.remove(cur.size() - 1);
         
-        while (idx < nums.length - 1 && nums[idx + 1] == nums[idx]) {
+        while(idx < nums.length - 1 && nums[idx + 1] == nums[idx]) {
             idx++;
         }
         
