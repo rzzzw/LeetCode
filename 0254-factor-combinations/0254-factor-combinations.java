@@ -4,39 +4,45 @@ class Solution {
         if (n <= 1) {
             return res;
         }
-        List<Integer> factors = allFactors(n);
         List<Integer> cur = new ArrayList<>();
-        helper(cur, 0, factors, n, res);
-        return res;        
+        List<Integer> factors = Factors(n);
+        helper(n, 0, factors, cur, res);
+        return res;
     }
-    
-    private void helper(List<Integer> cur, int idx, List<Integer> factors, int target, List<List<Integer>> res) {
+    private void helper(int remain, int idx, List<Integer> factors, List<Integer> cur, List<List<Integer>> res) {
         if (idx == factors.size()) {
-            if (target == 1) {
+            if (remain == 1) {
                 res.add(new ArrayList<>(cur));
             }
             return;
         }
-        
-        helper(cur, idx + 1, factors, target, res);
-        
+        helper(remain, idx + 1, factors, cur, res);
         int factor = factors.get(idx);
-        int size = cur.size();
-        while (target % factor == 0) {
+        int count = 0;
+        while(remain % factor == 0) {
             cur.add(factor);
-            target /= factor;
-            helper(cur, idx + 1, factors, target, res);
+            count++;
+            remain /= factor; // 这句不能省
+            helper(remain, idx + 1, factors, cur, res); // 如果写成 helper(remain / factor, idx + 1, factors, cur, res), Memory Limit Exceeded, 因为remain 的value 没有迭代
         }
-        cur.subList(size, cur.size()).clear();    
+        for (int i = 0; i < count; i++){
+            cur.remove(cur.size() - 1);
+        }
     }
-    
-    private List<Integer> allFactors(int n) {
+    private List<Integer> Factors(int n) {
         List<Integer> factors = new ArrayList<>();
-        for (int i = n / 2; i > 1; i--) {
+        for (int i = 2; i <= n/2; i++) {
             if (n % i == 0) {
                 factors.add(i);
-            }
+            } 
         }
+        // for (int i = n / 2; i > 1; i--) {
+        //     if (n % i == 0 ) {
+        //         factors.add(i);
+        //     }
+        // }
         return factors;
     }
 }
+
+
