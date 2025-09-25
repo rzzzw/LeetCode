@@ -47,19 +47,16 @@ class Solution {
         }
         char[] arr = s.toCharArray();
         Map<Character, Integer> map = new HashMap<>();
-        int res = 0;
-        int curLen = 0;
+        int slow = 0;
+        int longest = 0;
         for (int fast = 0; fast < arr.length; fast++) {
-            char curChar = arr[fast];
-            if(!map.containsKey(curChar)) {
-                map.put(curChar, fast);  
-                curLen++;         
-            } else {
-                curLen = fast - map.get(curChar);
-                map.put(curChar, fast);            
+            while (map.containsKey(arr[fast])) {
+                map.remove(arr[slow]);
+                slow++;     
             }
-            res = Math.max(res, curLen);
+           longest = Math.max(longest, fast - slow + 1);
+           map.put(arr[fast], fast);
         }
-        return res;
+        return longest;
     }
 }
