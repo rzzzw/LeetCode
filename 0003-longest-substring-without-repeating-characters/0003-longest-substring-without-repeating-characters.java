@@ -46,16 +46,19 @@ class Solution {
             return 0;
         }
         char[] arr = s.toCharArray();
-        Map<Character, Integer> map = new HashMap<>();
+        Set<Character> set = new HashSet<>();
         int slow = 0;
+        int fast = 0;
         int longest = 0;
-        for (int fast = 0; fast < arr.length; fast++) {
-            while (map.containsKey(arr[fast])) {
-                map.remove(arr[slow]);
-                slow++;     
+        while (fast < arr.length) {
+            if (!set.contains(arr[fast])) {
+                set.add(arr[fast]);
+                fast++;
+                longest = Math.max(longest, fast - slow);
+            } else {
+                set.remove(arr[slow]); // 错误点： set.remove(arr[fast]), 只remove了重复的那一个字符，而不是那个字符及左边的所有字符
+                slow++;
             }
-           longest = Math.max(longest, fast - slow + 1);
-           map.put(arr[fast], fast);
         }
         return longest;
     }
