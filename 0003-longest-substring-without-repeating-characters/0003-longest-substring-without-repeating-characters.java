@@ -40,26 +40,25 @@
 //     }
 // }
 
+
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() == 0) {
             return 0;
         }
-        char[] arr = s.toCharArray();
-        Set<Character> set = new HashSet<>();
+
+        HashMap<Character, Integer> map = new HashMap<>();
         int slow = 0;
-        int fast = 0;
-        int longest = 0;
-        while (fast < arr.length) {
-            if (!set.contains(arr[fast])) {
-                set.add(arr[fast]);
-                fast++;
-                longest = Math.max(longest, fast - slow);
-            } else {
-                set.remove(arr[slow]); // 错误点： set.remove(arr[fast]), 只remove了重复的那一个字符，而不是那个字符及左边的所有字符
-                slow++;
+        int maxLen = 0;
+
+        for (int fast = 0; fast < s.length(); fast++) {
+            char c = s.charAt(fast);
+            if (map.containsKey(c)) {
+                slow = Math.max(map.get(c) + 1, slow);
             }
+            map.put(c, fast);
+            maxLen = Math.max(maxLen, fast - slow + 1);
         }
-        return longest;
+        return maxLen;
     }
 }
