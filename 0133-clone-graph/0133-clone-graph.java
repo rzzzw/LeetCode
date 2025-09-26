@@ -17,6 +17,7 @@ class Node {
     }
 }
 */
+
 class Solution {
     public Node cloneGraph(Node node) {
         if (node == null) {
@@ -27,48 +28,22 @@ class Solution {
     }
 
     private Node helper(Node node, HashMap<Node, Node> visited) {
-         if (visited.containsKey(node)){
+        if (visited.containsKey(node)) {
             return visited.get(node);
-         }
+        }
 
-         Node cloneNode = new Node(node.val, new ArrayList<>());
-         visited.put(node, cloneNode);
+        // Create a new clone node
+        Node cloneNode = new Node(node.val, new ArrayList<>());
+        visited.put(node, cloneNode);
 
-         for (Node neighbor : node.neighbors) {
+        // Clone neighbors
+        for (Node neighbor : node.neighbors) {
             cloneNode.neighbors.add(helper(neighbor, visited));
-         }
+                                    // If the neighbor has already been cloned, helper just returns the existing clone from visited.
+                                    // If not, helper creates a brand-new clone for that neighbor and all its connections.
+            
+        }
 
-         return cloneNode;
+        return cloneNode;
     }
 }
-
-
-// class Solution {
-//     public Node cloneGraph(Node node) {
-//         if (node == null) {
-//             return node;
-//         }
-//         HashMap<Node, Node> visited = new HashMap<>();
-//         return helper(node, visited);
-//     }
-
-//     private Node helper(Node node, HashMap<Node, Node> visited) {
-//         if (visited.containsKey(node)) {
-//             return visited.get(node);
-//         }
-
-//         // Create a new clone node
-//         Node cloneNode = new Node(node.val, new ArrayList<>());
-//         visited.put(node, cloneNode);
-
-//         // Clone neighbors
-//         for (Node neighbor : node.neighbors) {
-//             cloneNode.neighbors.add(helper(neighbor, visited));
-//                                     // If the neighbor has already been cloned, helper just returns the existing clone from visited.
-//                                     // If not, helper creates a brand-new clone for that neighbor and all its connections.
-            
-//         }
-
-//         return cloneNode;
-//     }
-// }
