@@ -17,31 +17,58 @@ class Node {
     }
 }
 */
-
 class Solution {
     public Node cloneGraph(Node node) {
-        if (node == null) return node;
-        Map<Node, Node> map = new HashMap<>();
-        copyNode(node, map);
-        copyNeighbor(node, map, new HashSet<Node>());
-        return map.get(node);
-    }
-    
-    private void copyNode(Node node, Map<Node, Node> map) {
-        if (map.containsKey(node))  return;
-        map.put(node, new Node(node.val, new ArrayList<>()));
-        for (Node nei : node.neighbors) {
-            copyNode(nei, map);
+        if (node == null) {
+            return node;
         }
+        HashMap<Node, Node> visited = new HashMap<>();
+        return helper(node, visited);
     }
-    
-    private void copyNeighbor(Node node, Map<Node, Node> map, HashSet<Node> visited) {
-        if (visited.contains(node)) return;
-        visited.add(node);
-        
-        for (Node nei : node.neighbors) {
-            map.get(node).neighbors.add(map.get(nei));
-            copyNeighbor(nei, map, visited);
-        }
-    }    
+
+    private Node helper(Node node, HashMap<Node, Node> visited) {
+         if (visited.containsKey(node)){
+            return visited.get(node);
+         }
+
+         Node cloneNode = new Node(node.val, new ArrayList<>());
+         visited.put(node, cloneNode);
+
+         for (Node neighbor : node.neighbors) {
+            cloneNode.neighbors.add(helper(neighbor, visited));
+         }
+
+         return cloneNode;
+    }
 }
+
+
+// class Solution {
+//     public Node cloneGraph(Node node) {
+//         if (node == null) {
+//             return node;
+//         }
+//         HashMap<Node, Node> visited = new HashMap<>();
+//         return helper(node, visited);
+//     }
+
+//     private Node helper(Node node, HashMap<Node, Node> visited) {
+//         if (visited.containsKey(node)) {
+//             return visited.get(node);
+//         }
+
+//         // Create a new clone node
+//         Node cloneNode = new Node(node.val, new ArrayList<>());
+//         visited.put(node, cloneNode);
+
+//         // Clone neighbors
+//         for (Node neighbor : node.neighbors) {
+//             cloneNode.neighbors.add(helper(neighbor, visited));
+//                                     // If the neighbor has already been cloned, helper just returns the existing clone from visited.
+//                                     // If not, helper creates a brand-new clone for that neighbor and all its connections.
+            
+//         }
+
+//         return cloneNode;
+//     }
+// }
