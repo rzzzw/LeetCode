@@ -37,12 +37,15 @@ class Solution {
         visited.put(node, cloneNode);
 
         // Clone neighbors
-        for (Node neighbor : node.neighbors) {
-            cloneNode.neighbors.add(helper(neighbor, visited));
-                                    // If the neighbor has already been cloned, helper just returns the existing clone from visited.
-                                    // If not, helper creates a brand-new clone for that neighbor and all its connections.
-            
+        if (node.neighbors != null && node.neighbors.size() >0) {
+            for (Node neighbor : node.neighbors) {
+                cloneNode.neighbors.add(helper(neighbor, visited));
+                                        // If the neighbor has already been cloned, helper just returns the existing clone from visited.
+                                        // If not, helper creates a brand-new clone for that neighbor and all its connections.
+                
+            }
         }
+
 
         return cloneNode;
     }
