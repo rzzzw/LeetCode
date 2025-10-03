@@ -1,23 +1,20 @@
-
 class Solution {
     public int maxArea(int[] height) {
         if (height == null || height.length == 0) {
             return 0;
         }
-        int l = 0;
-        int r = height.length - 1;
-        int globalMax = 0;
-        while(l < r) {
-            int minHeight= Math.min(height[l], height[r]);
-            int curArea = minHeight * (r - l);
-            globalMax = Math.max(globalMax, curArea);
-            while (l != r && height[l] <= minHeight) {
-                l++;
-            }
-            while (l != r && height[r] <= minHeight) {
-                r--;
+        int max = 0;
+        int left = 0;
+        int right = height.length - 1;
+        while (left < right) {
+            int cur = (right - left) * Math.min(height[left], height[right]);
+            max = Math.max(max, cur);
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
             }
         }
-        return globalMax;
+        return max;
     }
 }
