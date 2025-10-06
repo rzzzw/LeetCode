@@ -4,16 +4,30 @@ public class Codec {
     public String encode(List<String> strs) {
         StringBuilder encodedString = new StringBuilder();
         for (String s : strs) {
-            encodedString.append(s);
-            encodedString.append('π');
+            encodedString.append(s.replace("/", "//")).append("/:");
         }
         return encodedString.toString();
     }
 
     // Decodes a single string to a list of strings.
     public List<String> decode(String s) {
-        String[] decodedStrings = s.split("π", -1);
-        return new ArrayList<>(Arrays.asList(decodedStrings).subList(0, decodedStrings.length - 1));
+        List<String> decodedStrings = new ArrayList<>();
+        StringBuilder curStr = new StringBuilder();
+        int i = 0;
+        while (i < s.length()) {
+            if (i + 1 < s.length() && s.charAt(i) == '/' && s.charAt(i + 1) == ':') {
+                decodedStrings.add(curStr.toString());
+                curStr = new StringBuilder();
+                i += 2;
+            } else if (i + 1 < s.length() && s.charAt(i) == '/' && s.charAt(i + 1) == '/') {
+                curStr.append('/');
+                i += 2;
+            } else {
+                curStr.append(s.charAt(i));
+                i++;
+            }
+        }
+        return decodedStrings;
     }
 }
 
