@@ -18,6 +18,6 @@ class Solution {
             }
         }
 
-        return nums[right];
+        return nums[left];
     }
 }
