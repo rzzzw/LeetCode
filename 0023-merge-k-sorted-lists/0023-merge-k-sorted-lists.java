@@ -8,37 +8,67 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    public ListNode mergeKLists(ListNode[] lists) {
-        ListNode head = new ListNode(-1);
-        ListNode point = head;
-        PriorityQueue<ListNode> pq = new PriorityQueue<>(
-            new Comparator<ListNode>() {
-                @Override
-                public int compare(ListNode o1, ListNode o2) {
-                    if (o1.val > o2.val) {
-                        return 1;
-                    } else if (o1.val == o2.val) {
-                        return 0;
-                    } else {
-                        return -1;
-                    }
-                }
-            }
-        );
-        for (ListNode node : lists) {
-            if (node != null) {
-                pq.add(node);
-            }
-        }
-        while (!pq.isEmpty()) {
-            point.next = pq.poll();
-            point = point.next;
-            if (point.next != null) {
-                pq.add(point.next);
-            }
-        }
-        return head.next;
+// class Solution {
+//     public ListNode mergeKLists(ListNode[] lists) {
+//         ListNode head = new ListNode(-1);
+//         ListNode point = head;
+//         PriorityQueue<ListNode> pq = new PriorityQueue<>(
+//             (a, b) -> Integer.compare(a.val, b.val)
+//         );
+//         for (ListNode node : lists) {
+//             if (node != null) {
+//                 pq.add(node);
+//             }
+//         }
+//         while (!pq.isEmpty()) {
+//             point.next = pq.poll();
+//             point = point.next;
+//             if (point.next != null) {
+//                 pq.add(point.next);
+//             }
+//         }
+//         return head.next;
         
+//     }
+// }
+
+class Solution{
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        return mergeRange(lists, 0, lists.length - 1);
+    }
+
+    private ListNode mergeRange(ListNode[] lists, int left, int right) {
+        if (left == right) {
+            return lists[left];
+        }
+        int mid = left + (right - left) / 2;
+        ListNode l1 = mergeRange(lists, left, mid);
+        ListNode l2 = mergeRange(lists, mid + 1, right);
+        return mergeTwoLists(l1, l2);
+    }
+
+    private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = dummy;
+        while(l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+        if (l1 != null) {
+            cur.next = l1;
+        }
+        if (l2 != null) {
+            cur.next = l2;
+        }
+        return dummy.next;
     }
 }
