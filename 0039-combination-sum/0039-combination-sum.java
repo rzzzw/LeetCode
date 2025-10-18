@@ -4,33 +4,27 @@ class Solution {
         if (candidates == null || candidates.length == 0) {
             return res;
         }
-        helper(res, new ArrayList<>(), candidates, target, 0);
+        helper(new ArrayList<>(), 0, res, candidates, target);
         return res;
     }
+    private void helper(List<Integer> cur, int idx, List<List<Integer>> res, int[] candidates, int remains) {
 
-    private void helper(List<List<Integer>> res, List<Integer> cur, int[] candidates, int remain, int idx) {
-        if (remain == 0) {
+        if (remains == 0) {
             res.add(new ArrayList<>(cur));
+            return;   
+        }  
+
+        if (remains < 0) {
             return;
         }
 
-        if (remain < 0) {
-            return;
-        }
-
-        if (idx == candidates.length) {
-            return;
-        }
-
-        
         for (int i = idx; i < candidates.length; i++) {
-            cur.add(candidates[i]);
-            helper(res, cur, candidates, remain - candidates[i], i);
+            cur.add(candidates[i]);                
+            helper(cur, i, res, candidates, remains - candidates[i]);
             cur.remove(cur.size() - 1);
         }
     }
 }
-
 
 // class Solution {
 //     public List<List<Integer>> combinationSum(int[] candidates, int target) {
