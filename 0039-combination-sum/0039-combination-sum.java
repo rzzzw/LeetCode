@@ -18,13 +18,6 @@ class Solution {
             return;
         }
 
-        // for (int i = idx; i < candidates.length; i++) {
-        //     cur.add(candidates[i]);                
-        //     helper(cur, i, res, candidates, remains - candidates[i]);
-        //     cur.remove(cur.size() - 1);
-        // }
-
-
         cur.add(candidates[idx]);
         helper(res, cur, idx, remains - candidates[idx], candidates);
         cur.remove(cur.size() - 1);
