@@ -27,37 +27,6 @@ class Solution {
     }
 }
 
-// class Solution {
-//     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-//         List<List<Integer>> res = new ArrayList<>();
-//         if (candidates == null || candidates.length == 0) {
-//             return res;
-//         }
-//         helper(res, new ArrayList<>(), candidates, target, 0);
-//         return res;
-//     }
-//     private void helper(List<List<Integer>> res, List<Integer> cur, int[] candidates, int remains, int idx) {
-//         if (remains == 0) {
-//             res.add(new ArrayList<>(cur));
-//             return;
-//         }
-
-//         if (idx == candidates.length) return;
-//         int val = candidates[idx];
-//         int maxCount = remains / val;
-
-//         for (int count = 0; count <= maxCount; count++) {
-//             helper(res, cur, candidates, remains - count * val, idx + 1);
-//             cur.add(val);
-//         }
-
-//         for (int k = 0; k < maxCount; k++) {
-//             cur.remove(cur.size() -1);
-//         }
-//     }
-// }
-
-
 
 
 
