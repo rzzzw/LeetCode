@@ -8,40 +8,37 @@
  * }
  */
 public class Codec {
-
-    // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         seriHelper(root, sb);
         return sb.toString();
     }
-    private void seriHelper(TreeNode root, StringBuilder sb) {
-        if (root == null) {
+
+    private void seriHelper(TreeNode node, StringBuilder sb) {
+        if (node == null) {
             sb.append("null,");
             return;
-        } 
-        sb.append(root.val);
-        sb.append(",");
-        seriHelper(root.left, sb);
-        seriHelper(root.right, sb);
+        }
+        sb.append(node.val).append(",");
+        seriHelper(node.left, sb);
+        seriHelper(node.right, sb);
     }
 
-    // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         String[] values = data.split(",");
         int[] index = new int[1];
-        return deseriHelper(values, index);
+        return deseriHelper(values, index); 
     }
 
-    private TreeNode deseriHelper(String[] values, int[] index) {
-        if (values[index[0]].equals("null")) {
-            index[0]++;
+    private TreeNode deseriHelper(String[] strs, int[] idx) {
+        if (strs[idx[0]].equals("null")) {
+            idx[0]++;
             return null;
         }
-        TreeNode node = new TreeNode(Integer.parseInt(values[index[0]]));
-        index[0]++;
-        node.left = deseriHelper(values, index);
-        node.right = deseriHelper(values, index);
+        TreeNode node = new TreeNode(Integer.parseInt(strs[idx[0]]));
+        idx[0]++;
+        node.left = deseriHelper(strs, idx);
+        node.right = deseriHelper(strs, idx);
         return node;
     }
 }
@@ -76,3 +73,4 @@ DFS:
 // Codec ser = new Codec();
 // Codec deser = new Codec();
 // TreeNode ans = deser.deserialize(ser.serialize(root));
+
