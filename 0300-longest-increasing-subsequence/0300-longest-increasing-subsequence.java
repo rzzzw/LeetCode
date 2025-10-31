@@ -1,5 +1,12 @@
+// Method 2. Build a Subsequence, get size
 class Solution {
     public int lengthOfLIS(int[] nums) {
+        if (nums == null) {
+            return 0;
+        }
+        if (nums.length <= 1) {
+            return nums.length;
+        }
         List<Integer> sub = new ArrayList<>();
         sub.add(nums[0]);
         for (int i = 1; i < nums.length; i++) {
@@ -17,6 +24,29 @@ class Solution {
         return sub.size();
     }
 }
+
+// Method 1. DP
+// class Solution {
+//     public int lengthOfLIS(int[] nums) {
+//         int[] dp = new int[nums.length];
+//         Arrays.fill(dp, 1);
+        
+//         for (int i = 1; i < nums.length; i++) {
+//             for (int j = 0; j < i; j++) {
+//                 if (nums[i] > nums[j]) {
+//                     dp[i] = Math.max(dp[i], dp[j] + 1);
+//                 }
+//             }
+//         }
+        
+//         int longest = 0;
+//         for (int c: dp) {
+//             longest = Math.max(longest, c);
+//         }
+        
+//         return longest;
+//     }
+// }
 
 // class Solution {
 //     public int lengthOfLIS(int[] nums) {
@@ -51,3 +81,5 @@ class Solution {
 //         return left;
 //     }
 // }
+
+
