@@ -29,9 +29,9 @@ class Solution {
             Arrays.sort(cs);
             String key = new String(cs);
 
-            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s); // ensures the key exists with a list, then add(s)
         }
-        return new ArrayList<>(map.values());
+        return new ArrayList<>(map.values()); // gives a collection of all groups; wrap in new ArrayList<>(...)
     }
 }
 
