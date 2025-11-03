@@ -1,5 +1,20 @@
 /**
 Method 1:
+
+1. Signature for anagram
+    If two words are anagrams, when you sort their letters they become the same string.
+    So you can use the sorted word as a key (or “canonical form”) to group anagrams.
+
+2. Use a hashmap for grouping
+    Use a Map<String, List<String>> where:
+        Key = sorted letters of a word
+        Value = list of words that map to that key
+            For each word in strs, sort its characters → build key → add word to map.
+
+3. Complexity
+    Sorting a word of length k takes O(k log k). If there are n words, worst-case time = O(n × k log k). 
+    Space complexity = O(n × k) for storing the grouped words.
+
  */
 
 
@@ -20,11 +35,3 @@ class Solution {
     }
 }
 
-/**
-e:0 1   3
-a:0 1 2 3 4 5
-t:0 1 2 3 4 5
-n:    2   4
-b:          5
-
- */
