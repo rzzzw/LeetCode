@@ -3,17 +3,15 @@ class Solution {
         if (strs == null || strs.length == 0) {
             return new ArrayList<>();
         }
-        Map<String, List> res = new HashMap<String, List>();
+        Map<String, List<String>> map = new HashMap<>();
         for (String s : strs) {
-            char[] cur = s.toCharArray();
-            Arrays.sort(cur);
-            String key = String.valueOf(cur);
-            if (!res.containsKey(key)) {
-                res.put(key, new ArrayList<>());
-            }
-            res.get(key).add(s);
+            char[] cs = s.toCharArray();
+            Arrays.sort(cs);
+            String key = new String(cs);
+
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
         }
-        return new ArrayList(res.values());
+        return new ArrayList<>(map.values());
     }
 }
 
