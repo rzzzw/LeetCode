@@ -45,7 +45,7 @@ class Solution {
                 curStart = i + 1;
             }
         }
-        return res.toArray(new int[res.size()][]);
+        return res.toArray(new int[res.size() - 1][]);
     }
 }
 
