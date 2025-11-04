@@ -1,72 +1,36 @@
-// class Solution {
-//     public List<Integer> spiralOrder(int[][] matrix) {
-//         List<Integer> res = new ArrayList<>();
-//         int nrow = matrix.length;
-//         int ncol = matrix[0].length;
-//         int up = 0;
-//         int left = 0;
-//         int right = ncol - 1;
-//         int down = nrow - 1;
-
-//         while (res.size() < nrow * ncol) {
-//             for (int col = left; col <= right; col++) {
-//                 res.add(matrix[up][col]);
-//             }
-//             for (int row = up + 1; row <= down; row++) {
-//                 res.add(matrix[row][right]);
-//             }
-//             if (up != down) {
-//                 for (int col = right - 1; col >= left; col--) {
-//                     res.add(matrix[down][col]);
-//                 }
-//             }
-//             if (left != right) {
-//                 for (int row = down - 1; row > up; row--) {
-//                     res.add(matrix[row][left]);
-//                 }
-//             }
-//             left++;
-//             right--;
-//             up++;
-//             down--;
-//         }
-//         return res;
-//     }
-// }
-
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> res = new ArrayList<>();
-        if (matrix == null) {
+        if (matrix == null || matrix.length == 0) {
             return res;
         }
-        int nrow = matrix.length;
-        int ncol = matrix[0].length;
-        int up = 0;
-        int left = 0;
-        int down = nrow - 1;
-        int right = ncol - 1;
-        while (res.size() < nrow * ncol) {
+        int top = 0; 
+        int bottom = matrix.length - 1;
+        int left = 0; 
+        int right = matrix[0].length - 1;
+
+        while (top <= bottom && left <= right) {
             for (int col = left; col <= right; col++) {
-                res.add(matrix[up][col]);
+                res.add(matrix[top][col]);
             }
-            for (int row = up + 1; row <= down; row++) {
+            top++;
+            for (int row = top; row <= bottom; row++) {
                 res.add(matrix[row][right]);
             }
-            if (down != up) {
-                for (int col = right - 1; col >= left; col--) {
-                    res.add(matrix[down][col]);
+            right--;
+            if (top <= bottom) {
+                for (int col = right; col >= left; col--) {
+                    res.add(matrix[bottom][col]);
                 }
+                bottom--;
             }
-            if (right != left) {
-                for (int row = down - 1; row > up; row--) {
+            if (right >= left) {
+                for (int row = bottom; row >= top; row--) {
                     res.add(matrix[row][left]);
                 }
+                left++;
             }
-            left++;
-            up++;
-            right--;
-            down--;
+            
         }
         return res;
     }
