@@ -16,7 +16,7 @@
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if(root == null) return false;
-        if(isSame(root,subRoot)) return true;
+        if(isSame(root,subRoot) == true) return true;
         return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot); 
     }
 
