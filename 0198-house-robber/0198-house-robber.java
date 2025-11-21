@@ -1,29 +1,31 @@
-// class Solution {
-//     public int rob(int[] nums) {
-//         int preMax = 0;
-//         int curMax = 0;
-//         for (int num : nums) {
-//             int tmp = curMax;
-//             curMax = Math.max(preMax + num, curMax);
-//             preMax = tmp;
-//         }
-//         return curMax;
-//     }
-// }
+/**
+For each house i, you have 2 choices:
+Rob house i → you cannot rob house i–1
+Skip house i → you can take the best up to house i–1
 
-// class Solution {
-//     public int rob(int[] nums) {
-//         int pre = 0;
-//         int cur = 0;
-//         for (int num : nums) {
-//             int tmp = num + pre; // tmp        -- with the latest idx num
-//             pre = cur;           // pre & cur  -- without the latest idx num
-//             cur = Math.max(tmp, cur); 
-//         }
-//         return cur;
-//     }
-// }
+So for every index:
+dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+             cur       pre
 
+compresses DP into 2 variables, because dp[i] only depends on the previous two states.
+
+pre = dp[i-2]
+cur = dp[i-1]
+ */
+
+class Solution{
+    public int rob(int[] nums) {
+        int curMax = 0; // dp[i - 1]
+        int preMax = 0; // dp[i - 2]
+        for (int num : nums) {
+
+            int robThis = num + preMax; // rob house i --> can't rob house i-1, so baseline is the dp[i-2]
+            preMax = curMax; // slide the window foward, dp[i-1] becomes dp[i-2] for the next iteration 
+            curMax = Math.max(robThis, curMax); // Best up to current house = rob it OR skip it
+        }
+        return curMax;
+    }
+}
 
 /**
 example:
@@ -48,20 +50,20 @@ idx     0   1   2   3   4
 dp      0   2   2   3   4
 
  */
-class Solution {
-    public int rob(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        int n = nums.length;
-        int[] dp = new int[n + 1]; // 1～n 代表第n个房子， dp[0]代表还没开始偷
+// class Solution {
+//     public int rob(int[] nums) {
+//         if (nums == null || nums.length == 0) {
+//             return 0;
+//         }
+//         int n = nums.length;
+//         int[] dp = new int[n + 1]; // 1～n 代表第n个房子， dp[0]代表还没开始偷
 
-        dp[0] = 0;
-        dp[1] = nums[0];
-        for (int i = 2; i <= n; i++) {
-            dp[i] = Math.max(dp[i - 2] + nums[i - 1], dp[i - 1]); // 注意nums[i - 1]！ dp[] off by 1, 所以读取对应房子财产的时候要 减1
-        }
-        return dp[n];
-    }
-}
+//         dp[0] = 0;
+//         dp[1] = nums[0];
+//         for (int i = 2; i <= n; i++) {
+//             dp[i] = Math.max(dp[i - 2] + nums[i - 1], dp[i - 1]); // 注意nums[i - 1]！ dp[] off by 1, 所以读取对应房子财产的时候要 减1
+//         }
+//         return dp[n];
+//     }
+// }
 
