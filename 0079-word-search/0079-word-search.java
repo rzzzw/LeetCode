@@ -1,4 +1,6 @@
 class Solution {
+    private static final int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
     public boolean exist(char[][] board, String word) {
         int rows = board.length;
         int cols = board[0].length;
@@ -15,22 +17,37 @@ class Solution {
     private boolean dfs(char[][] board, String word, int index, int r, int c){
         if (index == word.length()) return true;
         
-        if (r < 0 || c < 0 || r >= board.length || c >= board[0].length || board[r][c] != word.charAt(index)) {
+        if (r < 0 || c < 0 || r >= board.length || c >= board[0].length) {
+            return false;
+        }
+
+        if (board[r][c] != word.charAt(index)) {
             return false;
         }
 
         char temp = board[r][c];
+        
         board[r][c] = '#';
 
-        boolean found = 
-            dfs(board, word, index + 1, r + 1, c) ||
-            dfs(board, word, index + 1, r - 1, c) ||
-            dfs(board, word, index + 1, r, c + 1) ||
-            dfs(board, word, index + 1, r, c - 1);
+        for (int[] d : DIRS) {
+            if (dfs(board, word, index + 1, r + d[0], c + d[1])) {
+                // board[r][c] = temp;
+                return true;
+            }
+        }
 
         board[r][c] = temp;
+        return false;
 
-        return found;
+        // boolean found = 
+        //     dfs(board, word, index + 1, r + 1, c) ||
+        //     dfs(board, word, index + 1, r - 1, c) ||
+        //     dfs(board, word, index + 1, r, c + 1) ||
+        //     dfs(board, word, index + 1, r, c - 1);
+
+        // board[r][c] = temp;
+
+        // return found;
     }
 }
 
