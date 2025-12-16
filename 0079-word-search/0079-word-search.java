@@ -29,25 +29,25 @@ class Solution {
         
         board[r][c] = '#';
 
-        for (int[] d : DIRS) {
-            if (dfs(board, word, index + 1, r + d[0], c + d[1])) {
-                // board[r][c] = temp;
-                return true;
-            }
-        }
-
-        board[r][c] = temp;
-        return false;
-
-        // boolean found = 
-        //     dfs(board, word, index + 1, r + 1, c) ||
-        //     dfs(board, word, index + 1, r - 1, c) ||
-        //     dfs(board, word, index + 1, r, c + 1) ||
-        //     dfs(board, word, index + 1, r, c - 1);
+        // for (int[] d : DIRS) {
+        //     if (dfs(board, word, index + 1, r + d[0], c + d[1])) {
+        //         board[r][c] = temp;
+        //         return true;
+        //     }
+        // }
 
         // board[r][c] = temp;
+        // return false;
 
-        // return found;
+        boolean found = 
+            dfs(board, word, index + 1, r + 1, c) ||
+            dfs(board, word, index + 1, r - 1, c) ||
+            dfs(board, word, index + 1, r, c + 1) ||
+            dfs(board, word, index + 1, r, c - 1);
+
+        board[r][c] = temp;
+
+        return found;
     }
 }
 
