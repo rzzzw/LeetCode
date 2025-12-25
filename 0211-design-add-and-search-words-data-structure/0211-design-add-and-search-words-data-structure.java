@@ -43,12 +43,32 @@ class WordDictionary {
             if (child != null && dfs(word, index + 1, child)) {
                 return true;
             }
+/**  common error if write as below: returning too early inside wildcard loop
+
+    . means:
+    “This character can match any one letter — try all possibilities until one works.”
+
+    That implies:
+    You must explore every valid child
+    You can only return false after all options fail
+
+            if (child != null) {
+                return dfs(word, index + 1, child);
+            }
+
+    This means:
+        It tries only the first non-null child
+        If it returns false, immediately give up
+        It never try the other children
+    That breaks the definition of ..
+
+ */
         }
 
         return false;
     }
 
-    class TrieNode {
+    private static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         boolean isWord;
     }
