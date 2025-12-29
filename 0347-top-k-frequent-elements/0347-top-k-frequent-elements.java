@@ -1,29 +1,29 @@
 /**
 Min Heap - Maintain a min-heap of size k
  */
-class Solution {
-    public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> freq = new HashMap<>();
-        for (int n : nums) {
-            freq.put(n, freq.getOrDefault(n, 0) + 1);
-        }
+// class Solution {
+//     public int[] topKFrequent(int[] nums, int k) {
+//         Map<Integer, Integer> freq = new HashMap<>();
+//         for (int n : nums) {
+//             freq.put(n, freq.getOrDefault(n, 0) + 1);
+//         }
 
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>((a, b) -> freq.get(a) - freq.get(b));
+//         PriorityQueue<Integer> minHeap = new PriorityQueue<>((a, b) -> freq.get(a) - freq.get(b));
 
-        for (int key : freq.keySet()) {
-            minHeap.offer(key);
-            if (minHeap.size() > k) {
-                minHeap.poll();
-            }
-        }
+//         for (int num : freq.keySet()) {
+//             minHeap.offer(num);
+//             if (minHeap.size() > k) {
+//                 minHeap.poll();
+//             }
+//         }
 
-        int[] res = new int[k];
-        for (int i = k - 1; i >= 0; i--) {
-            res[i] = minHeap.poll();
-        }
-        return res;
-    }
-}
+//         int[] res = new int[k];
+//         for (int i = k - 1; i >= 0; i--) {
+//             res[i] = minHeap.poll();
+//         }
+//         return res;
+//     }
+// }
 
 
 
@@ -43,7 +43,40 @@ bucket: length = 7
 
  */
 
- 
+ class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int n : nums) {
+            freq.put(n, freq.getOrDefault(n, 0) + 1);
+        }
+
+        // Buckets: index = frequency
+        List<Integer>[] buckets = new List[nums.length + 1]; // Create an array, where each element is a List<Integer>
+        for (int key : freq.keySet()) {
+            int f = freq.get(key);
+            if (buckets[f] == null) {
+                buckets[f] = new ArrayList<>();
+            }
+            buckets[f].add(key);
+        }
+
+        int[] res = new int[k];
+        int idx = 0;
+        for (int i = buckets.length - 1; i >= 0 && idx < k; i--) {
+            if (buckets[i]!= null) {
+                for (int num : buckets[i]) {
+                    res[idx] = num;
+                    idx++;
+                    if (idx == k) {
+                        return res;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+ }
+
 // class Solution {
 //     private class Item {
 //         int key;
