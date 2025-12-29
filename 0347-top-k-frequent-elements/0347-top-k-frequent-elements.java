@@ -68,7 +68,7 @@ bucket: length = 7
                     res[idx] = num;
                     idx++;
                     if (idx == k) {
-                        return res;
+                        break;
                     }
                 }
             }
