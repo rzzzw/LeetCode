@@ -14,59 +14,45 @@
  * }
  */
 
+// range DFS
+// class Solution {
+//     public boolean isValidBST(TreeNode root) {
+//         return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
+//     }
+//     private boolean dfs(TreeNode node, long min, long max) {
+//         if (node == null) {
+//             return true;
+//         }
+//         if (node.val <= min || node.val >= max) {
+//             return false;
+//         }
+//         return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
+//     }
+// }
+/**
+Why long, not int?
+    Because node values can be Integer.MIN_VALUE or Integer.MAX_VALUE.
+
+
+Time: O(n)
+Space: O(h) recursion stack
+ */
+
+
+//Inorder traversal (sorted array insight - Inorder traversal of a BST is strictly increasing)
 class Solution {
+    Long prev = null;
     public boolean isValidBST(TreeNode root) {
-        return isBST(root, null, null);
-    }
-    
-    private boolean isBST(TreeNode root, Integer min, Integer max) {
         if (root == null) {
             return true;
         }
-        if ((min != null && root.val <= min) || (max != null && root.val >= max)) {
+        if (!isValidBST(root.left)) return false;
+
+        if (prev != null && root.val <= prev) {
             return false;
         }
-        return isBST(root.left, min, root.val) && isBST(root.right, root.val, max);
+        prev = (long) root.val;
+
+        return isValidBST(root.right);
     }
 }
-
-
-// // Bottom-up
-// class Solution {
-//     public boolean isValidBST(TreeNode root) {
-//         if (root == null || root.left == null && root.right == null) {
-//             return true;
-//         }
-//         BSTInfo res = helper(root);
-//         return res.isBST;
-//     }
-    
-//     private BSTInfo helper(TreeNode node) {
-//         if (node == null) {
-//             return new BSTInfo(true, Long.MAX_VALUE, Long.MIN_VALUE);
-//         } 
-        
-//         BSTInfo left = helper(node.left);
-//         BSTInfo right = helper(node.right);
-        
-//         if (left.isBST && right.isBST && node.val > left.max && node.val < right.min) {
-//             long min = (node.left == null) ? node.val : left.min;
-//             long max = (node.right == null) ? node.val : right.max;
-//             return new BSTInfo(true, min, max);
-//         } 
-//         return new BSTInfo(false, 0, 0);
-        
-//     }
-    
-//     class BSTInfo {
-//         boolean isBST;
-//         long min;
-//         long max;
-        
-//         BSTInfo(boolean isBST, long min, long max) {
-//             this.isBST = isBST;
-//             this.min = min;
-//             this.max = max;
-//         }
-//     }
-// }
