@@ -8,3 +8,7 @@ class Solution {
         return a;
     }
 }
+
+
+// Time	 O(1) (max 32 iterations)
+// Space	O(1)
