@@ -40,5 +40,7 @@ class Solution {
 }
 
 /**
+Time: (n)
+Space: O(h)
  */
 
