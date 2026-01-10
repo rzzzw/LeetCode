@@ -1,29 +1,33 @@
+/**
+Edge case:
+n = 1 -> ["()"]
+n = 0 -> [""]
+
+backtracking with constrains
+ */
+
 class Solution {
-  public List<String> generateParenthesis(int n) {
-    List<String> res = new ArrayList<>();
-    if (n == 0) {
-      return res;
-    }
-    dfs(n, n, new StringBuilder(), res);
-    return res;
-  }
-
-  private void dfs(int openRemain, int closeRemain, StringBuilder sb, List<String> res) {
-    if (openRemain == 0 && closeRemain == 0) {
-      res.add(sb.toString());
-      return;
-    }
-    if (openRemain > 0) {
-      sb.append('(');
-      dfs(openRemain-1, closeRemain, sb, res);
-      sb.deleteCharAt(sb.length() - 1);
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        backtrack(n, 0, 0, new StringBuilder(), res);
+        return res;
     }
 
-    if (closeRemain > openRemain) {
-      sb.append(')');
-      dfs(openRemain, closeRemain - 1, sb, res);
-      sb.deleteCharAt(sb.length() - 1);
-    }
-  }
+    private void backtrack(int n, int openUsed, int closeUsed, StringBuilder path, List<String> res) {
+        if (path.length() == 2 * n) {
+            res.add(path.toString());
+            return;
+        }
+        if (openUsed < n) {
+            path.append('(');
+            backtrack(n, openUsed + 1, closeUsed, path, res);
+            path.deleteCharAt(path.length() - 1);
+        }
 
+        if (closeUsed < n && closeUsed < openUsed) {
+            path.append(')');
+            backtrack(n, openUsed, closeUsed + 1, path, res);
+            path.deleteCharAt(path.length() - 1);
+        }
+    }
 }
