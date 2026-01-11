@@ -1,109 +1,59 @@
-// class Solution {
-//     public List<List<String>> solveNQueens(int n) {
-//         List<List<String>> res = new ArrayList<>();
-//         if (n == 0) {
-//             return res;
-//         }
-//         List<Integer> path = new ArrayList<>();
-//         helper(path, res, n);
-//         return res;
-//     }
-//     private void helper(List<Integer> path, List<List<String>> res, int n) {
-//         if (path.size() == n) {
-//             List<String> pathString = convertPath(path);
-//             res.add(new ArrayList(pathString));
-//         }
-//         for (int i = 0; i < n; i++) { // this n represent the range of vertical axis(y-axis)
-//             if (isValid(path, i)) {
-//                 path.add(i);
-//                 helper(path, res, n);
-//                 path.remove(path.size() - 1);
-//             }
-//         }
-//     }
-
-//     private boolean isValid(List<Integer> path, int y) {
-//         int x = path.size();
-//         for (int i = 0; i < x; i++) {
-//             if (path.get(i) == y || Math.abs(path.get(i) - y) == x - i) { // slop:  -1 || 1
-//                                          //e.g.: [1, 2, 3, 4] or [2, 3, 4, 1]
-//                 return false;
-//             }
-//         }
-//         return true;
-//     }
-
-//     private List<String> convertPath(List<Integer> path) {
-//         List<String> pathString = new ArrayList<>();
-//         for (int i = 0; i < path.size(); i++) {
-//             StringBuilder sb = new StringBuilder();
-//             for (int j = 0; j < path.size(); j++) {
-//                 if (j == path.get(i)) {
-//                     sb.append('Q');
-//                 } else {
-//                     sb.append('.');
-//                 }
-//             }
-//             pathString.add(sb.toString());
-//         }
-//         return pathString;
-//     }
-// }
-
-
 class Solution {
+
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> res = new ArrayList<>();
-        if (n == 0) {
-            return res;
+        List<List<String>> result = new ArrayList<>();
+
+        char[][] board = new char[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
         }
-        List<Integer> path = new ArrayList<>();
-        helper(n, path, res);
+
+        boolean[] cols = new boolean[n];
+        boolean[] diag1 = new boolean[2 * n]; // row - col + n
+        boolean[] diag2 = new boolean[2 * n]; // row + col
+
+        backtrack(0, n, board, cols, diag1, diag2, result);
+        return result;
+    }
+
+    private void backtrack(int row, int n,
+                           char[][] board,
+                           boolean[] cols,
+                           boolean[] diag1,
+                           boolean[] diag2,
+                           List<List<String>> result) {
+
+        // Base case: all rows filled
+        if (row == n) {
+            result.add(constructBoard(board));
+            return;
+        }
+
+        for (int col = 0; col < n; col++) {
+            int d1 = row - col + n;
+            int d2 = row + col;
+
+            if (cols[col] || diag1[d1] || diag2[d2]) {
+                continue;
+            }
+
+            // Place queen
+            board[row][col] = 'Q';
+            cols[col] = diag1[d1] = diag2[d2] = true;
+
+            backtrack(row + 1, n, board, cols, diag1, diag2, result);
+
+            // Backtrack
+            board[row][col] = '.';
+            cols[col] = diag1[d1] = diag2[d2] = false;
+        }
+    }
+
+    private List<String> constructBoard(char[][] board) {
+        List<String> res = new ArrayList<>();
+        for (char[] row : board) {
+            res.add(new String(row));
+        }
         return res;
     }
-
-    private void helper(int n, List<Integer> path, List<List<String>> res) {
-        if (path.size() == n) {
-            List<String> pathString = convertPath(path);
-            res.add(new ArrayList<>(pathString));
-        }
-        for (int i = 0; i < n; i++) {
-            if (isValid(path, i)) {
-                path.add(i);
-                helper(n, path, res);
-                path.remove(path.size() - 1);
-            }
-        }
-    }
-
-    private boolean isValid(List<Integer> path, int y) {
-        int x = path.size(); // x: the current x-axis; y: the current y-axis => (x, y)
-        for(int i = 0; i < x; i++) {
-            if (path.get(i) == y || Math.abs(y - path.get(i)) == x - i) { // slop:  -1 || 1   
-                                            // y - y1 == x - x1 
-                                            // path: [1, 2, ..]                                   
-                                            //         o x o o (0, 1)
-                                            //         o o x o (1, 2)
-  
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private List<String> convertPath(List<Integer> path) {
-        List<String> pathString = new ArrayList<>();
-        for (int i = 0; i < path.size(); i++) {
-            StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < path.size(); j++) {
-                if (j == path.get(i)) {
-                    sb.append('Q');
-                } else {
-                    sb.append('.');
-                }
-            }
-            pathString.add(sb.toString());
-        }
-        return pathString;
-    }    
 }
