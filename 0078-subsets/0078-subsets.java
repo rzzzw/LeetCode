@@ -18,6 +18,8 @@ Space complexity: 2^n * n
     call stack: O(height) -> n
     Lists(res & cur): 2^n * n 
 
+
+The algorithm generates all 2ⁿ subsets. For each subset, we copy up to n elements, so the time complexity is O(n · 2ⁿ). The recursion stack uses O(n) space, and storing all subsets takes O(n · 2ⁿ) space.
  */
 
 
