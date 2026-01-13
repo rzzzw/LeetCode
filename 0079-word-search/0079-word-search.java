@@ -4,6 +4,7 @@ class Solution {
     public boolean exist(char[][] board, String word) {
         int rows = board.length;
         int cols = board[0].length;
+
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 if (dfs(board, word, 0, r, c)) {
@@ -13,33 +14,43 @@ class Solution {
         }
         return false;
     }
-
-    private boolean dfs(char[][] board, String word, int idx, int r, int c) {
-        if (idx == word.length()) {
-            return true;
-        }
+    private boolean dfs(char[][] board, String word, int index, int r, int c){
+        if (index == word.length()) return true;
+        
         if (r < 0 || c < 0 || r >= board.length || c >= board[0].length) {
             return false;
         }
-        if (board[r][c] != word.charAt(idx)) {
+
+        if (board[r][c] != word.charAt(index)) {
             return false;
         }
 
         char temp = board[r][c];
+        
         board[r][c] = '#';
 
-        for (int[] d : DIRS) {
-            if (dfs(board, word, idx + 1, r + d[0], c + d[1])) {
-                board[r][c] = temp;
-                return true;
-            }
-        }
+        // for (int[] d : DIRS) {
+        //     if (dfs(board, word, index + 1, r + d[0], c + d[1])) {
+        //         board[r][c] = temp;
+        //         return true;
+        //     }
+        // }
+
+        // board[r][c] = temp;
+        // return false;
+
+        boolean found = 
+            dfs(board, word, index + 1, r + 1, c) ||
+            dfs(board, word, index + 1, r - 1, c) ||
+            dfs(board, word, index + 1, r, c + 1) ||
+            dfs(board, word, index + 1, r, c - 1);
 
         board[r][c] = temp;
-        return false;
-    }
 
+        return found;
+    }
 }
+
 /**
 
 Time Complexity: O(N × 3^L)
