@@ -4,31 +4,24 @@
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ *     TreeNode(int x) { val = x; }
  * }
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
-        if (root == null) {
-            return res;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.offerFirst(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pollFirst();
+                res.add(cur.val);
+                cur = cur.right;
+            }
         }
-        inOrder(root, res);
         return res;
-    }
-    private void inOrder(TreeNode node, List<Integer> res) {
-        if (node == null) {
-            return;
-        }
-        
-        inOrder(node.left, res);
-        res.add(node.val);
-        inOrder(node.right, res);
     }
 }
