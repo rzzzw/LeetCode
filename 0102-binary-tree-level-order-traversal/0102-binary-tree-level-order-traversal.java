@@ -71,6 +71,7 @@
 //     }
 // }
 
+
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
@@ -97,7 +98,6 @@ class Solution {
         return res;
     }
 }
-
 
 
 
