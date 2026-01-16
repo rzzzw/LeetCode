@@ -21,24 +21,30 @@
     => The k-th smallest element is the k-th node visited in inorder traversal.
 
   */
-class Solution {
+
+class Solution{
     public int kthSmallest(TreeNode root, int k) {
         int[] res = new int[1];
         int[] count = new int[]{1};
-        inOrder(root, count, k, res);
+        inOrder(root, k, count, res);
         return res[0];
     }
-
-    private void inOrder(TreeNode node, int[] count, int k, int[] res) {
+    private void inOrder(TreeNode node, int k, int[] count, int[] res) {
         if (node == null) {
             return;
         }
-        inOrder(node.left, count, k, res);
+
+        // left
+        inOrder(node.left, k, count, res);
+
+        // root
         if (count[0] == k) {
             res[0] = node.val;
         }
         count[0]++;
-        inOrder(node.right, count, k, res);
+        
+        // right
+        inOrder(node.right, k, count, res);
     }
 }
 
