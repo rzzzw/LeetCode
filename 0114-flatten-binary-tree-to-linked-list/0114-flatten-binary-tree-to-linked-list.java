@@ -21,9 +21,12 @@ Rules:
     Use the tree’s right pointers as next
     Set all left pointers to null
     Do not create new nodes
+    
+bottom up - 从下往上捋
+Time O(n)
+Space O(h)
  */
 
-// bottom up - 从下往上捋
 class Solution {
     public void flatten(TreeNode root) {
         TreeNode[] prev = new TreeNode[1];
@@ -34,6 +37,8 @@ class Solution {
         if (node == null) {
             return;
         }
+
+        // Reverse preorder: right -> left -> node
         dfs(node.right, prev);
         dfs(node.left, prev);
 
