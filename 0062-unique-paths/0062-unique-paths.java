@@ -4,12 +4,11 @@ class Solution {
         for (int[] arr : dp) {
             Arrays.fill(arr, 1);
         }
-        for (int col = 1; col < m; col++) {
-            for (int row = 1; row < n; row++) {
-                dp[col][row] = dp[col - 1][row] + dp[col][row - 1];
+        for (int r = 1; r < m; r++) {
+            for (int c = 1; c < n; c++) {
+                dp[r][c] = dp[r - 1][c] + dp[r][c - 1];
             }
         }
         return dp[m - 1][n - 1];
-
     }
 }
