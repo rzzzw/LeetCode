@@ -3,24 +3,51 @@
 //         int m = word1.length();
 //         int n = word2.length();
 //         int[][] dp = new int[m + 1][n + 1];
-//         for (int i = 0; i <= m; i++) {
-//             for (int j = 0; j <= n; j++) {
-//                 if (i == 0) {
-//                     dp[i][j] = j;
-//                 } else if (j == 0) {
-//                     dp[i][j] = i;
-//                 } else if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
-//                     dp[i][j] = dp[i - 1][j - 1];
-//                 } else {
-//                     dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1);
-//                     dp[i][j] = Math.min(dp[i - 1][j - 1] + 1, dp[i][j]);
-//                 }
+//         return helper(word1, word2, m - 1, n - 1, dp);
+//     }
 
-//             }
+//     private int helper(String a, String b, int i, int j, int[][] dp) {  // i: idx of a;   j: idx of b
+//         if (i < 0) {
+//             return j + 1;
 //         }
-//         return dp[m][n];
+//         if (j < 0) {
+//             return i + 1;
+//         }
+//         if (dp[i][j] != 0) {
+//             return dp[i][j];
+//         }
+//         if (a.charAt(i) == b.charAt(j)) {
+//             return dp[i][j] = helper(a, b, i - 1, j - 1, dp);
+//         }
+//         dp[i][j] = Math.min(1 + helper(a, b, i - 1, j, dp), 1 + helper(a, b, i, j - 1, dp));
+//         dp[i][j] = Math.min(dp[i][j], 1 + helper(a, b, i - 1, j - 1, dp));
+//         return dp[i][j];
 //     }
 // }
+
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1);
+                    dp[i][j] = Math.min(dp[i - 1][j - 1] + 1, dp[i][j]);
+                }
+
+            }
+        }
+        return dp[m][n];
+    }
+}
 /**
 Constrains & edge cases:
     - Lengths up to ~500
@@ -52,31 +79,31 @@ Step 3: Think about the LAST character:     word1[i-1] vs. word2[j-1]
 
  */
 
-class Solution{
-    public int minDistance(String word1, String word2) {
-        int m = word1.length();
-        int n = word2.length();
+// class Solution{
+//     public int minDistance(String word1, String word2) {
+//         int m = word1.length();
+//         int n = word2.length();
 
-        int[][] dp = new int[m + 1][n + 1];
+//         int[][] dp = new int[m + 1][n + 1];
 
-        // base cases
-        for (int i = 0; i <= m; i++) {
-            dp[i][0] = i;
-        }
-        for (int j = 0; j <= n; j++) {
-            dp[0][j] = j;
-        }
+//         // base cases
+//         for (int i = 0; i <= m; i++) {
+//             dp[i][0] = i;
+//         }
+//         for (int j = 0; j <= n; j++) {
+//             dp[0][j] = j;
+//         }
 
-        // fill DP table
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1];
-                } else {
-                    dp[i][j] = 1 + Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
-                }
-            }
-        }
-        return dp[m][n];
-    }
-}
+//         // fill DP table
+//         for (int i = 1; i <= m; i++) {
+//             for (int j = 1; j <= n; j++) {
+//                 if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+//                     dp[i][j] = dp[i - 1][j - 1];
+//                 } else {
+//                     dp[i][j] = 1 + Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
+//                 }
+//             }
+//         }
+//         return dp[m][n];
+//     }
+// }
