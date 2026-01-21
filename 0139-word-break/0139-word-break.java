@@ -36,7 +36,7 @@ class Solution{
             for (int i = 0; i < len; i++) {
                 if (M[i] && set.contains(s.substring(i, len))) {
                     M[len] = true;
-                    break;
+                    break;  
                 }
             }
         }
