@@ -22,7 +22,7 @@ len = 3 -- 'app':
 
  */
 
- class Solution {
+class Solution{
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> set = toSet(wordDict);
         boolean[] M = new boolean[s.length() + 1];
@@ -35,7 +35,7 @@ len = 3 -- 'app':
                 }
             }
         }
-        return M[M.length - 1];
+        return M[s.length()];
     }
 
     private Set<String> toSet(List<String> list) {
@@ -45,4 +45,4 @@ len = 3 -- 'app':
         }
         return set;
     }
- }
+}
