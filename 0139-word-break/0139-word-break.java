@@ -2,7 +2,12 @@
         applepenapple       ["apple","pen"]
 
 M[i] represent 长度为i的string能不能切成每一份都在字典里
+M[i] = true if s[0..i-1] can be segmented
 M[0] = T
+
+M[i] = true if there exists j such that:
+    M[j] == true
+    AND s[j..i-1] ∈ wordDict
 
 len = 1 -- 'a' : M[1] = F
 len = 2 -- 'ap':
