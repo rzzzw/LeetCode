@@ -6,10 +6,9 @@ public class Solution {
         dp[0] = 0;
         for (int i = 1; i <= amount; i++) {
             for (int c : coins) {
-                if (i < c) {
-                    continue;
+                if (i - c >= 0) {
+                    dp[i] = Math.min(dp[i], dp[i - c] + 1);
                 }
-                dp[i] = Math.min(dp[i], dp[i - c] + 1);
             }
         }
         return dp[amount] == max ? -1 : dp[amount];
