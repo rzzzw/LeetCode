@@ -1,3 +1,47 @@
+ class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        int[] indegree = new int[numCourses];
+
+        // Initialize graph
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        // Build graph and indegree
+        for (int[] p : prerequisites) {
+            int course = p[0];
+            int prereq = p[1];
+            graph.get(prereq).add(course);
+            indegree[course]++;
+        }
+
+        // Queue of course with no prerequisites
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                q.offer(i);
+            }
+        }
+
+        int finished = 0;
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            finished++;
+
+            for (int next : graph.get(cur)) {
+                indegree[next]--;
+                if (indegree[next] == 0) {
+                    q.offer(next);
+                }
+            }
+        }
+
+        return finished == numCourses;
+    }
+ }
+
 // class Solution {
 //     public boolean canFinish(int numCourses, int[][] prerequisites) {
 //         int[] indegree = new int[numCourses];
@@ -55,46 +99,6 @@ step 2: 把不需要先修课的课放进queue
 
  */
 
- class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>();
-        int[] indegree = new int[numCourses];
 
-        // Initialize graph
-        for (int i = 0; i < numCourses; i++) {
-            graph.add(new ArrayList<>());
-        }
 
-        // Build graph and indegree
-        for (int[] p : prerequisites) {
-            int course = p[0];
-            int prereq = p[1];
-            graph.get(prereq).add(course);
-            indegree[course]++;
-        }
 
-        // Queue of course with no prerequisites
-        Queue<Integer> q = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) {
-                q.offer(i);
-            }
-        }
-
-        int finished = 0;
-
-        while (!q.isEmpty()) {
-            int cur = q.poll();
-            finished++;
-
-            for (int next : graph.get(cur)) {
-                indegree[next]--;
-                if (indegree[next] == 0) {
-                    q.offer(next);
-                }
-            }
-        }
-
-        return finished == numCourses;
-    }
- }
