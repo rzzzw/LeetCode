@@ -31,3 +31,9 @@ class Solution{
         dfs(grid, r, c - 1);
     }
 }
+
+/**
+Time: O(m × n) Each cell is visited once
+
+Space: O(m × n) worst-case recursion stack (all land)
+ */
