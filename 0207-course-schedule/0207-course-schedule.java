@@ -1,4 +1,4 @@
- class Solution {
+class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         List<List<Integer>> graph = new ArrayList<>();
         int[] indegree = new int[numCourses];
@@ -12,12 +12,12 @@
         for (int[] p : prerequisites) {
             int course = p[0];
             int prereq = p[1];
-            graph.get(prereq).add(course);
-            indegree[course]++;
+            graph.get(prereq).add(course); // 记录每一门先修课影响哪些课程
+            indegree[course]++; // 统计 课程 受几门先修课影响
         }
 
         // Queue of course with no prerequisites
-        Queue<Integer> q = new LinkedList<>();
+        Queue<Integer> q = new ArrayDeque<>();
         for (int i = 0; i < numCourses; i++) {
             if (indegree[i] == 0) {
                 q.offer(i);
@@ -26,7 +26,7 @@
 
         int finished = 0;
 
-        while (!q.isEmpty()) {
+        while (!q.isEmpty()){
             int cur = q.poll();
             finished++;
 
@@ -37,10 +37,23 @@
                 }
             }
         }
-
         return finished == numCourses;
-    }
- }
+    } 
+}
+/**
+V = numCourses (number of nodes)
+E = prerequisites.length (number of edges)
+
+Time Complexity: O(V + E)
+    Each node enters the queue once
+    Each edge is processed once when reducing indegree
+
+Space Complexity: O(V + E)
+    Graph adjacency list → O(V + E)
+    Indegree array → O(V)
+    Queue → up to O(V)
+ 
+ */
 
 // class Solution {
 //     public boolean canFinish(int numCourses, int[][] prerequisites) {
