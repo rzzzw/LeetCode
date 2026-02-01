@@ -1,32 +1,46 @@
+/*
+Core idea (the invariant)
+Maintain two heaps:
+1️⃣ Max-heap (left)
+    - Stores the smaller half of the numbers
+    - Top = largest of the smaller half
+
+2️⃣ Min-heap (right)
+    - Stores the larger half of the numbers
+    - Top = smallest of the larger half
+
+Invariants must keep
+    1. left.size() == right.size() OR
+       left.size() == right.size() + 1
+    2. Every element in left ≤ every element in right
+*/
+
 class MedianFinder {
-    private PriorityQueue<Integer> maxHeap;
-    private PriorityQueue<Integer> minHeap;
+
+    private PriorityQueue<Integer> left; // max heap
+    private PriorityQueue<Integer> right; // min heap
+
     public MedianFinder() {
-        maxHeap = new PriorityQueue<>(Collections.reverseOrder()); // smaller half
-        minHeap = new PriorityQueue<>(); // larger half
+        left = new PriorityQueue<>(Collections.reverseOrder());
+        right = new PriorityQueue<>();
     }
-
+    
     public void addNum(int num) {
-        //120 60 80 50 100
-        //min 120 80 
-        //max 100 60 50
-        minHeap.offer(num); 
-        maxHeap.offer(minHeap.poll());
-        if (maxHeap.size() > minHeap.size() + 1) {
-            minHeap.offer(maxHeap.poll());
+        left.offer(num);
+        right.offer(left.poll());
+
+        if (right.size() > left.size()) {
+            left.offer(right.poll());
         }
-
     }
-
+    
     public double findMedian() {
-        if (minHeap.size() == maxHeap.size()) {
-            return (minHeap.peek() + maxHeap.peek()) / 2.0;
-        } else {
-            return maxHeap.peek();
+        if (left.size() > right.size()) {
+           return left.peek();
         }
+        return (left.peek() + right.peek()) / 2.0;
     }
-} 
-
+}
 
 /**
  * Your MedianFinder object will be instantiated and called as such:
@@ -34,32 +48,3 @@ class MedianFinder {
  * obj.addNum(num);
  * double param_2 = obj.findMedian();
  */
-
-
-
-//  class MedianFinder {
-//     private PriorityQueue<Integer> maxHeap; // lower half
-//     private PriorityQueue<Integer> minHeap; // higher half
-//     public MedianFinder() {
-//         maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-//         minHeap = new PriorityQueue<>();
-//     }
-
-//     public void addNum(int num) {
-//         maxHeap.offer(num);
-//         minHeap.offer(maxHeap.poll());
-//         if (minHeap.size() > maxHeap.size()) {
-//             maxHeap.offer(minHeap.poll());
-//         }
-
-//     }
-
-//     public double findMedian() {
-//         if (maxHeap.size() == minHeap.size()) {
-//             return (maxHeap.peek() + minHeap.peek()) / 2.0;
-//         } else {
-//             return maxHeap.peek();
-//         }
-//     } 
-
-//  }
