@@ -31,14 +31,15 @@ class Solution {
             for (int i = 0; i < k && kth != null; i++) {
                 kth = kth.next;
             }
-            if (kth == null) break;
+            if (kth == null) {
+                break;
+            }
 
             ListNode groupNext = kth.next;
 
             // 2. reverse group
             ListNode prev = groupNext;
             ListNode cur = groupPrev.next;
-
             while (cur != groupNext) {
                 ListNode tmp = cur.next;
                 cur.next = prev;
@@ -47,7 +48,7 @@ class Solution {
             }
 
             //3. reconnect
-            ListNode tmp = groupPrev.next; // will be tail
+            ListNode tmp = groupPrev.next;  // will be tail
             groupPrev.next = kth;
             groupPrev = tmp;
         }
