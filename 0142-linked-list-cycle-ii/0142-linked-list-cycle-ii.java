@@ -24,9 +24,9 @@ public class Solution {
             if (slow == fast) {
                 // Step 2: find cycle entry
                 ListNode ptr = head;
-                while (ptr != fast) {
+                while (ptr != slow) {
                     ptr = ptr.next;
-                    fast = fast.next;
+                    slow = slow.next;
                 }
                 return ptr;
             }
