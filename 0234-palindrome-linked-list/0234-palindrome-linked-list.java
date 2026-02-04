@@ -43,13 +43,13 @@ class Solution {
         }
         // 1. Find middle
         ListNode slow = head, fast = head;
-        while (fast != null && fast.next != null) {
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
         
         // 2. Reverse second half
-        ListNode second = reverse(slow);
+        ListNode second = reverse(slow.next);
 
         // 3.compare
         ListNode first = head;
