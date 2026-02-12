@@ -5,16 +5,17 @@ class Solution {
 
         res[0] = 1;
         for (int i = 1; i < n; i++) {
-            res[i] = nums[i - 1] * res[i - 1];
+            res[i] = res[i - 1] * nums[i - 1];
         }
         int right = 1;
         for (int i = n - 1; i >= 0; i--) {
             res[i] = right * res[i];
-            right *= nums[i];
+            right *= nums[i]; 
         }
         return res;
     }
 }
+
 /**
 
 product_except_i = (product of all elements to the LEFT of i) × (product of all elements to the RIGHT of i)
