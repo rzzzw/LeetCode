@@ -5,8 +5,8 @@ class Solution {
         }
         int l = 0;
         int r = s.length() - 1;
-        while (l < r) {
-            while (l < r && !Character.isLetterOrDigit(s.charAt(l))) {
+        while (l < r) {  // why not 'l <= r'? take 'aba' as an example
+            while (l < r && !Character.isLetterOrDigit(s.charAt(l))) {  // only skip spaces/punchuation. letters and digits are all counted for palindrome judgement, so using"Character.isLetter()" is wrong.
                 l++;
             }
             while (l < r && !Character.isLetterOrDigit(s.charAt(r))) {
@@ -21,3 +21,4 @@ class Solution {
         return true;
     }
 }
+
