@@ -26,7 +26,7 @@ class Solution {
         if (s == null || s.length() == 0) {
             return 0;
         }
-        int[] count = new int[128]
+        int[] count = new int[128];
         for (char c : s.toCharArray()) {
             count[c]++;
         }
