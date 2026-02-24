@@ -13,6 +13,7 @@
  *     }
  * }
  */
+
 class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
         if (root == null) {
@@ -23,21 +24,19 @@ class Solution {
         return res[0];
     }
 
-    private int dfs(TreeNode node, int[] res) {
-        if (node == null) {
+    private int dfs(TreeNode root, int[] res) {
+        if (root == null) {
             return 0;
         }
-
-        int leftHeight = dfs(node.left, res);
-        int rightHeight = dfs(node.right, res);
+        int leftHeight = dfs(root.left, res);
+        int rightHeight = dfs(root.right, res);
 
         res[0] = Math.max(res[0], leftHeight + rightHeight);
 
         // return height to parent
         return Math.max(leftHeight, rightHeight) + 1;
-    }
+     }
 }
-
 /**
 
 Diameter at a node = left height + right height
