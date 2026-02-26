@@ -13,11 +13,12 @@ class Solution {
                 slow++;
             }
             set.add(input[fast]);
-            longest = Math.max(fast - slow + 1, longest);
-        }        
+            longest = Math.max(longest, fast - slow + 1);
+        }
         return longest;
     }
 }
+
 
 
 // class Solution {
