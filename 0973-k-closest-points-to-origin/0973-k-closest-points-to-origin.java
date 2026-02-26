@@ -6,14 +6,14 @@ This is optimal when: k << n
  */
 
 
-
 class Solution {
+    
     public int[][] kClosest(int[][] points, int k) {
         if (points == null || points.length == 0 || k == 0) {
             return null;
         }
         PriorityQueue<int[]> maxHeap = new PriorityQueue<>(
-            (a, b) -> ((b[0] * b[0] + b[1] * b[1]) - (a[0] * a[0] + a[1] * a[1]))
+            (a, b) -> (squreDistance(b) - squreDistance(a))
         );
         for (int[] p : points) {
             maxHeap.offer(p);
@@ -28,6 +28,10 @@ class Solution {
             res[i] = maxHeap.poll();
         }
         return res;
+    }
+
+    private int squreDistance(int[] p) {
+        return p[0] * p[0] + p[1] * p[1];
     }
 }
 
