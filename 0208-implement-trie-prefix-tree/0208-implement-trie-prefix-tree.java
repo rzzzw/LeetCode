@@ -1,5 +1,5 @@
 class Trie {
-
+    
     private static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         boolean isWord;
@@ -42,9 +42,8 @@ class Trie {
             cur = cur.children[idx];
         }
         return cur;
-    }
+    }    
 }
-
 
 /**
 Complexity Analysis
