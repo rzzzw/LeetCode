@@ -3,9 +3,7 @@ class Solution {
         Deque<Integer> stack = new ArrayDeque<>();
 
         for (String token : tokens) {
-            try {
-                stack.push(Integer.parseInt(token));
-            } catch (NumberFormatException e) {
+            if (token.length() == 1 && "+-*/".contains(token)) {
                 int b = stack.pop();
                 int a = stack.pop();
 
@@ -15,6 +13,8 @@ class Solution {
                     case "*": stack.push(a * b); break;
                     case "/": stack.push(a / b); break;
                 }
+            } else{
+                stack.push(Integer.parseInt(token));
             }
         }
 
