@@ -1,7 +1,7 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>();
-        int[] indegree = new int[numCourses];
+        List<List<Integer>> graph = new ArrayList<>(); // record the impacted course list of each course
+        int[] indegree = new int[numCourses]; // each idx is course label, which records the number of prerequred course
 
         // Initialize graph
         for (int i = 0; i < numCourses; i++) {
@@ -26,7 +26,7 @@ class Solution {
 
         int finished = 0;
 
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             int cur = q.poll();
             finished++;
 
@@ -35,11 +35,12 @@ class Solution {
                 if (indegree[next] == 0) {
                     q.offer(next);
                 }
-            }
+            }      
         }
         return finished == numCourses;
     } 
 }
+
 /**
 V = numCourses (number of nodes)
 E = prerequisites.length (number of edges)
