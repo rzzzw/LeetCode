@@ -1,5 +1,4 @@
 class Trie {
-    
     private static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         boolean isWord;
@@ -29,7 +28,8 @@ class Trie {
     }
 
     public boolean startsWith(String prefix) {
-        return findNode(prefix) != null;
+        TrieNode node = findNode(prefix);
+        return node != null;
     }
 
     private TrieNode findNode(String s) {
@@ -40,10 +40,14 @@ class Trie {
                 return null;
             }
             cur = cur.children[idx];
-        }
+        }        
         return cur;
-    }    
+    }
 }
+
+
+
+
 
 /**
 Complexity Analysis
