@@ -19,6 +19,7 @@ class Solution {
     public boolean isValidBST(TreeNode root) {
         return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
+
     private boolean dfs(TreeNode node, long min, long max) {
         if (node == null) {
             return true;
@@ -29,11 +30,12 @@ class Solution {
         return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
     }
 }
+
 /**
 Why long, not int? 
-    -231 <= Node.val <= 231 - 1
+    -2^31 <= Node.val <= 2^31 - 1
 
-    If the tree is: root = [-2147483648] (That value is Integer.MIN_VALUE.)
+    If the tree is: root = [-2147483648] (That value is Integer.MIN_VALUE(-2³¹).)
     
     The first check becomes:
         node.val <= Integer.MIN_VALUE   // true!
