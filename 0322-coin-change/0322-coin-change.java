@@ -1,19 +1,21 @@
 public class Solution {
     public int coinChange(int[] coins, int amount) {
-        int max = amount + 1;
-        int[] dp = new int[amount + 1];
+        int max = amount + 1; 
+        int[] dp = new int[amount + 1]; // dp[i] = minimum coins to make up amount i
         Arrays.fill(dp, max);
-        dp[0] = 0;
+        dp[0] = 0; // to make amount = 0, we need 0 coins.
         for (int i = 1; i <= amount; i++) {
             for (int c : coins) {
                 if (i - c >= 0) {
                     dp[i] = Math.min(dp[i], dp[i - c] + 1);
-                }
+                }         
             }
         }
         return dp[amount] == max ? -1 : dp[amount];
     }
 }
+
+
 
 /**
 example: 
@@ -22,6 +24,9 @@ example:
     dp: [0 7 7 7 7 7 7]
         
     coins: [1, 2, 3]
+
+         0 1 2 3 4 5 6
+    dp: [0 1 1 1 2 7 7]    
 
 Induction Rule
     dp[i] = minimum coins to make up amount i
