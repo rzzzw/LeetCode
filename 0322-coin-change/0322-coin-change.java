@@ -1,5 +1,6 @@
 public class Solution {
     public int coinChange(int[] coins, int amount) {
+        if (amount == 0) return 0;
         int max = amount + 1; 
         int[] dp = new int[amount + 1]; // dp[i] = minimum coins to make up amount i
         Arrays.fill(dp, max);
