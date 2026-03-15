@@ -1,28 +1,35 @@
+/**
+binary-decision backtracking formulation
+ */
+
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         if (candidates == null || candidates.length == 0) {
             return res;
         }
-        helper(res, new ArrayList<>(), 0, target, candidates);
+        backtrack(candidates, target, 0, new ArrayList<>(), res);
         return res;
     }
-    private void helper(List<List<Integer>> res, List<Integer> cur, int idx, int remains, int[] candidates) {
 
+    private void backtrack(int[] candidates, int remains, int idx, List<Integer> cur, List<List<Integer>> res) {
         if (remains == 0) {
             res.add(new ArrayList<>(cur));
-            return;   
-        }  
+            return;
+        }
 
         if (remains < 0 || idx == candidates.length) {
             return;
         }
+
+        // 加
         if (candidates[idx] <= remains) {
             cur.add(candidates[idx]);
-            helper(res, cur, idx, remains - candidates[idx], candidates);
+            backtrack(candidates, remains - candidates[idx], idx, cur, res);  // ❌ idx + 1
             cur.remove(cur.size() - 1);
         }
 
-        helper(res, cur, idx + 1, remains, candidates);
+        // 不加
+        backtrack(candidates, remains, idx + 1, cur, res);
     }
 }
