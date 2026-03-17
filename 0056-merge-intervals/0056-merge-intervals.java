@@ -1,29 +1,39 @@
 /**
 Key Insight 
     Two intervals overlap if: current.start <= previous.end
+
+Sorting: O(n log n)
+Merging: O(n)
+Total: O(n log n)
+
+Space: O(n) for result
  */
+
 
 class Solution {
     public int[][] merge(int[][] intervals) {
         if (intervals == null || intervals.length <= 1) {
             return intervals;
         }
+
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
-        List<int[]> result = new ArrayList<>();
+        List<int[]> res = new ArrayList<>();
         int[] cur = intervals[0];
         for (int i = 1; i < intervals.length; i++) {
             if (intervals[i][0] <= cur[1]) {
-                cur[1] = Math.max(cur[1], intervals[i][1]);
+                cur[1] = Math.max(intervals[i][1], cur[1]);
             } else {
-                result.add(cur);
+                res.add(cur);
                 cur = intervals[i];
             }
         }
-        result.add(cur);
-        return result.toArray(new int[result.size()][]);
+        res.add(cur);
+        return res.toArray(new int[res.size()][]);       
     }
 }
+
+
 // class Solution {
 //     public int[][] merge(int[][] intervals) {
 //         if (intervals == null || intervals.length == 1) {
