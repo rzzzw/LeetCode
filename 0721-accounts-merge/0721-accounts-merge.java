@@ -1,62 +1,118 @@
 class Solution {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        Map<String, String> parent = new HashMap<>();
+
+        Map<String, List<String>> graph = new HashMap<>();
         Map<String, String> emailToName = new HashMap<>();
 
-        // Step 1: Initialize
+        // Step 1: Build Graph
         for (List<String> acc : accounts) {
             String name = acc.get(0);
+            String firstEmail = acc.get(1);
+
             for (int i = 1; i < acc.size(); i++) {
                 String email = acc.get(i);
-                parent.putIfAbsent(email, email);
+
+                graph.putIfAbsent(email, new ArrayList<>());
                 emailToName.put(email, name);
+
+                if (i == 1) continue;
+                
+                // connect firstEmail <-> current email
+                graph.get(firstEmail).add(email);
+                graph.get(email).add(firstEmail);
             }
         }
-
-        // Step 2: Union
-        for (List<String> acc : accounts) {
-            String firstEmail = acc.get(1);
-            for (int i = 2; i < acc.size(); i++) {
-                union(parent, firstEmail, acc.get(i));
-            }
-        }
-
-        // Step 3: Group by root
-        Map<String, TreeSet<String>> map = new HashMap<>();
-
-        for (String email : parent.keySet()) {
-            String root = find(parent, email);
-            map.putIfAbsent(root, new TreeSet<>());
-            map.get(root).add(email);
-        }
-
-        // Step 4: Build result
+        // Step 2: DFS traversal
+        Set<String> visited = new HashSet<>();
         List<List<String>> res = new ArrayList<>();
 
-        for (String root : map.keySet()) {
-            List<String> list = new ArrayList<>();
-            list.add(emailToName.get(root));
-            list.addAll(map.get(root));
-            res.add(list);
+        for (String email : graph.keySet()) {
+            if (visited.contains(email)) continue;
+
+            List<String> component = new ArrayList<>();
+            dfs(email, graph, visited, component);
+
+            Collections.sort(component);
+
+            // add name at front
+            component.add(0, emailToName.get(email));
+            res.add(component);
         }
         return res;
     }
 
-    private String find(Map<String, String> parent, String x) {
-        if (!parent.get(x).equals(x)) {
-            parent.put(x, find(parent, parent.get(x))); // recursive until reach the k-v pair which k = v, that's the root element
-        }
-        return parent.get(x);
-    }
+    private void dfs(String email, Map<String, List<String>> graph, Set<String> visited, List<String> component) {
+        visited.add(email);
+        component.add(email);
 
-    private void union(Map<String, String> parent, String a, String b) {
-        String rootA = find(parent, a);
-        String rootB = find(parent, b);
-        if (!rootA.equals(rootB)) {
-            parent.put(rootA, rootB);
+        for (String nei : graph.get(email)) {
+            if (!visited.contains(nei)) {
+                dfs(nei, graph, visited, component);
+            }
         }
     }
 }
+
+// // Union-find
+// class Solution {
+//     public List<List<String>> accountsMerge(List<List<String>> accounts) {
+//         Map<String, String> parent = new HashMap<>();
+//         Map<String, String> emailToName = new HashMap<>();
+
+//         // Step 1: Initialize
+//         for (List<String> acc : accounts) {
+//             String name = acc.get(0);
+//             for (int i = 1; i < acc.size(); i++) {
+//                 String email = acc.get(i);
+//                 parent.putIfAbsent(email, email);
+//                 emailToName.put(email, name);
+//             }
+//         }
+
+//         // Step 2: Union
+//         for (List<String> acc : accounts) {
+//             String firstEmail = acc.get(1);
+//             for (int i = 2; i < acc.size(); i++) {
+//                 union(parent, firstEmail, acc.get(i));
+//             }
+//         }
+
+//         // Step 3: Group by root
+//         Map<String, TreeSet<String>> map = new HashMap<>();
+
+//         for (String email : parent.keySet()) {
+//             String root = find(parent, email);
+//             map.putIfAbsent(root, new TreeSet<>());
+//             map.get(root).add(email);
+//         }
+
+//         // Step 4: Build result
+//         List<List<String>> res = new ArrayList<>();
+
+//         for (String root : map.keySet()) {
+//             List<String> list = new ArrayList<>();
+//             list.add(emailToName.get(root));
+//             list.addAll(map.get(root));
+//             res.add(list);
+//         }
+//         return res;
+//     }
+
+//     private String find(Map<String, String> parent, String x) {
+//         if (!parent.get(x).equals(x)) {
+//             parent.put(x, find(parent, parent.get(x))); // recursive until reach the k-v pair which k = v, that's the root element
+//         }
+//         return parent.get(x);
+//     }
+
+//     private void union(Map<String, String> parent, String a, String b) {
+//         String rootA = find(parent, a);
+//         String rootB = find(parent, b);
+//         if (!rootA.equals(rootB)) {
+//             parent.put(rootA, rootB);
+//         }
+//     }
+// }
 
 
 
