@@ -1,5 +1,8 @@
 class Solution {
     public void sortColors(int[] nums) {
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
         int i = 0, j = 0, k = nums.length - 1;
         while (j <= k) {
             if (nums[j] == 0) {
@@ -13,15 +16,14 @@ class Solution {
                 j++;
             }
         }
-        return;
     }
-
     private void swap(int[] arr, int left, int right) {
         int tmp = arr[left];
         arr[left] = arr[right];
         arr[right] = tmp;
-    }
+    }    
 }
+
 
 /**
 i, j, k
