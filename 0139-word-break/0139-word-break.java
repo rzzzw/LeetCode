@@ -27,7 +27,7 @@ len = 3 -- 'app':
 
  */
 
-class Solution{
+class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> set = toSet(wordDict);
         boolean[] M = new boolean[s.length() + 1];
@@ -36,7 +36,7 @@ class Solution{
             for (int i = 0; i < len; i++) {
                 if (M[i] && set.contains(s.substring(i, len))) {
                     M[len] = true;
-                    break;  
+                    break;
                 }
             }
         }
@@ -50,4 +50,4 @@ class Solution{
         }
         return set;
     }
-}
+} 
