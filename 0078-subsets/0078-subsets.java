@@ -34,7 +34,7 @@ class Solution {
     }
     private void dfs(int[] nums, int idx, List<Integer> cur, List<List<Integer>> res) {
         if (idx == nums.length) {
-            res.add(new ArrayList(cur));
+            res.add(new ArrayList<>(cur));
             return;
         }
         cur.add(nums[idx]);
