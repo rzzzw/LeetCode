@@ -3,46 +3,34 @@ class Solution {
         if (s == null || s.length() == 0) {
             return 0;
         }
-        char[] arr = s.toCharArray();
-        int n = arr.length;
-        int idx = 0;
-        while (idx < n && arr[idx] == ' ') {
-            idx++;
-        }
-        
-        if (idx == n) return 0;
-        
-        int sign = 1;
-        if (arr[idx] == '-' || arr[idx] == '+') {
-            sign = arr[idx] == '-' ? -1 : 1;
-            idx++;
-        }
-        
-        int res = 0;
-        while (idx < n) {
-            int digit = arr[idx] - '0';
-            if (digit < 0 || digit > 9) break;
+        char[] ch = s.toCharArray(); 
+        int i = 0;
+        int n = ch.length;
 
-            int newRes = res * 10 + digit;
-            
-            // --------- check the boundary -------------
-            
-            // Method 1:
-            if (Integer.MAX_VALUE / 10 < res || (Integer.MAX_VALUE / 10 == res && Integer.MAX_VALUE % 10 < digit)) {
+        // 1. skip spaces
+        while (i < n && ch[i] == ' ') {
+            i++;
+        }
+
+        // 2. Sign
+        int sign = 1;
+        if (i < n && (ch[i] == '-' || ch[i] ==  '+')) {
+            sign = (ch[i] == '-') ? -1 : 1;
+            i++;
+        }
+
+        // 3. Convert digits
+        int num = 0;
+        while (i < ch.length && (ch[i] - '0') >= 0 && (ch[i] - '0') <= 9) { // Character.isDigit(ch[i])
+            int digit = ch[i] - '0';
+            if (num > (Integer.MAX_VALUE - digit) / 10) {
                 return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
-            
-            // method 2:
-            // if (newRes / 10 != res) {
-            //     return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            // }
-            
-            // ------------------------------------------
-            
-            res = newRes;
-            idx++;
+            // num *= 10;
+            // num += (ch[i] - '0');
+            num = num * 10 + digit;
+            i++;
         }
-        return res * sign;
-        
+        return num * sign;
     }
 }
