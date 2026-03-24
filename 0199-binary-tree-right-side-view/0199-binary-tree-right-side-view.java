@@ -13,6 +13,8 @@
  *     }
  * }
  */
+
+
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> res = new ArrayList<>();
@@ -39,3 +41,4 @@ class Solution {
         return res;
     }
 }
+
