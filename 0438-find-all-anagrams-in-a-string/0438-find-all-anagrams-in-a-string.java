@@ -9,7 +9,9 @@ Core pattern
 
 Key trick (very interview-relevant) - Instead of comparing entire arrays each time, track:
     matches: number of characters whose frequency matches p
-
+    
+Time: O(n)
+Space: O(1)
  */
 
 class Solution {
@@ -41,16 +43,14 @@ class Solution {
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             int idx = c - 'a';
-            
+
             window[idx]++;
             if (window[idx] == charNeed[idx]) {
                 formed++;
             }
-            
-            // shrink when window size exceeds p length
+
             if (right - left + 1 > p.length()) {
-                char leftChar = s.charAt(left);
-                int leftIdx = leftChar - 'a';
+                int leftIdx = s.charAt(left) - 'a';
                 if (window[leftIdx] == charNeed[leftIdx]) {
                     formed--;
                 }
