@@ -1,12 +1,14 @@
 class Solution {
-    private static final int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+    private static final int[][] DIRS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
     public boolean exist(char[][] board, String word) {
-        int rows = board.length;
-        int cols = board[0].length;
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        if (board == null || board.length == 0 || board[0].length == 0) {
+            return false;
+        }
+        int row = board.length;
+        int col = board[0].length;
+        for (int r = 0; r < row; r++) {
+            for (int c = 0; c < col; c++) {
                 if (dfs(board, word, 0, r, c)) {
                     return true;
                 }
@@ -14,42 +16,33 @@ class Solution {
         }
         return false;
     }
-    private boolean dfs(char[][] board, String word, int index, int r, int c){
-        if (index == word.length()) return true;
-        
+
+    private boolean dfs(char[][] board, String word, int idx, int r, int c) {
+        if (idx == word.length()) {
+            return true;
+        }
         if (r < 0 || c < 0 || r >= board.length || c >= board[0].length) {
             return false;
         }
-
-        if (board[r][c] != word.charAt(index)) {
+        if (board[r][c] != word.charAt(idx)) {
             return false;
         }
 
         char temp = board[r][c];
-        
         board[r][c] = '#';
 
-        // for (int[] d : DIRS) {
-        //     if (dfs(board, word, index + 1, r + d[0], c + d[1])) {
-        //         board[r][c] = temp;
-        //         return true;
-        //     }
-        // }
-
-        // board[r][c] = temp;
-        // return false;
-
-        boolean found = 
-            dfs(board, word, index + 1, r + 1, c) ||
-            dfs(board, word, index + 1, r - 1, c) ||
-            dfs(board, word, index + 1, r, c + 1) ||
-            dfs(board, word, index + 1, r, c - 1);
-
+        for (int[] d : DIRS) {
+            if (dfs(board, word, idx + 1, r + d[0], c + d[1])) {
+                board[r][c] = temp;
+                return true;
+            }
+        }
         board[r][c] = temp;
-
-        return found;
+        return false;
     }
 }
+
+
 
 /**
 
@@ -62,4 +55,4 @@ Space Complexity: O(L)
     Max recursion depth is the length of the word
     We modify the board in-place, so no extra matrix
 
- */
+*/
