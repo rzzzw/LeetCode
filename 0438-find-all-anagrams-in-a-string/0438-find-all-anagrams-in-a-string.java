@@ -43,14 +43,16 @@ class Solution {
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             int idx = c - 'a';
-
+            
             window[idx]++;
             if (window[idx] == charNeed[idx]) {
                 formed++;
             }
-
+            
+            // shrink when window size exceeds p length
             if (right - left + 1 > p.length()) {
-                int leftIdx = s.charAt(left) - 'a';
+                char leftChar = s.charAt(left);
+                int leftIdx = leftChar - 'a';
                 if (window[leftIdx] == charNeed[leftIdx]) {
                     formed--;
                 }
