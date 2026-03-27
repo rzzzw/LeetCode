@@ -28,7 +28,7 @@ class Solution {
             for (int i = 0; i < size; i++) {
                 int leaf = q.poll();
                 count--;
-                inDeg[leaf]--;
+                // inDeg[leaf]--;  // redundant, not needed.. Just let inDeg value of leaves end at 1
                 for (int nei : adj.get(leaf)) {
                     inDeg[nei]--;
                     if (inDeg[nei] == 1) {
