@@ -66,21 +66,4 @@ Strategy: Remove Leaves Layer by Layer
     3.Remove them level by level
     4.The last remaining nodes = answer
 
-edges = [[1,0],[1,2],[1,3]]
-
-1: 0, 2, 3
-0: 1
-2: 1
-3: 1
-
-
-edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
-
-3: 0, 1, 2, 4
-0: 3
-1: 3
-2: 3
-4: 3, 5
-5: 4
-
  */
