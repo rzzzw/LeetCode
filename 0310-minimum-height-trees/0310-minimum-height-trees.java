@@ -1,48 +1,94 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        if (n == 1) return Arrays.asList(0);
-        
-        // build graph
-        List<Set<Integer>> graph = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            graph.add(new HashSet<>());
+        if (n == 1) {
+            return Arrays.asList(0);
         }
-
+        List<Integer> ans=new ArrayList<>();
+        List<List<Integer>> adj = new ArrayList<>();
+        int[] inDeg = new int[n];
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
         for (int[] e : edges) {
-            graph.get(e[0]).add(e[1]);
-            graph.get(e[1]).add(e[0]);
+            adj.get(e[0]).add(e[1]);
+            adj.get(e[1]).add(e[0]);
+            inDeg[e[0]]++;
+            inDeg[e[1]]++;
         }
-
-        // Initialize leaves
-        List<Integer> leaves = new ArrayList<>();
+        Deque<Integer> q = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
-            if (graph.get(i).size() == 1) {
-                leaves.add(i);
+            if (inDeg[i] == 1) {
+                q.offer(i);
             }
-        }
+        } 
 
-        // Trim leaves
-        int remainingNodes = n;
-
-        while (remainingNodes > 2) {
-            remainingNodes -= leaves.size();
-            List<Integer> newLeaves = new ArrayList<>();
-
-            for (int leaf : leaves) {
-                int neighbor = graph.get(leaf).iterator().next(); // “Get the only neighbor of this leaf node”
-                graph.get(neighbor).remove(leaf);
-
-                if (graph.get(neighbor).size() == 1) {
-                    newLeaves.add(neighbor);
+        int count = n;
+        while (count > 2) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int leaf = q.poll();
+                count--;
+                inDeg[leaf]--;
+                for (int nei : adj.get(leaf)) {
+                    inDeg[nei]--;
+                    if (inDeg[nei] == 1) {
+                        q.offer(nei);
+                    }                    
                 }
             }
-
-            leaves = newLeaves;
         }
-        return leaves;
         
+        while (!q.isEmpty()) {
+            ans.add(q.poll());
+        }
+        return ans;
     }
 }
+// class Solution {
+//     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+//         if (n == 1) return Arrays.asList(0);
+        
+//         // build graph
+//         List<Set<Integer>> graph = new ArrayList<>();
+//         for (int i = 0; i < n; i++) {
+//             graph.add(new HashSet<>());
+//         }
+
+//         for (int[] e : edges) {
+//             graph.get(e[0]).add(e[1]);
+//             graph.get(e[1]).add(e[0]);
+//         }
+
+//         // Initialize leaves
+//         List<Integer> leaves = new ArrayList<>();
+//         for (int i = 0; i < n; i++) {
+//             if (graph.get(i).size() == 1) {
+//                 leaves.add(i);
+//             }
+//         }
+
+//         // Trim leaves
+//         int remainingNodes = n;
+
+//         while (remainingNodes > 2) {
+//             remainingNodes -= leaves.size();
+//             List<Integer> newLeaves = new ArrayList<>();
+
+//             for (int leaf : leaves) {
+//                 int neighbor = graph.get(leaf).iterator().next(); // “Get the only neighbor of this leaf node”
+//                 graph.get(neighbor).remove(leaf);
+
+//                 if (graph.get(neighbor).size() == 1) {
+//                     newLeaves.add(neighbor);
+//                 }
+//             }
+
+//             leaves = newLeaves;
+//         }
+//         return leaves;
+        
+//     }
+// }
 
 
 /**
