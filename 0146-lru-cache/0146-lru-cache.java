@@ -74,8 +74,9 @@ class LRUCache {
     }
 
     private void addToFront(Node node) {
-        node.next = head.next;
         node.prev = head;
+        node.next = head.next;
+
         head.next.prev = node;
         head.next = node; 
     }
