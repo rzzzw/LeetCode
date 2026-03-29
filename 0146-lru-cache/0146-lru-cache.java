@@ -1,4 +1,18 @@
-class LRUCache{
+/**
+Key Idea
+To achieve O(1), combine
+1. HashMap
+    • key -> Node
+    • Fast lookup
+
+2. Doubly Linked List
+    • Maintain usage order
+    • Most recently used -> front
+    • Least recently used -> back
+
+ */
+
+class LRUCache {
     class Node {
         int key, value;
         Node prev, next;
@@ -15,8 +29,8 @@ class LRUCache{
     public LRUCache(int capacity) {
         this.capacity = capacity;
         map = new HashMap<>();
-
-        //dummy nodes
+        
+        // dummy nodes
         head = new Node(0, 0);
         tail = new Node(0, 0);
         head.next = tail;
@@ -63,10 +77,11 @@ class LRUCache{
         node.next = head.next;
         node.prev = head;
         head.next.prev = node;
-        head.next = node;
+        head.next = node; 
     }
-
 }
+
+
 
 // class LRUCache {
 //     private int capacity;
