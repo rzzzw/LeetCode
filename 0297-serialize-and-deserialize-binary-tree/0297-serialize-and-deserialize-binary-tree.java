@@ -27,8 +27,8 @@ public class Codec {
  
     public TreeNode deserialize(String data) {
         String[] values = data.split(",");
-        int[] index = new int[1];
-        return deseriHelper(values, index);
+        int[] idx = new int[1];
+        return deseriHelper(values, idx);
     }
 
     private TreeNode deseriHelper(String[] strs, int[] idx) {
