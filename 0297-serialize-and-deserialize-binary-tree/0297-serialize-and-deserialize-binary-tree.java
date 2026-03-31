@@ -7,6 +7,7 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
 public class Codec {
     public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
@@ -23,11 +24,11 @@ public class Codec {
         seriHelper(node.left, sb);
         seriHelper(node.right, sb);
     }
-
+ 
     public TreeNode deserialize(String data) {
         String[] values = data.split(",");
         int[] index = new int[1];
-        return deseriHelper(values, index); 
+        return deseriHelper(values, index);
     }
 
     private TreeNode deseriHelper(String[] strs, int[] idx) {
@@ -42,6 +43,9 @@ public class Codec {
         return node;
     }
 }
+
+
+// 1， 2， n, n, 3, 4, 5
 
 
 /**
