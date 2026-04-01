@@ -17,14 +17,14 @@ Invariants must keep
 
 class MedianFinder {
 
-    private PriorityQueue<Integer> left; // max heap
-    private PriorityQueue<Integer> right; // min heap
+    private PriorityQueue<Integer> left;    // max heap
+    private PriorityQueue<Integer> right;   // min heap
 
     public MedianFinder() {
-        left = new PriorityQueue<>(Collections.reverseOrder());
+        left = new PriorityQueue<>(Collections.reverseOrder()); 
         right = new PriorityQueue<>();
     }
-    
+
     public void addNum(int num) {
         left.offer(num);
         right.offer(left.poll());
@@ -33,14 +33,15 @@ class MedianFinder {
             left.offer(right.poll());
         }
     }
-    
+
     public double findMedian() {
         if (left.size() > right.size()) {
-           return left.peek();
+            return left.peek();
         }
         return (left.peek() + right.peek()) / 2.0;
     }
 }
+
 
 /**
  * Your MedianFinder object will be instantiated and called as such:
