@@ -2,7 +2,7 @@ class Solution {
     public int trap(int[] height) {
         if (height == null || height.length == 0) {
             return 0;
-        }
+        }        
         int left = 0, right = height.length - 1;
         int leftMax = 0;
         int rightMax = 0;
@@ -22,6 +22,9 @@ class Solution {
         return water;
     }
 }
+
+
+
 
 
 // class Solution {
