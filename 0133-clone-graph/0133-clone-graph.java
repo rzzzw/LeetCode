@@ -56,24 +56,32 @@ DFS：
 //     }
 // }
 
+// BFS：
+
 class Solution {
     public Node cloneGraph(Node node) {
         if (node == null) {
             return null;
         }
         Map<Node, Node> visited = new HashMap<>();
-        Queue<Node> queue = new LinkedList<>();
+        Deque<Node> queue = new ArrayDeque<>();  // Queue<Node> queue = new LinkedList<>(); .offer()/ .poll()
         Node clone = new Node(node.val, new ArrayList<>());
         visited.put(node, clone);
         queue.offer(node);
         while (!queue.isEmpty()) {
-            Node cur = queue.poll();
+            Node cur = queue.pollFirst();
             for (Node nb : cur.neighbors) {
                 if (!visited.containsKey(nb)) {
                     visited.put(nb, new Node(nb.val, new ArrayList<>())); // create copy of neighbor node, and put it as placeholder in the visited map 
-                    queue.offer(nb);
+                    queue.offerLast(nb);
                 }
-                visited.get(cur).neighbors.add(visited.get(nb));    // Link current clone to neighbor clone                     
+                /**
+                cloned(cur).neighbors.add(cloned(neighbor))   
+                1. Look at each original neighbor
+                2. Add the corresponding cloned neighbor
+                3. To the cloned version of curr               
+                 */
+                visited.get(cur).neighbors.add(visited.get(nb)); // Add the cloned neighbor to the cloned current node's neighbor list    
             }
         }
         return clone;
