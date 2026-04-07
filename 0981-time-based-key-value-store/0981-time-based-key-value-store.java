@@ -1,3 +1,11 @@
+ /**
+k: 
+    t1: val1
+    t2: val2
+    t3: val3
+
+ */
+
 class TimeMap {
 
     private Map<String, List<Pair>> map;
@@ -19,6 +27,7 @@ class TimeMap {
     public void set(String key, String value, int timestamp) {
         map.putIfAbsent(key, new ArrayList<>());
         map.get(key).add(new Pair(timestamp, value));
+
     }
     
     public String get(String key, int timestamp) {
@@ -34,13 +43,12 @@ class TimeMap {
             int mid = left + (right - left) / 2;
 
             if (list.get(mid).timestamp <= timestamp) {
-                res = list.get(mid).value;  // valid candidate
-                left = mid + 1;             // try to find later one if there is
+                res = list.get(mid).value; // valid candidate
+                left = mid + 1;            // try to find later one if there is
             } else {
                 right = mid - 1;
             }
         }
-
         return res;
     }
 }
@@ -51,3 +59,4 @@ class TimeMap {
  * obj.set(key,value,timestamp);
  * String param_2 = obj.get(key,timestamp);
  */
+
