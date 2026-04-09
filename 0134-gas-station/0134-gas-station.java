@@ -5,8 +5,9 @@ class Solution {
         int res = 0;
 
         for (int i = 0; i < gas.length; i++) {
-            totalSum += gas[i] - cost[i];
-            curSum += gas[i] - cost[i];
+            int d = gas[i] - cost[i];
+            totalSum += d;
+            curSum += d;
 
             if (curSum < 0) {
                 curSum = 0;
