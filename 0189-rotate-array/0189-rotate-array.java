@@ -7,28 +7,37 @@ class Solution {
     }
 
 
-    private void swap (int[] nums, int leftIdx, int rightIdx) {
-        while(leftIdx < rightIdx) {
-            int temp = nums[leftIdx]; 
-            nums[leftIdx] = nums[rightIdx];
-            nums[rightIdx] = temp;
-            leftIdx++;
-            rightIdx--;
+    private void swap (int[] nums, int l, int r) {
+        while (l < r) {
+            int temp = nums[l];
+            nums[l] = nums[r];
+            nums[r] = temp;
+            l++;
+            r--; 
         }
     }
-// case: nums = [1]; k = 0   
-//java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
-    // private void swap(int[] nums, int l, int r) {
-    //     int mid = l + (r - l) / 2;
-    //     while (l <= mid) {
-    //         int temp = nums[l];
-    //         nums[l] = nums[r];
-    //         nums[r] = temp; 
-    //         l++;
-    //         r--;
-    //     }
-    // }
 }
+
+/**
+Why not:
+    private void swap(int[] nums, int l, int r) {
+        int mid = l + (r - l) / 2;
+        while (l <= mid) {
+            int temp = nums[l];
+            nums[l] = nums[r];
+            nums[r] = temp; 
+            l++;
+            r--;
+        }
+    }
+
+case: nums = [1]; k = 0                                      l  r
+swap(nums, nums.length - k, nums.length - 1); --> swap(nums, 1, 0);
+    mid = 1 + (0 - 1) / 2 = 1; Truncate toward zero 
+    l <= mid 
+    temp = nums[1]   <--  java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+*/
+
 
 
 
