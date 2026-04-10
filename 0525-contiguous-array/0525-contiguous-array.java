@@ -17,6 +17,15 @@ If: prefixSum[j] == prefixSum[i]
 3. If same sum appears again:
     • subarray between them = valid
 
+     0  1  2  3  4  5  6  7
+     0  1  0  1  0  0  1  1
+sum  -1 0  -1 0  -1 -2 -1 0
+
+k : v
+0  -1
+-1  0
+-2  5
+
  */
 
 
