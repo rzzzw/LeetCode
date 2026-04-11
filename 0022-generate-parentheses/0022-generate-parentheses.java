@@ -9,25 +9,27 @@ backtracking with constrains
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
-        backtrack(n, 0, 0, new StringBuilder(), res);
+        helper(n, 0, 0, new StringBuilder(), res);
         return res;
     }
 
-    private void backtrack(int n, int openUsed, int closeUsed, StringBuilder path, List<String> res) {
+    private void helper(int n, int leftUsed, int rightUsed, StringBuilder path, List<String> res) {
         if (path.length() == 2 * n) {
             res.add(path.toString());
             return;
         }
-        if (openUsed < n) {
+
+        if (leftUsed < n) {
             path.append('(');
-            backtrack(n, openUsed + 1, closeUsed, path, res);
+            helper(n, leftUsed+1, rightUsed, path, res);
             path.deleteCharAt(path.length() - 1);
         }
 
-        if (closeUsed < n && closeUsed < openUsed) {
+        if (rightUsed < n && rightUsed < leftUsed) {
             path.append(')');
-            backtrack(n, openUsed, closeUsed + 1, path, res);
+            helper(n, leftUsed, rightUsed+1, path, res);
             path.deleteCharAt(path.length() - 1);
         }
     }
 }
+
