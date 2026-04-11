@@ -12,11 +12,13 @@ To achieve O(1), combine
 
  */
 
+
 class LRUCache {
+
     class Node {
         int key, value;
         Node prev, next;
-        Node(int k, int v) {
+        Node (int k, int v) {
             key = k;
             value = v;
         }
@@ -29,7 +31,7 @@ class LRUCache {
     public LRUCache(int capacity) {
         this.capacity = capacity;
         map = new HashMap<>();
-        
+
         // dummy nodes
         head = new Node(0, 0);
         tail = new Node(0, 0);
@@ -62,7 +64,7 @@ class LRUCache {
             map.put(key, node);
         }
     }
-
+    
     private void moveToFront(Node node) {
         remove(node);
         addToFront(node);
@@ -74,14 +76,48 @@ class LRUCache {
     }
 
     private void addToFront(Node node) {
-        node.prev = head;
-        node.next = head.next;
-
         head.next.prev = node;
-        head.next = node; 
+        node.next = head.next;
+        head.next = node;
+        node.prev = head;
     }
-}
+} 
 
+
+
+/**
+the node is inserted to the head by "node.next = head.next; node.prev = head;", why still need "head.next.prev = node; head.next = node; "?
+
+I want:   head <-> node <-> oldFirst  ❗❗BOTH sides must acknowledge it.
+
+With:     node.next = head.next;
+          node.prev = head;  
+    
+    The structure looks like:
+                                head    oldFirst
+                                    \     /
+                                     node
+        node.prev = head ✅
+        node.next = oldFirst ✅    
+
+    But ❗👉 The rest of the list does NOT know about node yet. ❗ What’s missing?
+    Currently:
+        head.next = oldFirst
+        oldFirst.prev = head   
+
+    So the list is still:
+                                head <--> oldFirst
+                                    \     /
+                                      node (the new node is just floating, not connected properly.)
+
+
+
+So these two lines are needed:
+
+    head.next.prev = node;   <-- oldFirst.prev = node   👉 Now oldFirst correctly points back to node
+    head.next = node;       👉 Now head correctly points forward to node
+
+ */
 
 
 // class LRUCache {
