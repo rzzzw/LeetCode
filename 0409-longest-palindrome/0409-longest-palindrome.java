@@ -1,3 +1,26 @@
+class Solution {
+    public int longestPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int[] map = new int[128];
+        for (char c : s.toCharArray()) {
+            map[c]++;
+        }
+        int count = 0;
+        boolean hasOdd = false;
+        for (int n : map) {
+            if (n % 2 == 0) {
+                count += n;
+            } else {
+                hasOdd = true;
+                count += (n - 1);
+            }
+        }
+        return hasOdd ? count + 1 : count;
+    }
+}
+
 // class Solution {
 //     public int longestPalindrome(String s) {
 //         if (s == null || s.length() == 0) {
@@ -21,30 +44,30 @@
 //     } 
 // }
 
-class Solution {
-    public int longestPalindrome(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        int[] count = new int[128];
-        for (char c : s.toCharArray()) {
-            count[c]++;
-        }
-        boolean hasOdd = false;
-        int res = 0;
-        for (int n : count) {
-            res += (n / 2) * 2; // add largest even part
-            if (n % 2 == 1) {
-                hasOdd = true;
-            }
-            // if (n % 2 == 0) {
-            //     res += n;
-            // } else {
-            //     res += n - 1;
-            //     hasOdd = true;
-            // }
-        }
-        return hasOdd ? (res + 1) : res;
-    } 
-}
+// class Solution {
+//     public int longestPalindrome(String s) {
+//         if (s == null || s.length() == 0) {
+//             return 0;
+//         }
+//         int[] count = new int[128];
+//         for (char c : s.toCharArray()) {
+//             count[c]++;
+//         }
+//         boolean hasOdd = false;
+//         int res = 0;
+//         for (int n : count) {
+//             res += (n / 2) * 2; // add largest even part
+//             if (n % 2 == 1) {
+//                 hasOdd = true;
+//             }
+//             // if (n % 2 == 0) {
+//             //     res += n;
+//             // } else {
+//             //     res += n - 1;
+//             //     hasOdd = true;
+//             // }
+//         }
+//         return hasOdd ? (res + 1) : res;
+//     } 
+// }
 
