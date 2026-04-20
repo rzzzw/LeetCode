@@ -1,3 +1,33 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        int n = s.length();
+        char[] arr = s.toCharArray();
+        int maxLen = 1;
+        int left = 0;
+        for (int i = 0; i < n; i++) {
+            int len = Math.max(getPalinLen(arr, i, i), getPalinLen(arr, i, i + 1));
+            if (maxLen < len) {
+                maxLen = len;
+                left = i - (maxLen - 1) / 2;
+            }
+        }
+        return s.substring(left, left + maxLen);
+    }
+
+    private int getPalinLen(char[] arr, int l, int r) {
+        while (l >= 0 && r < arr.length && arr[l] == arr[r]) {
+            l--;
+            r++;
+        }
+        return r - l - 1; // attention: the locations of l & r are both 1 step outter of the start & end points of the length.
+    }
+}
+
+
+
 // class Solution {
 //     public String longestPalindrome(String s) {
 //         if (s == null || s.length() <= 1) return s;
@@ -56,34 +86,34 @@
  */
 
 
-class Solution {
-    public String longestPalindrome(String s) {
-        if (s == null || s.length() == 0) {
-            return s;
-        }
-        int start = 0;
-        int maxLen = 1;
+// class Solution {
+//     public String longestPalindrome(String s) {
+//         if (s == null || s.length() == 0) {
+//             return s;
+//         }
+//         int start = 0;
+//         int maxLen = 1;
 
-        for (int i = 0; i < s.length(); i++) {
-            int len1 = expandFromCenter(s, i, i);
-            int len2 = expandFromCenter(s, i, i + 1);
-            int curMax = Math.max(len1, len2);
-            if (curMax > maxLen) {
-                maxLen = curMax;
-                start = i - (maxLen - 1) / 2;   // "abba / aba"
-            }
-        }
-        return s.substring(start, start + maxLen);
-    }
+//         for (int i = 0; i < s.length(); i++) {
+//             int len1 = expandFromCenter(s, i, i);
+//             int len2 = expandFromCenter(s, i, i + 1);
+//             int curMax = Math.max(len1, len2);
+//             if (curMax > maxLen) {
+//                 maxLen = curMax;
+//                 start = i - (maxLen - 1) / 2;   // "abba / aba"
+//             }
+//         }
+//         return s.substring(start, start + maxLen);
+//     }
 
-    private int expandFromCenter(String s, int left, int right) {
-        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
-            left--;
-            right++;
-        }
-        return right - left - 1;
-    }
-}
+//     private int expandFromCenter(String s, int left, int right) {
+//         while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+//             left--;
+//             right++;
+//         }
+//         return right - left - 1;
+//     }
+// }
 
 /**
 Why the (maxLen - 1)?
