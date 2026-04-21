@@ -21,12 +21,11 @@ class Solution {
                 sb.append(n).append('#');
             }
             String key = sb.toString();
-            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
-            // if (map.containsKey(key)) {
-            // } else {
-            //     map.put(key, new ArrayList<>());
-            // }
-            // map.get(key).add(s);
+            // map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+            map.get(key).add(s);
         }
         return new ArrayList<>(map.values());
     }
