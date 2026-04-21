@@ -14,25 +14,24 @@ Time: O(n)
 Space: O(1)
  */
 
+
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> res = new ArrayList<>();
         if (s == null || p == null || s.length() == 0 || p.length() == 0) {
             return res;
         }
-        if (s.length() < p.length()) {
-            return res;
-        }
+        if (s.length() < p.length()) return res;
         int[] charNeed = new int[26];
         int[] window = new int[26];
+        int required = 0;
 
         for (char c : p.toCharArray()) {
             charNeed[c - 'a']++;
         }
 
-        int required = 0;
-        for (int c : charNeed) {
-            if (c > 0) {
+        for (int n : charNeed) {
+            if (n > 0) {
                 required++;
             }
         }
@@ -43,13 +42,11 @@ class Solution {
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             int idx = c - 'a';
-            
             window[idx]++;
             if (window[idx] == charNeed[idx]) {
                 formed++;
             }
-            
-            // shrink when window size exceeds p length
+
             if (right - left + 1 > p.length()) {
                 char leftChar = s.charAt(left);
                 int leftIdx = leftChar - 'a';
@@ -58,15 +55,18 @@ class Solution {
                 }
                 window[leftIdx]--;
                 left++;
-            }
+            } 
 
             if (formed == required) {
                 res.add(left);
             }
         }
         return res;
+        
     }
 }
+
+
 
 // class Solution {
 //     public List<Integer> findAnagrams(String s, String p) {
