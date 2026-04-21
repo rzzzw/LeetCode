@@ -11,21 +11,44 @@ Complexity:
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
-        for (String s: strs) {
+        for (String s : strs) {
             int[] count = new int[26];
             for (char c : s.toCharArray()) {
-                count[c - 'a']++;                
+                count[c - 'a']++;
             }
-            StringBuilder keyBuilder = new StringBuilder();
-            for (int num : count) {
-                keyBuilder.append(num).append('#');
+            StringBuilder sb = new StringBuilder();
+            for (int n : count) {
+                sb.append(n).append('#');
             }
-            String key = keyBuilder.toString();
-            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+            String key = sb.toString();
+            if (map.containsKey(key)) {
+            } else {
+                map.put(key, new ArrayList<>());
+            }
+            map.get(key).add(s);
         }
         return new ArrayList<>(map.values());
     }
 }
+
+// class Solution {
+//     public List<List<String>> groupAnagrams(String[] strs) {
+//         Map<String, List<String>> map = new HashMap<>();
+//         for (String s: strs) {
+//             int[] count = new int[26];
+//             for (char c : s.toCharArray()) {
+//                 count[c - 'a']++;                
+//             }
+//             StringBuilder keyBuilder = new StringBuilder();
+//             for (int num : count) {
+//                 keyBuilder.append(num).append('#');
+//             }
+//             String key = keyBuilder.toString();
+//             map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+//         }
+//         return new ArrayList<>(map.values());
+//     }
+// }
 
 /**
 Method 1:
