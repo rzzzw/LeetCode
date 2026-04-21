@@ -7,22 +7,23 @@ Keep the window where (size - maxFreq ≤ k), and expand as much as possible.
 If (window size - maxFreq > k) → shrink window
 
  **/
+ 
  class Solution {
     public int characterReplacement(String s, int k) {
-        // assume s!= null
-        int n = s.length();
-        if (n <= 1) {
-            return n;
+        int len = s.length();
+        if (len < 2) {
+            return len;
         }
         char[] arr = s.toCharArray();
         int[] freq = new int[26];
         int maxCount = 0;
         int left = 0;
-        int right = 0;
-        while (right < n) {
+        int right = 0; 
+        //[left, right) 区间内最多替换k个字符可以得到只有一种字符的字串， 区间左闭右开，长度=right-left
+        while (right < len) {
             freq[arr[right] - 'A']++;
             maxCount = Math.max(maxCount, freq[arr[right] - 'A']);
-            right++;
+            right++;  // 区间左闭右开
 
             if (right - left > maxCount + k) { // If (window size - maxFreq > k) → shrink window
                 freq[arr[left] - 'A']--;
@@ -31,9 +32,7 @@ If (window size - maxFreq > k) → shrink window
         }
         return right - left;
     }
- }
- 
- 
+}
 
 /**
 Time O(N)
