@@ -6,15 +6,14 @@ class Solution {
         }
         int top = 0, bottom = matrix.length - 1;
         int left = 0, right = matrix[0].length - 1;
-
-        while(top <= bottom && left <= right) {
-            // 1. top row
+        while (top <= bottom && left <= right) {
+            // 1.top row
             for (int j = left; j <= right; j++) {
                 res.add(matrix[top][j]);
             }
             top++;
-
-            // 2.right column
+            
+            // 2. right col
             for (int i = top; i <= bottom; i++) {
                 res.add(matrix[i][right]);
             }
@@ -28,16 +27,15 @@ class Solution {
                 bottom--;
             }
 
-            // 4. left column
+            // 4. left col
             if (left <= right) {
                 for (int i = bottom; i >= top; i--) {
                     res.add(matrix[i][left]);
                 }
-                left++;
+                left++;                
             }
         }
         return res;
     }
 }
-
 
