@@ -1,3 +1,30 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        transpose(matrix);
+        reflect(matrix);
+    }
+    private void transpose(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+    }
+    private void reflect(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <  n / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - 1 - j];
+                matrix[i][n - 1 - j] = temp;
+            }
+        }
+    }
+}
+
 // class Solution {
 //     public void rotate(int[][] matrix) {
 //         transpose(matrix); // Swap across the diagonal:   matrix[i][j] ↔ matrix[j][i]
@@ -35,29 +62,32 @@
         147      741
         258  ->  852
         369      963
+
+        14      21
+        25      54
 */
 
 
 
-class Solution {
-    public void rotate(int[][] matrix) {
-        int n = matrix.length;
-        if (n <= 1) {
-            return;
-        }
-        int round = n / 2;
-        for (int level = 0; level < n; level++) {
-            int right = n - 2 - level;
-            for (int i = level; i <= right; i++) {
-                int temp = matrix[level][i];
-                matrix[level][i] = matrix[n - 1 - i][level];
-                matrix[n - 1 - i][level] = matrix[n - 1 - level][n - 1 - i];
-                matrix[n - 1 - level][n - 1 - i] = matrix[i][n - 1 - level];
-                matrix[i][n - 1 - level] = temp;
-            }
-        }
-    }
-}
+// class Solution {
+//     public void rotate(int[][] matrix) {
+//         int n = matrix.length;
+//         if (n <= 1) {
+//             return;
+//         }
+//         int round = n / 2;
+//         for (int level = 0; level < n; level++) {
+//             int right = n - 2 - level;
+//             for (int i = level; i <= right; i++) {
+//                 int temp = matrix[level][i];
+//                 matrix[level][i] = matrix[n - 1 - i][level];
+//                 matrix[n - 1 - i][level] = matrix[n - 1 - level][n - 1 - i];
+//                 matrix[n - 1 - level][n - 1 - i] = matrix[i][n - 1 - level];
+//                 matrix[i][n - 1 - level] = temp;
+//             }
+//         }
+//     }
+// }
 
 /**
 n = 9: 
