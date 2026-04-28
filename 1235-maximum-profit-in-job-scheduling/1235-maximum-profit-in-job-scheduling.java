@@ -2,12 +2,13 @@
 // start        1,  2,  3,  3
 // end          3,  4,  5,  6
 // profit       50, 10, 40, 70
+
 class Solution {
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
         int n = profit.length;
         int[][] jobs = new int[n][3];
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n ; i++) {
             jobs[i] = new int[]{startTime[i], endTime[i], profit[i]};
         }
 
@@ -19,7 +20,7 @@ class Solution {
         for (int i = 1; i < n; i++) {
             int take = jobs[i][2];
 
-            int j = findLastNonOverlap(jobs, i);
+            int j = findLastNonOverlap(jobs, i); 
             if (j != -1) {
                 take += dp[j];
             }
@@ -30,24 +31,24 @@ class Solution {
     }
 
     private int findLastNonOverlap(int[][] jobs, int i) {
-        int left = 0, right = i - 1;
-
+        int left = 0;
+        int right = i - 1;  // find the last non-overlapping task with the current task i, so the task i can't be included;
+        int res = -1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
             if (jobs[mid][1] <= jobs[i][0]) {
-                if (mid + 1 <= right && jobs[mid + 1][1] <= jobs[i][0]) {  // check if there’s a better (more right) answer, shrink the range OR find the answer
-                    left = mid + 1;
-                } else {
-                    return mid;
-                }
+                res = mid;
+                left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-        return -1;
+        return res;
     }
 }
+
+
 
 
 
