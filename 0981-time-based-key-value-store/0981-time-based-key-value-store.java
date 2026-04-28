@@ -23,15 +23,14 @@ class TimeMap {
     public TimeMap() {
         map = new HashMap<>();
     }
-    
+
     public void set(String key, String value, int timestamp) {
         map.putIfAbsent(key, new ArrayList<>());
         map.get(key).add(new Pair(timestamp, value));
-
     }
-    
+
     public String get(String key, int timestamp) {
-        if (!map.containsKey(key)) return "";
+        if (!map.containsKey(key))  return "";
 
         List<Pair> list = map.get(key);
 
@@ -41,10 +40,9 @@ class TimeMap {
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-
             if (list.get(mid).timestamp <= timestamp) {
-                res = list.get(mid).value; // valid candidate
-                left = mid + 1;            // try to find later one if there is
+                res = list.get(mid).value;      // valid candidate
+                left = mid + 1;                 // try to find later one if there is
             } else {
                 right = mid - 1;
             }
@@ -52,6 +50,8 @@ class TimeMap {
         return res;
     }
 }
+
+
 
 /**
  * Your TimeMap object will be instantiated and called as such:
