@@ -1,4 +1,3 @@
-
 class Solution {
     public int search(int[] nums, int target) {
         int left = 0; 
@@ -9,7 +8,7 @@ class Solution {
                 return mid;
             } else if (nums[mid] >= nums[left]) {
                 if (target < nums[mid] && target >= nums[left]) {
-                    right = mid - 1;
+                    right = mid - 1; 
                 } else {
                     left = mid + 1;
                 }
@@ -21,9 +20,10 @@ class Solution {
                 }
             }
         }
-        return -1;
+        return - 1;
     }
 }
+
 // [1, 2] target: 1
 // [1, 2] target: 2
 // [2, 1] target: 1
