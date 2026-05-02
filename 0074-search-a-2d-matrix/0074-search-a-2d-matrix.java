@@ -5,7 +5,7 @@ class Solution {
         }
         int row = matrix.length;
         int col = matrix[0].length;
-        int left = 0;
+        int left = 0; 
         int right = row * col - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
@@ -17,7 +17,7 @@ class Solution {
             } else {
                 right = mid - 1;
             }
-        } 
+        }
         return false;
     }
 }
