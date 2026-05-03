@@ -8,8 +8,7 @@ class Solution {
         }
         int left = 0; 
         int right = nums.length - 1;
-
-        while(left < right) {
+        while (left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] > nums[right]) { // Minimum is in the right half
                 left = mid + 1;
@@ -19,8 +18,9 @@ class Solution {
         }
         return nums[left];
     }
-
 }
+
+
 /** 
 Identify which half is sorted. 
 
@@ -36,5 +36,11 @@ Key observation (critical)：
     Why?
         The rotation break causes the drop
         The right side always contains the smallest element when unsorted
+
+------------------------------------------------------------------------------------------------
+Binary Search Loop Conditions: left < right vs left <= right
+
+The One Core Question You Must Ask Yourself:
+    Am I searching for an exact index, or am I shrinking a range until one answer remains?
 
 */
