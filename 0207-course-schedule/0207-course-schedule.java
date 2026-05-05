@@ -35,11 +35,13 @@ class Solution {
                 if (indegree[next] == 0) {
                     q.offer(next);
                 }
-            }      
+            }
         }
         return finished == numCourses;
-    } 
+    }
 }
+
+
 
 /**
 V = numCourses (number of nodes)
