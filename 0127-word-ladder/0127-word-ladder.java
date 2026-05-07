@@ -25,8 +25,10 @@ class Solution {
                 for (int j = 0; j < arr.length; j++) {
                     char original = arr[j];
                     for (char c = 'a'; c <= 'z'; c++) {
+                        if (c == original) continue;
                         arr[j] = c;
-                        String next = new String(arr); // ❌ arr.toString()
+                        String next = new String(arr); // ❌ arr.toString(). It doesn't convert the char array into a word
+                                                       // it returns sth like:[C@5a07e868  (memory address / object representation)
 
                         if (!visited.contains(next) && dict.contains(next)) {
                             q.offer(next);
