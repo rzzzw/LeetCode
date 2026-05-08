@@ -9,8 +9,10 @@ class Solution {
         int col = board[0].length;
         for (int r = 0; r < row; r++) {
             for (int c = 0; c < col; c++) {
-                if (dfs(board, word, 0, r, c)) {
-                    return true;
+                if (board[r][c] == word.charAt(0)) {
+                    if (dfs(board, word, 0, r, c)) {
+                        return true;
+                    }
                 }
             }
         }
