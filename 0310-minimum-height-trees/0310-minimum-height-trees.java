@@ -36,7 +36,7 @@ class Solution {
             inDeg[e[0]]++;
             inDeg[e[1]]++;
         }
-        Deque<Integer> q = new ArrayDeque<>();
+        Queue<Integer> q = new ArrayDeque<>(); // can also write as "Deque<Integer> q = new ArrayDeque<>();"
         for (int i = 0; i < n; i++) {
             if (inDeg[i] == 1) {
                 q.offer(i);
