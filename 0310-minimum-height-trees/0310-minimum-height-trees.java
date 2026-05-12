@@ -1,16 +1,37 @@
+/**
+Key Insight: A Minimum Height Tree (MHT) root must be the center of the tree.
+Instead of “Try every node as root” ❌ (O(n²) too slow), we can repeatedly remove leaf nodes layer by layer — like topological sorting.
+
+What is the “center” of a tree?
+    A tree can have:
+       • 1 center (odd length path)
+       • 2 centers (even length path)
+       ❌ Never more than 2
+    These centers are exactly the roots of Minimum Height Trees (MHTs).
+    👉 These centers are the last remaining nodes after trimming leaves layer by layer
+
+Strategy: Remove Leaves Layer by Layer
+    Leaf = node with degree = 1
+    Process:
+    1.Build graph (adj list + degree array)
+    2.Put all leaves into a queue
+    3.Remove them level by level
+    4.The last remaining nodes = answer
+
+ */
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         if (n == 1) {
             return Arrays.asList(0);
         }
-        List<Integer> ans=new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
         List<List<Integer>> adj = new ArrayList<>();
         int[] inDeg = new int[n];
         for (int i = 0; i < n; i++) {
             adj.add(new ArrayList<>());
         }
         for (int[] e : edges) {
-            adj.get(e[0]).add(e[1]);
+            adj.get(e[0]).add(e[1]); 
             adj.get(e[1]).add(e[0]);
             inDeg[e[0]]++;
             inDeg[e[1]]++;
@@ -20,8 +41,8 @@ class Solution {
             if (inDeg[i] == 1) {
                 q.offer(i);
             }
-        } 
-
+        }
+        
         int count = n;
         while (count > 2) {
             int size = q.size();
@@ -33,17 +54,30 @@ class Solution {
                     inDeg[nei]--;
                     if (inDeg[nei] == 1) {
                         q.offer(nei);
-                    }                    
-                }
+                    }
+                }                
             }
+
         }
-        
         while (!q.isEmpty()) {
-            ans.add(q.poll());
+            res.add(q.poll());
         }
-        return ans;
+        return res;
     }
 }
+/**
+adj
+    0: 1
+    1: 0,2,3
+    2: 1
+    3: 1
+
+inDeg
+    0 1 2 3
+    1 3 1 1
+ */
+
+
 // class Solution {
 //     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
 //         if (n == 1) return Arrays.asList(0);
@@ -91,25 +125,3 @@ class Solution {
 // }
 
 
-/**
-Key Insight:
-Instead of: “Try every node as root” ❌ (too slow) 
-Think: "The root of MHT must be the center of the tree" ✅
-
-What is the “center” of a tree?
-    A tree can have:
-       • 1 center (odd length path)
-       • 2 centers (even length path)
-       ❌ Never more than 2
-    These centers are exactly the roots of Minimum Height Trees (MHTs).
-    👉 These centers are the last remaining nodes after trimming leaves layer by layer
-
-Strategy: Remove Leaves Layer by Layer
-    Leaf = node with degree = 1
-    Process:
-    1.Build graph (adj list + degree array)
-    2.Put all leaves into a queue
-    3.Remove them level by level
-    4.The last remaining nodes = answer
-
- */
