@@ -43,12 +43,13 @@ class Solution {
             }
         }
 
-        // cycle exists
-        if (idx != numCourses) {
-            return new int[0];
-        }
+        // // cycle exists
+        // if (idx != numCourses) {
+        //     return new int[0];
+        // }
 
-        return order;
+        // return order;
+        return idx != numCourses ? new int[0] : order;
     }
 }
 
