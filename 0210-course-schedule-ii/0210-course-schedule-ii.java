@@ -49,7 +49,7 @@ class Solution {
         // }
 
         // return order;
-        return idx != numCourses ? new int[0] : order;
+        return idx == numCourses ? order : new int[0];
     }
 }
 
