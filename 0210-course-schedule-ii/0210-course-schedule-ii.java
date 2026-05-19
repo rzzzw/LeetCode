@@ -28,11 +28,13 @@ class Solution {
             }
         }
 
-        List<Integer> res = new ArrayList<>();
+        int[] order = new int[numCourses];
+
+        int idx = 0;
 
         while (!q.isEmpty()) {
             int cur = q.poll();
-            res.add(cur);
+            order[idx++] = cur;
             for (int next : graph.get(cur)) {
                 indegree[next]--;
                 if (indegree[next] == 0) {
@@ -41,15 +43,7 @@ class Solution {
             }
         }
 
-        if (res.size() != numCourses) {
-            return new int[]{};
-        }
-
-        int[] ans = new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            ans[i] = res.get(i);
-        }
-        return ans;
+        return idx == numCourses ? order : new int[0];
     }
 }
 
