@@ -215,7 +215,6 @@ class Solution {
         int count = 0;
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
-                visited[i] = true;
                 count++;
                 dfs(graph, visited, i);
             }
@@ -223,10 +222,9 @@ class Solution {
         return count;
     }
     private void dfs(List<List<Integer>> graph, boolean[] visited, int idx) {
-
+        visited[idx] = true;
         for (int nei : graph.get(idx)){
             if (!visited[nei]) {
-                visited[nei] = true;
                 dfs(graph, visited, nei);
             }           
         }
