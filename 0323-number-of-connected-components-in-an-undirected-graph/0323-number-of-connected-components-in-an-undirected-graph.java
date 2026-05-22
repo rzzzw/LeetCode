@@ -211,22 +211,22 @@ class Solution {
             graph.get(e[0]).add(e[1]);
             graph.get(e[1]).add(e[0]);
         }
-        Set<Integer> visited = new HashSet<>();
+        boolean[] visited = new boolean[n];
         int count = 0;
         for (int i = 0; i < n; i++) {
-            if (!visited.contains(i)) {
-                visited.add(i);
+            if (!visited[i]) {
+                visited[i] = true;
                 count++;
                 dfs(graph, visited, i);
             }
         }
         return count;
     }
-    private void dfs(List<List<Integer>> graph, Set<Integer> visited, int idx) {
+    private void dfs(List<List<Integer>> graph, boolean[] visited, int idx) {
 
         for (int nei : graph.get(idx)){
-            if (!visited.contains(nei)) {
-                visited.add(nei);
+            if (!visited[nei]) {
+                visited[nei] = true;
                 dfs(graph, visited, nei);
             }           
         }
