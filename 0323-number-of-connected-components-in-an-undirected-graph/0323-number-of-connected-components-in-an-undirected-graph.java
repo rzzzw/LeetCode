@@ -2,47 +2,6 @@
 
 // union-find with rank
 
-class Solution {
-    public int countComponents(int n, int[][] edges) {
-        int[] parent = new int[n];
-        int[] rank = new int[n];
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-        }
-        int components = n;
-        for (int[] e : edges) {
-            if (union(e[0], e[1], parent, rank)) {      // 2 things to do: 1. update parent and rank; 2. if this pair has not yet within 1 group, return true to comfirm it can be grouped
-                components--;
-            }
-        }
-        return components;
-    }
-
-    private boolean union(int a, int b, int[] parent, int[] rank) {
-        int rootA = find(a, parent);
-        int rootB = find(b, parent);
-        if (rootA == rootB) {
-            return false;
-        }
-        if (rank[rootA] > rank[rootB]) {
-            parent[rootB] = rootA;
-        } else if (rank[rootA] < rank[rootB]) {
-            parent[rootA] = rootB;
-        } else {
-            parent[rootA] = rootB;
-            rank[rootB]++;
-        }
-        return true;
-    }
-
-    private int find(int x, int[] parent) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x], parent);
-        }
-        return parent[x];
-    }
-}
-
 // class Solution {
 //     public int countComponents(int n, int[][] edges) {
 //         int[] parent = new int[n];
@@ -50,31 +9,32 @@ class Solution {
 //         for (int i = 0; i < n; i++) {
 //             parent[i] = i;
 //         }
-
 //         int components = n;
 //         for (int[] e : edges) {
-//             if (union(e[0], e[1], parent, rank)) {
+//             if (union(e[0], e[1], parent, rank)) {      // 2 things to do: 1. update parent and rank; 2. if this pair has not yet within 1 group, return true to comfirm it can be grouped
 //                 components--;
 //             }
 //         }
 //         return components;
 //     }
+
 //     private boolean union(int a, int b, int[] parent, int[] rank) {
 //         int rootA = find(a, parent);
 //         int rootB = find(b, parent);
-//         if (rootA == rootB) { // [0,1][0,2][1,2]
+//         if (rootA == rootB) {
 //             return false;
 //         }
-//         if (rank[rootA] < rank[rootB]) {
+//         if (rank[rootA] > rank[rootB]) {
+//             parent[rootB] = rootA;
+//         } else if (rank[rootA] < rank[rootB]) {
 //             parent[rootA] = rootB;
-//         } else if (rank[rootA] > rank[rootB]) {
-//             parent[rootB] = rootA;
 //         } else {
-//             parent[rootB] = rootA;
-//             rank[rootA]++;
+//             parent[rootA] = rootB;
+//             rank[rootB]++;
 //         }
 //         return true;
 //     }
+
 //     private int find(int x, int[] parent) {
 //         if (parent[x] != x) {
 //             parent[x] = find(parent[x], parent);
@@ -147,30 +107,30 @@ count: 5
 
  */
 
-// class Solution {
-//     public int countComponents(int n, int[][] edges) {
-//         int[] parent = new int[n];
-//         for (int i = 0; i < n; i++) {
-//             parent[i] = i;
-//         }
-//         int count = n;
-//         for (int[] e : edges) {
-//             int rootA = find(parent, e[0]);
-//             int rootB = find(parent, e[1]);
-//             if (rootA != rootB) {
-//                 parent[rootA] = rootB;
-//                 count--; 
-//             }
-//         }
-//         return count;
-//     }
-//     private int find(int[] parent, int x) {
-//         if (parent[x] != x) {
-//             parent[x] = find(parent, parent[x]);
-//         }
-//         return parent[x];
-//     }
-// }
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        int[] parent = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+        int count = n;
+        for (int[] e : edges) {
+            int rootA = find(parent, e[0]);
+            int rootB = find(parent, e[1]);
+            if (rootA != rootB) {
+                parent[rootA] = rootB;
+                count--; 
+            }
+        }
+        return count;
+    }
+    private int find(int[] parent, int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent, parent[x]);
+        }
+        return parent[x];
+    }
+}
 
 
 // dfs
