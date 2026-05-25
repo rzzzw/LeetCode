@@ -36,47 +36,6 @@ Important Pruning Trick
     This dramatically reduces search space.
  */
 
-class Solution {
-    public int minKnightMoves(int x, int y) {
-        x = Math.abs(x);
-        y = Math.abs(y);
-
-        int[][] dirs = {{1, 2}, {2, 1}, {-1, 2}, {-2, 1}, {-1, -2}, {-2, -1}, {1, -2}, {2, -1}};
-
-        Queue<int[]> q = new ArrayDeque<>();
-        Set<String> visited = new HashSet<>();
-
-        q.offer(new int[]{0, 0});
-        visited.add("0,0");
-
-        int steps = 0;
-        while (!q.isEmpty()) {
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                int[] cur = q.poll();
-                if (x == cur[0] && y == cur[1]) {
-                    return steps;
-                }
-                for (int[] d : dirs) {
-                    int nx = cur[0] + d[0];
-                    int ny = cur[1] + d[1];
-                
-                    if (nx >= -2 && ny >= -2) {
-
-                        String key = nx + "," + ny;
-                        if (!visited.contains(key)) {
-                            q.offer(new int[]{nx, ny});
-                            visited.add(key);
-                        }
-
-                    }
-                }
-            }
-            steps++;
-        }
-        return -1;
-    }
-}
 // class Solution {
 
 //     public int minKnightMoves(int x, int y) {
@@ -169,33 +128,33 @@ example:
 
  */
 
-// class Solution {
-//     public int minKnightMoves(int x, int y) {
-//         x = Math.abs(x);
-//         y = Math.abs(y);
-//         Map<String, Integer> memo = new HashMap<>();
-//         return dfs(x, y, memo);
-//     }
-//     private int dfs(int x, int y, Map<String, Integer> memo) {
-//         String key = x + "," + y;
-//         if (memo.containsKey(key)) {
-//             return memo.get(key);
-//         }
+class Solution {
+    public int minKnightMoves(int x, int y) {
+        x = Math.abs(x);
+        y = Math.abs(y);
+        Map<String, Integer> memo = new HashMap<>();
+        return dfs(x, y, memo);
+    }
+    private int dfs(int x, int y, Map<String, Integer> memo) {
+        String key = x + "," + y;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
         
-//         if (x + y == 0) {
-//             return 0;
-//         }
+        if (x + y == 0) {
+            return 0;
+        }
 
-//         if (x + y == 2) {
-//             return 2;
-//         }
+        if (x + y == 2) {
+            return 2;
+        }
 
-//         int ans = 1 + Math.min(dfs(Math.abs(x - 2), Math.abs(y - 1), memo), dfs(Math.abs(x - 1), Math.abs(y - 2), memo));
+        int ans = 1 + Math.min(dfs(Math.abs(x - 2), Math.abs(y - 1), memo), dfs(Math.abs(x - 1), Math.abs(y - 2), memo));
 
-//         memo.put(key, ans);
-//         return ans;
-//     }
-// }
+        memo.put(key, ans);
+        return ans;
+    }
+}
 
 /* 
 Why the Base Case x + y == 2?
