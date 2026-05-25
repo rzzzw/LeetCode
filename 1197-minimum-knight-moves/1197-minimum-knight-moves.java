@@ -1,4 +1,6 @@
 /**
+8 directions a knight can move: (1, 2), (2, 1), (-1, 2), (-2, 1), (1, -2), (2, -1), (-1, -2), (-2, -1)
+
 Key Observation: Symmetry
 Knight movement is symmetric across:
     1. x-axis
@@ -98,33 +100,62 @@ Important Pruning Trick
 // }
 
 
+/**
+2. DFS + memo   (a famous recursive solution.)
+
+Instead of exploring from start outward like BFS,
+we think:
+
+“If I am already at (x,y), what previous position could optimally reach me in ONE knight move?”
+
+Key recurrence:
+    For large coordinates:
+
+    f(x,y) =
+    1 + min(
+        f(|x-1|, |y-2|),
+        f(|x-2|, |y-1|)
+    )
+
+because optimal moves tend toward target.
+Very elegant.
+ */
+
 class Solution {
     public int minKnightMoves(int x, int y) {
         x = Math.abs(x);
         y = Math.abs(y);
-
         Map<String, Integer> memo = new HashMap<>();
         return dfs(x, y, memo);
     }
-
     private int dfs(int x, int y, Map<String, Integer> memo) {
         String key = x + "," + y;
         if (memo.containsKey(key)) {
             return memo.get(key);
         }
+        
+        if (x + y == 0) {
+            return 0;
+        }
 
-        // base cases
-        if (x + y == 0) return 0;
+        if (x + y == 2) {
+            return 2;
+        }
 
-        if (x + y == 2) return 2;
-
-        int ans = 1 + Math.min(
-            dfs(Math.abs(x - 1), Math.abs(y - 2), memo),
-            dfs(Math.abs(x - 2), Math.abs(y - 1), memo)
-        );
+        int ans = 1 + Math.min(dfs(Math.abs(x - 2), Math.abs(y - 1), memo), dfs(Math.abs(x - 1), Math.abs(y - 2), memo));
 
         memo.put(key, ans);
-
         return ans;
     }
 }
+
+/* 
+Why the Base Case x + y == 2?
+    These positions:
+        (1,1)
+        (0,2)
+        (2,0)
+    need exactly: 2 moves
+Without this base case, recursion loops inefficiently.
+
+**/
