@@ -36,105 +36,108 @@ Important Pruning Trick
     This dramatically reduces search space.
  */
 
-// class Solution {
-//     public int minKnightMoves(int x, int y) {
-//         x = Math.abs(x);
-//         y = Math.abs(y);
-
-//         int[][] dirs = {{1, 2}, {2, 1}, {-1, 2}, {-2, 1}, {-1, -2}, {-2, -1}, {1, -2}, {2, -1}};
-
-//         Queue<int[]> q = new ArrayDeque<>();
-//         Set<String> visited = new HashSet<>();
-
-//         q.offer(new int[]{0, 0});
-//         visited.add("0,0");
-
-//         int steps = 0;
-//         while (!q.isEmpty()) {
-//             int size = q.size();
-//             for (int i = 0; i < size; i++) {
-//                 int[] cur = q.poll();
-//                 if (x == cur[0] && y == cur[1]) {
-//                     return steps;
-//                 }
-//                 for (int[] d : dirs) {
-//                     int nx = cur[0] + d[0];
-//                     int ny = cur[1] + d[1];
-                
-//                     if (nx >= -2 && ny >= -2) {
-
-//                         String key = nx + "," + ny;
-//                         q.offer(new int[]{nx, ny});
-//                         visited.add(key);
-//                     }
-//                 }
-//             }
-//             steps++;
-//         }
-//         return -1;
-//     }
-// }
 class Solution {
-
     public int minKnightMoves(int x, int y) {
-
         x = Math.abs(x);
         y = Math.abs(y);
 
-        int[][] dirs = {
-            {1, 2}, {2, 1},
-            {-1, 2}, {-2, 1},
-            {1, -2}, {2, -1},
-            {-1, -2}, {-2, -1}
-        };
+        int[][] dirs = {{1, 2}, {2, 1}, {-1, 2}, {-2, 1}, {-1, -2}, {-2, -1}, {1, -2}, {2, -1}};
 
-        Queue<int[]> queue = new LinkedList<>();
+        Queue<int[]> q = new ArrayDeque<>();
         Set<String> visited = new HashSet<>();
 
-        queue.offer(new int[]{0, 0});
+        q.offer(new int[]{0, 0});
         visited.add("0,0");
 
         int steps = 0;
-
-        while (!queue.isEmpty()) {
-
-            int size = queue.size();
-
+        while (!q.isEmpty()) {
+            int size = q.size();
             for (int i = 0; i < size; i++) {
-
-                int[] cur = queue.poll();
-
-                int cx = cur[0];
-                int cy = cur[1];
-
-                if (cx == x && cy == y) {
+                int[] cur = q.poll();
+                if (x == cur[0] && y == cur[1]) {
                     return steps;
                 }
-
                 for (int[] d : dirs) {
-
-                    int nx = cx + d[0];
-                    int ny = cy + d[1];
-
-                    // pruning
+                    int nx = cur[0] + d[0];
+                    int ny = cur[1] + d[1];
+                
                     if (nx >= -2 && ny >= -2) {
 
                         String key = nx + "," + ny;
-
                         if (!visited.contains(key)) {
+                            q.offer(new int[]{nx, ny});
                             visited.add(key);
-                            queue.offer(new int[]{nx, ny});
                         }
+
                     }
                 }
             }
-
             steps++;
         }
-
         return -1;
     }
 }
+// class Solution {
+
+//     public int minKnightMoves(int x, int y) {
+
+//         x = Math.abs(x);
+//         y = Math.abs(y);
+
+//         int[][] dirs = {
+//             {1, 2}, {2, 1},
+//             {-1, 2}, {-2, 1},
+//             {1, -2}, {2, -1},
+//             {-1, -2}, {-2, -1}
+//         };
+
+//         Queue<int[]> queue = new LinkedList<>();
+//         Set<String> visited = new HashSet<>();
+
+//         queue.offer(new int[]{0, 0});
+//         visited.add("0,0");
+
+//         int steps = 0;
+
+//         while (!queue.isEmpty()) {
+
+//             int size = queue.size();
+
+//             for (int i = 0; i < size; i++) {
+
+//                 int[] cur = queue.poll();
+
+//                 int cx = cur[0];
+//                 int cy = cur[1];
+
+//                 if (cx == x && cy == y) {
+//                     return steps;
+//                 }
+
+//                 for (int[] d : dirs) {
+
+//                     int nx = cx + d[0];
+//                     int ny = cy + d[1];
+
+//                     // pruning
+//                     if (nx >= -2 && ny >= -2) {
+
+//                         String key = nx + "," + ny;
+
+//                         if (!visited.contains(key)) {
+//                             visited.add(key);
+//                             queue.offer(new int[]{nx, ny});
+//                         }
+//                     }
+//                 }
+//             }
+
+//             steps++;
+//         }
+
+//         return -1;
+//     }
+// }
 
 
 /**
