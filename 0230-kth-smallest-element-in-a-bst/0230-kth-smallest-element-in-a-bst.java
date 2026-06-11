@@ -22,7 +22,6 @@
 
   */
 
-
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         int[] res = new int[1];
@@ -47,4 +46,6 @@ class Solution {
         // right
         inOrder(node.right, k, count, res);
     }
-} 
+}
+
+
