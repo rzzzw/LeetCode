@@ -1,22 +1,22 @@
-class Solution {
-    public int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        int slow = 0;
-        Set<Character> set = new HashSet<>();
-        int longest = 0;
-        for (int fast = 0; fast < s.length(); fast++) {
-            while (set.contains(s.charAt(fast))) {
-                set.remove(s.charAt(slow));
-                slow++;
-            }
-            set.add(s.charAt(fast));
-            longest = Math.max(longest, fast - slow + 1);
-        }
-        return longest;
-    }
-}
+// class Solution {
+//     public int lengthOfLongestSubstring(String s) {
+//         if (s == null || s.length() == 0) {
+//             return 0;
+//         }
+//         int slow = 0;
+//         Set<Character> set = new HashSet<>();
+//         int longest = 0;
+//         for (int fast = 0; fast < s.length(); fast++) {
+//             while (set.contains(s.charAt(fast))) {
+//                 set.remove(s.charAt(slow));
+//                 slow++;
+//             }
+//             set.add(s.charAt(fast));
+//             longest = Math.max(longest, fast - slow + 1);
+//         }
+//         return longest;
+//     }
+// }
 
 
 // class Solution {
@@ -63,4 +63,28 @@ map:
 
 
 
-
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        char[] arr = s.toCharArray();
+        Set<Character> set = new HashSet<Character>();
+        int longest = 1;
+        int l = 0;   
+        int r = 1;
+        set.add(arr[l]);    
+        while(r < arr.length) {
+            char c = arr[r];
+            if (!set.contains(c)) {
+                set.add(c);
+                longest = Math.max(r - l + 1, longest);
+                r++;
+            } else {
+                set.remove(arr[l]);
+                l++;
+            }
+        }
+        return longest;
+    }
+}
