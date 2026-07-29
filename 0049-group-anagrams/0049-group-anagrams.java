@@ -24,17 +24,17 @@ class Solution {
             }
             String key = sb.toString();
             // option 1:
-            // map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
 
             // option 2:
             // map.putIfAbsent(key, new ArrayList<>());
             // map.get(key).add(s);
 
             // option 3:       
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
-            } 
-            map.get(key).add(s);
+            // if (!map.containsKey(key)) {
+            //     map.put(key, new ArrayList<>());
+            // } 
+            // map.get(key).add(s);
             
         }
         return new ArrayList<>(map.values());
