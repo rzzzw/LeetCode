@@ -29,8 +29,8 @@ class Solution {
             if (curA < minA) {
                 minA = curA;
                 res = n;
-            } else if(curA == minA) {
-                res = Math.max(n, res);
+            } else if(curA == minA && n > res) {
+                res = n;
             }
         }
         return res;
