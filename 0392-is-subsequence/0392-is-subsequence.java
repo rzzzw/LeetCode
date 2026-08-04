@@ -1,24 +1,3 @@
-class Solution {
-    public boolean isSubsequence(String s, String t) {
-        // assume s != null && t != null
-        if (s.length() == 0) {
-            return true;
-        }
-        if (s.length() > t.length()) {
-            return false;
-        }
-        int i = 0, j = 0;
-        while (i < s.length() && j < t.length()) {
-
-            if (s.charAt(i) == t.charAt(j)) {
-                i++;
-            }            
-            j++;    
-        }
-        return i == s.length();
-    }
-}
-
 // class Solution {
 //     public boolean isSubsequence(String s, String t) {
 //         // assume s != null && t != null
@@ -29,21 +8,45 @@ class Solution {
 //             return false;
 //         }
 //         int i = 0, j = 0;
-//         int count = 0;
 //         while (i < s.length() && j < t.length()) {
 
-//             while (j < t.length() && t.charAt(j) != s.charAt(i)) {
-//                 j++;
-//             }
-//             if (j < t.length() && s.charAt(i) == t.charAt(j)) {
-//                 count++;
+//             if (s.charAt(i) == t.charAt(j)) {
+//                 i++;
 //             }            
-//             i++;
-//             j++;        
-//             if (i == s.length() && count == s.length()) {
-//                 return true;
-//             }
+//             j++;    
 //         }
-//         return false;
+//         return i == s.length();
 //     }
 // }
+
+
+class Solution {
+
+    public boolean isSubsequence(String s, String t) {
+
+        Integer sourceLen = s.length(), targetLen = t.length();
+        // the source string is empty
+        if (sourceLen == 0)
+            return true;
+
+        int[][] dp = new int[sourceLen + 1][targetLen + 1];
+        // DP calculation, we fill the matrix column by column, bottom up
+        for (int col = 1; col <= targetLen; ++col) {
+            for (int row = 1; row <= sourceLen; ++row) {
+                if (s.charAt(row - 1) == t.charAt(col - 1))
+                    // find another match
+                    dp[row][col] = dp[row - 1][col - 1] + 1;
+                else
+                    // retrieve the maximal result from previous prefixes
+                    dp[row][col] = Math.max(dp[row][col - 1], dp[row - 1][col]);
+            }
+            // check if we can consume the entire source string,
+            // with the current prefix of the target string.
+            if (dp[sourceLen][col] == sourceLen)
+                return true;
+        }
+
+        // matching failure
+        return false;
+    }
+}
