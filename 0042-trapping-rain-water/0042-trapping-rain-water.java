@@ -1,3 +1,30 @@
+class Solution {
+    public int trap(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        int res = 0; 
+        int idx = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(idx++);
+        while (idx < height.length) {
+            while (!stack.isEmpty() && height[idx] > height[stack.peek()]) {
+                int top = stack.pop();
+                if (stack.isEmpty()) {
+                    break;
+                }
+                int dist = idx - stack.peek() - 1;
+                int boundedHeight = Math.min(height[idx], height[stack.peek()]) - height[top];
+                res += dist * boundedHeight;
+            } 
+            stack.push(idx);
+            idx++;
+        }  
+        return res;
+    }
+}
+
+
 // class Solution {
 //     public int trap(int[] height) {
 //         if (height == null || height.length == 0) {
@@ -25,29 +52,29 @@
 
 
 
-class Solution {
-    public int trap(int[] height) {
-        if (height == null || height.length == 0) {
-            return 0;
-        }
-        int res = 0;
-        int n = height.length;
-        int[] leftToRightMax = new int[n];
-        int[] rightToLeftMax = new int[n];
-        int leftMax = height[0];
-        int rightMax = height[n - 1];
-        for (int i = 0; i < n; i++) {
-            leftMax = Math.max(height[i], leftMax);
-            leftToRightMax[i] = leftMax;
-        } 
-        for (int i = n - 1; i >= 0; i--) {
-            rightMax = Math.max(rightMax, height[i]);
-            rightToLeftMax[i] = rightMax;
-        }
+// class Solution {
+//     public int trap(int[] height) {
+//         if (height == null || height.length == 0) {
+//             return 0;
+//         }
+//         int res = 0;
+//         int n = height.length;
+//         int[] leftToRightMax = new int[n];
+//         int[] rightToLeftMax = new int[n];
+//         int leftMax = height[0];
+//         int rightMax = height[n - 1];
+//         for (int i = 0; i < n; i++) {
+//             leftMax = Math.max(height[i], leftMax);
+//             leftToRightMax[i] = leftMax;
+//         } 
+//         for (int i = n - 1; i >= 0; i--) {
+//             rightMax = Math.max(rightMax, height[i]);
+//             rightToLeftMax[i] = rightMax;
+//         }
 
-        for (int i = 0; i < n; i++) {
-            res += (Math.min(rightToLeftMax[i], leftToRightMax[i]) - height[i]);
-        }
-        return res;
-    }
-}
+//         for (int i = 0; i < n; i++) {
+//             res += (Math.min(rightToLeftMax[i], leftToRightMax[i]) - height[i]);
+//         }
+//         return res;
+//     }
+// }
