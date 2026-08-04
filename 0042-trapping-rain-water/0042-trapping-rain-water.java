@@ -6,7 +6,6 @@ class Solution {
         int res = 0; 
         int idx = 0;
         Deque<Integer> stack = new ArrayDeque<>();
-        stack.push(idx);
         while (idx < height.length) {
             while (!stack.isEmpty() && height[idx] > height[stack.peek()]) {
                 int top = stack.pop();
