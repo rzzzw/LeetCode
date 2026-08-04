@@ -1,27 +1,28 @@
 class Solution {
     public int trap(int[] height) {
-        if (height == null || height.length == 0) {
+        if (height == null || height.length < 3) {
             return 0;
         }
-        int res = 0; 
-        int idx = 0;
+        int totalWater = 0;
         Deque<Integer> stack = new ArrayDeque<>();
-        while (idx < height.length) {
-            while (!stack.isEmpty() && height[idx] > height[stack.peek()]) {
-                int top = stack.pop();
+        for (int i = 0; i < height.length; i++) {
+            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+                int valleyIdx = stack.pop();
                 if (stack.isEmpty()) {
                     break;
                 }
-                int dist = idx - stack.peek() - 1;
-                int boundedHeight = Math.min(height[idx], height[stack.peek()]) - height[top];
-                res += dist * boundedHeight;
-            } 
-            stack.push(idx);
-            idx++;
-        }  
-        return res;
+                int leftWallIdx = stack.peek();
+                int rightWallIdx = i;
+                int width = rightWallIdx - leftWallIdx - 1;
+                int boundedHeight = Math.min(height[leftWallIdx], height[rightWallIdx]) - height[valleyIdx];
+                totalWater += boundedHeight * width;           
+            }
+            stack.push(i);
+        }
+        return totalWater;
     }
 }
+
 
 
 // class Solution {
