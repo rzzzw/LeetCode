@@ -20,40 +20,44 @@ class Trie {
     }
 
     public boolean search(String word) {
-        TrieNode cur = root;
-        for (char c : word.toCharArray()) {
-            int idx = c - 'a';
-            if (cur.children[idx] == null) {
-                return false;
-            }
-            cur = cur.children[idx];
-        }
-        return cur.isWord;
+        TrieNode cur = findNode(word);
+        return cur != null && cur.isWord;
+        // TrieNode cur = root;
+        // for (char c : word.toCharArray()) {
+        //     int idx = c - 'a';
+        //     if (cur.children[idx] == null) {
+        //         return false;
+        //     }
+        //     cur = cur.children[idx];
+        // }
+        // return cur.isWord;
     }
 
     public boolean startsWith(String prefix) {
+        TrieNode cur = findNode(prefix);
+        return cur != null;
+        // TrieNode cur = root;
+        // for (char c : prefix.toCharArray()) {
+        //     int idx = c - 'a';
+        //     if (cur.children[idx] == null) {
+        //         return false;
+        //     }
+        //     cur = cur.children[idx];
+        // }
+        // return true;
+    }
+
+    public TrieNode findNode(String str) {
         TrieNode cur = root;
-        for (char c : prefix.toCharArray()) {
+        for (char c : str.toCharArray()) {
             int idx = c - 'a';
             if (cur.children[idx] == null) {
-                return false;
+                return null;
             }
             cur = cur.children[idx];
         }
-        return true;
+        return cur;        
     }
-
-    // public TrieNode findStr(String str) {
-    //     TrieNode cur = root;
-    //     for (char c : str.toCharArray()) {
-    //         int idx = c - 'a';
-    //         if (cur.children[idx] == null) {
-    //             return null;
-    //         }
-    //         cur = cur.children[idx];
-    //     }
-    //     return cur;        
-    // }
 }
 
 /**
