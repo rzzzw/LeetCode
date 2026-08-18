@@ -1,29 +1,40 @@
-class Solution {
+class Solution{
     public void rotate(int[][] matrix) {
-        transpose(matrix);
-        reflect(matrix);
+        if (matrix == null || matrix.length <= 1) {
+            return;
+        }
+        transpose(matrix); // reflect over the hypotenuse
+        reflect(matrix); // reflect left & right 
     }
+
     private void transpose(int[][] matrix) {
         int n = matrix.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = temp;
+        for (int r = 0; r < n; r++) {
+            for (int c = r + 1; c < n; c++) {
+                int temp = matrix[r][c];
+                matrix[r][c] = matrix[c][r];
+                matrix[c][r] = temp;
             }
         }
     }
+
     private void reflect(int[][] matrix) {
         int n = matrix.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <  n / 2; j++) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][n - 1 - j];
-                matrix[i][n - 1 - j] = temp;
+        for (int r = 0; r <  n; r++) {
+            for (int c = 0; c < n / 2; c++) {
+                int temp = matrix[r][c];
+                matrix[r][c] = matrix[r][n - 1 - c];
+                matrix[r][n - 1 - c] = temp;                
             }
         }
     }
 }
+
+
+
+
+
+
 
 // class Solution {
 //     public void rotate(int[][] matrix) {
