@@ -9,53 +9,72 @@ Total: O(n log n)
 Space: O(n) for result
  */
 
-
 class Solution {
     public int[][] merge(int[][] intervals) {
         if (intervals == null || intervals.length <= 1) {
             return intervals;
         }
-
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-
         List<int[]> res = new ArrayList<>();
-        int[] cur = intervals[0];
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] <= cur[1]) {
-                cur[1] = Math.max(intervals[i][1], cur[1]);
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        for (int i = 0; i < intervals.length; i++) {
+            if (i + 1 < intervals.length && intervals[i + 1][0] <= intervals[i][1]) {
+                intervals[i + 1][0] = intervals[i][0]; 
+                intervals[i + 1][1] = Math.max(intervals[i][1], intervals[i+1][1]);
             } else {
-                res.add(cur);
-                cur = intervals[i];
+                res.add(intervals[i]);
             }
         }
-        res.add(cur);
-        return res.toArray(new int[res.size()][]);       
+        return res.toArray(new int[res.size()][]);
     }
 }
 
 
 // class Solution {
 //     public int[][] merge(int[][] intervals) {
-//         if (intervals == null || intervals.length == 1) {
+//         if (intervals == null || intervals.length <= 1) {
 //             return intervals;
 //         }
-//         int[] start = new int[intervals.length];
-//         int[] end = new int[intervals.length];
-//         for (int i = 0; i < intervals.length; i++) {
-//             start[i] = intervals[i][0];
-//             end[i] = intervals[i][1];
-//         }
-//         Arrays.sort(start);
-//         Arrays.sort(end);
+
+//         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+
 //         List<int[]> res = new ArrayList<>();
-//         int curStart = 0;
-//         for (int i = 0; i < start.length; i++) {
-//             if (i == start.length - 1 || start[i + 1] > end[i]) {
-//                 res.add(new int[]{start[curStart], end[i]});
-//                 curStart = i + 1;
+//         int[] cur = intervals[0];
+//         for (int i = 1; i < intervals.length; i++) {
+//             if (intervals[i][0] <= cur[1]) {
+//                 cur[1] = Math.max(intervals[i][1], cur[1]);
+//             } else {
+//                 res.add(cur);
+//                 cur = intervals[i];
 //             }
 //         }
-//         return res.toArray(new int[res.size()][]);
+//         res.add(cur);
+//         return res.toArray(new int[res.size()][]);       
 //     }
 // }
+
+
+// // class Solution {
+// //     public int[][] merge(int[][] intervals) {
+// //         if (intervals == null || intervals.length == 1) {
+// //             return intervals;
+// //         }
+// //         int[] start = new int[intervals.length];
+// //         int[] end = new int[intervals.length];
+// //         for (int i = 0; i < intervals.length; i++) {
+// //             start[i] = intervals[i][0];
+// //             end[i] = intervals[i][1];
+// //         }
+// //         Arrays.sort(start);
+// //         Arrays.sort(end);
+// //         List<int[]> res = new ArrayList<>();
+// //         int curStart = 0;
+// //         for (int i = 0; i < start.length; i++) {
+// //             if (i == start.length - 1 || start[i + 1] > end[i]) {
+// //                 res.add(new int[]{start[curStart], end[i]});
+// //                 curStart = i + 1;
+// //             }
+// //         }
+// //         return res.toArray(new int[res.size()][]);
+// //     }
+// // }
 
