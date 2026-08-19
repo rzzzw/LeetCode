@@ -1,21 +1,25 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        Set<String> seen = new HashSet<>();
+        boolean[][] rows = new boolean[9][9];
+        boolean[][] cols = new boolean[9][9];
+        boolean[][] boxes = new boolean[9][9];
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 char c = board[i][j];
-                if (c!= '.') {
-                    String rowKey = c + " in row " + i;
-                    String colKey = c + " in col " + j;
-                    String boxKey = c + " in box " + (i/3) + "-" + (j/3);
-
-                    if (!seen.add(rowKey) ||        // Set.add(x) returns:  ✅ true → if x was NOT in the set (new) ❌ false → if x already exists (duplicate)
-                        !seen.add(colKey) ||
-                        !seen.add(boxKey)) {
-                            return false;
-                     }
+                if (c == '.') {
+                    continue;
                 }
+                int num = c - '1'; // 0 - 8
+                int boxIdx = (i / 3 * 3) + (j / 3);
+
+                if (rows[i][num] || cols[j][num] || boxes[boxIdx][num]) { 
+                    // if the num existed in row i / col j / boxes boxIdx already, repeated
+                    return false;
+                }
+                rows[i][num] = true;
+                cols[j][num] = true;
+                boxes[boxIdx][num] = true;
             }
         }
         return true;
@@ -25,34 +29,26 @@ class Solution {
 
 // class Solution {
 //     public boolean isValidSudoku(char[][] board) {
-//         int N = 9;
-//         int[][] rows = new int[N][N];
-//         int[][] cols = new int[N][N];
-//         int[][] boxes = new int[N][N];
+//         Set<String> seen = new HashSet<>();
 
-//         for (int r = 0; r < N; r++) {
-//             for (int c = 0; c < N; c++) {
-//                 if (board[r][c] == '.') {
-//                     continue;
-//                 }
-//                 int pos = board[r][c] - '1';
-//                 if (rows[r][pos] == 1) {
-//                     return false;
-//                 }
-//                 rows[r][pos] = 1;
+//         for (int i = 0; i < 9; i++) {
+//             for (int j = 0; j < 9; j++) {
+//                 char c = board[i][j];
+//                 if (c!= '.') {
+//                     String rowKey = c + " in row " + i;
+//                     String colKey = c + " in col " + j;
+//                     String boxKey = c + " in box " + (i/3) + "-" + (j/3);
 
-//                 if (cols[c][pos] == 1) {
-//                     return false;
+//                     if (!seen.add(rowKey) ||        // Set.add(x) returns:  ✅ true → if x was NOT in the set (new) ❌ false → if x already exists (duplicate)
+//                         !seen.add(colKey) ||
+//                         !seen.add(boxKey)) {
+//                             return false;
+//                      }
 //                 }
-//                 cols[c][pos] = 1;
-
-//                 int idx = (r / 3) * 3 + c / 3;
-//                 if (boxes[idx][pos] == 1) {
-//                     return false;
-//                 }
-//                 boxes[idx][pos] = 1;
 //             }
 //         }
 //         return true;
 //     }
 // }
+
+
