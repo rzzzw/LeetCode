@@ -11,8 +11,7 @@ class Solution {
             map[c -'a']++;
         }
         for (char c : ransomNote.toCharArray()) {
-
-            if (map[c - 'a'] <= 0) {
+            if (map[c - 'a'] == 0) {
                 return false;
             }
             map[c - 'a']--;
