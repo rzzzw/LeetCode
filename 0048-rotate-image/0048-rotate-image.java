@@ -1,71 +1,69 @@
-class Solution{
+// class Solution{
+//     public void rotate(int[][] matrix) {
+//         if (matrix == null || matrix.length <= 1) {
+//             return;
+//         }
+//         transpose(matrix); // reflect over the hypotenuse
+//         reflect(matrix); // reflect left & right 
+//     }
+
+//     private void transpose(int[][] matrix) {
+//         int n = matrix.length;
+//         for (int r = 0; r < n; r++) {
+//             for (int c = r + 1; c < n; c++) {
+//                 int temp = matrix[r][c];
+//                 matrix[r][c] = matrix[c][r];
+//                 matrix[c][r] = temp;
+//             }
+//         }
+//     }
+
+//     private void reflect(int[][] matrix) {
+//         int n = matrix.length;
+//         for (int r = 0; r <  n; r++) {
+//             for (int c = 0; c < n / 2; c++) {
+//                 int temp = matrix[r][c];
+//                 matrix[r][c] = matrix[r][n - 1 - c];
+//                 matrix[r][n - 1 - c] = temp;                
+//             }
+//         }
+//     }
+// }
+
+
+
+/**
+     j=0  j=1  j=2
+i=0  [X]   .    .
+i=1  [X]   *    .          * = center (stays put)
+i=2   .    .    .
+
+     j=0  j=1  j=2  j=3  j=4
+i=0  [X]  [X]   .    .    .
+i=1  [X]  [X]   .    .    .
+i=2  [X]  [X]   *    .    .
+i=3   .    .    .    .    .
+i=4   .    .    .    .    .
+ */
+
+class Solution {
     public void rotate(int[][] matrix) {
-        if (matrix == null || matrix.length <= 1) {
+        int n = matrix.length;
+        if (n <= 1) {
             return;
-        }
-        transpose(matrix); // reflect over the hypotenuse
-        reflect(matrix); // reflect left & right 
-    }
-
-    private void transpose(int[][] matrix) {
-        int n = matrix.length;
-        for (int r = 0; r < n; r++) {
-            for (int c = r + 1; c < n; c++) {
-                int temp = matrix[r][c];
-                matrix[r][c] = matrix[c][r];
-                matrix[c][r] = temp;
-            }
-        }
-    }
-
-    private void reflect(int[][] matrix) {
-        int n = matrix.length;
-        for (int r = 0; r <  n; r++) {
-            for (int c = 0; c < n / 2; c++) {
-                int temp = matrix[r][c];
-                matrix[r][c] = matrix[r][n - 1 - c];
-                matrix[r][n - 1 - c] = temp;                
+        }        
+        for (int i = 0; i < (n + 1)/ 2; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                matrix[j][n - 1 - i] = temp;
             }
         }
     }
 }
 
-
-
-
-
-
-
-// class Solution {
-//     public void rotate(int[][] matrix) {
-//         transpose(matrix); // Swap across the diagonal:   matrix[i][j] ↔ matrix[j][i]
-//         reflect(matrix); // Reverse each row: [a, b, c] → [c, b, a]
-//     }
-//     private void transpose(int[][] matrix) {
-//         int n = matrix.length;
-//         for (int i = 0; i < n; i++) {
-//             for (int j = i + 1; j < n; j++) {
-//                 int temp = matrix[i][j];
-//                 matrix[i][j] = matrix[j][i];
-//                 matrix[j][i] = temp;
-//             }
-//         }
-//     }
-//     private void reflect(int[][] matrix) {
-//         int n = matrix.length;
-//         for (int i = 0; i < n; i++) {
-//             int l = 0;
-//             int r = n - 1;
-//             while (l < r) {
-//                 int temp = matrix[i][l];
-//                 matrix[i][l] = matrix[i][r];
-//                 matrix[i][r] = temp;
-//                 l++;
-//                 r--;
-//             }
-//         }
-//     }
-// }
 
 /*
 1. Swap across the diagonal:   matrix[i][j] ↔ matrix[j][i]
@@ -86,7 +84,6 @@ class Solution{
 //         if (n <= 1) {
 //             return;
 //         }
-//         int round = n / 2;
 //         for (int level = 0; level < n; level++) {
 //             int right = n - 2 - level;
 //             for (int i = level; i <= right; i++) {
@@ -100,20 +97,3 @@ class Solution{
 //     }
 // }
 
-/**
-n = 9: 
-
-        0 1 2 3 4 5 6 7 8
-
-0       - - - - - - - - #
-1       @ - - - - - - # #
-2       @ @ # # # # # # #
-3       @ @ # # # # # # #
-4       @ @ # # # # # # #
-5       @ @ # # # # # # #
-6       @ @ # # # # # # #
-7       @ @ % % % % % % #
-8       @ % % % % % % % %
-
-
- */
