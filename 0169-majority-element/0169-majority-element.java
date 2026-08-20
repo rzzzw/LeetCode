@@ -10,6 +10,7 @@ Cancellation Idea
 
  */
 
+
 class Solution {
     public int majorityElement(int[] nums) {
         int candidate = 0;
@@ -27,4 +28,3 @@ class Solution {
         return candidate;
     }
 }
-
