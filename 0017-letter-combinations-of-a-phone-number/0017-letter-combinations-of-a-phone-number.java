@@ -10,7 +10,8 @@ Time: 4^n
 Space: n
  */
 
- class Solution {
+
+class Solution {
     private static final String[] PHONE_MAP = {
         "",
         "",
@@ -21,32 +22,31 @@ Space: n
         "mno",
         "pqrs",
         "tuv",
-        "wxyz"
+        "wxyz",
     };
+
     public List<String> letterCombinations(String digits) {
-        List<String> res = new ArrayList<>(); 
-        if (digits == null || digits.length() == 0) {
+        List<String> res = new ArrayList<>();
+        if (digits == null || digits.length() == 0){
             return res;
         }
-        dfs(digits, 0, new StringBuilder(), res);
+        backtracking(digits, 0, new StringBuilder(), res);
         return res;
     }
 
-    private void dfs(String digits, int idx, StringBuilder path, List<String> res) {
+    private void backtracking(String digits, int idx, StringBuilder path, List<String> res) {
         if (idx == digits.length()) {
             res.add(path.toString());
             return;
         }
-
-        int num = digits.charAt(idx) - '0';
-        String letters = PHONE_MAP[num];
-        for (char ch : letters.toCharArray()) {
-            path.append(ch);
-            dfs(digits, idx + 1, path, res);
+        String letters = PHONE_MAP[digits.charAt(idx) - '0'];
+        for (char c : letters.toCharArray()) {
+            path.append(c);
+            backtracking(digits, idx + 1, path, res);
             path.deleteCharAt(path.length() - 1);
         }
     }
- }
+}
 
 
 
