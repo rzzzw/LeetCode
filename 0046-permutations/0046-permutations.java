@@ -6,6 +6,7 @@
     
  */
 
+
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -18,20 +19,18 @@ class Solution {
 
     private void dfs(int[] nums, int idx, List<List<Integer>> res) {
         if (idx == nums.length) {
-            List<Integer> list = new ArrayList<>(); // A brand new object is created here everytime
-            for (int n : nums) {
-                list.add(n);
+            List<Integer> list = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                list.add(nums[i]);
             }
-            res.add(new ArrayList<>(list));   //  res.add(list); is correct here
+            res.add(new ArrayList<>(list));
             return;
         }
-
         for (int i = idx; i < nums.length; i++) {
             swap(nums, idx, i);
             dfs(nums, idx + 1, res);
             swap(nums, idx, i);
         }
-
     }
 
     private void swap(int[] nums, int i, int j) {
@@ -39,4 +38,6 @@ class Solution {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+
 }
+
