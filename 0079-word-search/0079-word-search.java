@@ -1,51 +1,3 @@
-// class Solution {
-//     private static final int[][] DIRS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
-//     public boolean exist(char[][] board, String word) {
-//         if (board == null || board.length == 0 || board[0].length == 0) {
-//             return false;
-//         }
-//         int row = board.length;
-//         int col = board[0].length;
-//         for (int r = 0; r < row; r++) {
-//             for (int c = 0; c < col; c++) {
-//                 if (board[r][c] == word.charAt(0)) {
-//                     if (dfs(board, word, 0, r, c)) {
-//                         return true;
-//                     }
-//                 }
-//             }
-//         }
-//         return false;
-//     }
-
-//     private boolean dfs(char[][] board, String word, int idx, int r, int c) {
-//         if (idx == word.length()) {
-//             return true;
-//         }
-//         if (r < 0 || c < 0 || r >= board.length || c >= board[0].length) {
-//             return false;
-//         }
-//         if (board[r][c] != word.charAt(idx)) {
-//             return false;
-//         }
-
-//         char temp = board[r][c];
-//         board[r][c] = '#';
-
-//         for (int[] d : DIRS) {
-//             if (dfs(board, word, idx + 1, r + d[0], c + d[1])) {
-//                 board[r][c] = temp;
-//                 return true;
-//             }
-//         }
-//         board[r][c] = temp;
-//         return false;
-//     }
-// }
-
-
-
 /**
 
 Time Complexity: O(N × 3^L)
@@ -93,7 +45,7 @@ class Solution {
         board[r][c] = '#';
         for (int[] d : DIRS) {
             if (dfs(board, r + d[0], c + d[1], word, idx + 1)) {
-                // board[r][c] = origin;
+                board[r][c] = origin;
                 return true;
             }
         }
