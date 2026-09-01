@@ -14,8 +14,8 @@
 //             return;
 //         }
 
-//         for (int end = start; end < s.length(); end++) {
-//             if (isPalindrome(s, start, end)) {
+//         for (int end = start; end < s.length(); end++) { 
+//             if (isPalindrome(s, start, end)) {   
 //                 path.add(s.substring(start, end + 1));
 //                 helper(s, end + 1, path, res);
 //                 path.remove(path.size() - 1);
@@ -32,7 +32,15 @@
 //         return true;
 //     }
 // }
+/**
+Time complexity n^2 * 2^n: 
+- Between each pair of adjacent characters you can either cut or not cut. O(2^n)
+- Each candidate substring is checked using isPalindrome(s, start, end). O(n)
+- When a complete partition is found, copying path res.add(new ArrayList<>(path)).  O(n)
 
+Space: O(n)
+The recursion depth is at most n, and path can contain at most n substrings
+ */
 
 
 class Solution {
