@@ -30,7 +30,7 @@ Key logic:
 
  */
 
-public class Solution {
+class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if (headA == null || headB == null) {
             return null;
@@ -38,20 +38,20 @@ public class Solution {
         ListNode pA = headA;
         ListNode pB = headB;
         while (pA != pB) {
-            pA = (pA == null) ? headB : pA.next;
-            // if (pA == null) {
-            //     pA = headB;
-            // } else {
-            //     pA = pA.next;
-            // }
-
-            pB = (pB == null) ? headA : pB.next;
-            // if (pB == null) {
-            //     pB = headA;
-            // } else {
-            //     pB = pB.next;
-            // }
+            // pA = (pA == null) ? headB : pA.next;
+            if (pA == null) {
+                pA = headB;
+            } else {
+                pA = pA.next;
+            }
+            // pB = (pB == null) ? headA : pB.next;
+            if (pB == null) {
+                pB = headA;
+            } else {
+                pB = pB.next;
+            }
         }
         return pA;
     }
-}
+} 
+
