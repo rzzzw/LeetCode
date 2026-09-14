@@ -16,6 +16,7 @@ class Solution {
         }
         ListNode cur = head;
         ListNode pre = null;
+
         while (cur != null) {
             ListNode tmp = cur.next;
             cur.next = pre;
@@ -25,6 +26,8 @@ class Solution {
         return pre;
     }
 }
+
+
 
 // class Solution {
 //     public ListNode reverseList(ListNode head) {
