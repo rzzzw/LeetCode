@@ -15,14 +15,15 @@ Space Complexity: O(n) (worst case), O(log n) (best case for balanced trees)
  */
 
 
+
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // Base case 1: (important!) Reached the end → nothing found
         if (root == null) {
-            return root;
+            return null;
         }
         // Base case 2: Found one target node → return it upward
-        if (root == p || root == q) {
+        if (p == root || q == root) {
             return root;
         }
         TreeNode left = lowestCommonAncestor(root.left, p, q); // ask Left subtree: “Did you find p or q?”
@@ -35,3 +36,6 @@ class Solution {
         return left != null ? left : right;
     }
 }
+
+
+
