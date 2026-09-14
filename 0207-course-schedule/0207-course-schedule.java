@@ -1,31 +1,30 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>(); // record the impacted course list of each course
-        int[] indegree = new int[numCourses]; // each idx is course label, which records the number of prerequred course
-
-        // Initialize graph
+        // 1. Initialize graph. Record the impacted course list of each course
+        List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < numCourses; i++) {
             graph.add(new ArrayList<>());
         }
 
-        // Build graph and indegree
+        // 2. record how many prerequisites course x still has
+        int[] indegree = new int[numCourses];
+
         for (int[] p : prerequisites) {
             int course = p[0];
             int prereq = p[1];
-            graph.get(prereq).add(course); // 记录每一门先修课影响哪些课程
+            graph.get(prereq).add(course);  // 记录每一门先修课影响哪些课程
             indegree[course]++; // 统计 课程 受几门先修课影响
         }
 
-        // Queue of course with no prerequisites
+        // 3. Queue of course with no prerequisites
         Queue<Integer> q = new ArrayDeque<>();
+
         for (int i = 0; i < numCourses; i++) {
             if (indegree[i] == 0) {
                 q.offer(i);
             }
         }
-
         int finished = 0;
-
         while (!q.isEmpty()) {
             int cur = q.poll();
             finished++;
@@ -38,6 +37,7 @@ class Solution {
             }
         }
         return finished == numCourses;
+
     }
 }
 
