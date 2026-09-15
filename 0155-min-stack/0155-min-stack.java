@@ -83,11 +83,12 @@ class MinStack {
     }
 
     public int getMin() {
-        if (!stack.isEmpty()) {
-            return min;
-        } else {
-            return Integer.MAX_VALUE;
-        }
+        return min;
+        // if (!stack.isEmpty()) {
+        //     return min;
+        // } else {
+        //     return Integer.MAX_VALUE;
+        // }
     }
 }
 
