@@ -14,7 +14,7 @@ Merge sort is the only sorting algorithm that fits linked lists perfectly
  */
 
 
-class Solution {
+class Solution{
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -36,7 +36,6 @@ class Solution {
     private ListNode getMid(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
-
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
@@ -44,13 +43,12 @@ class Solution {
         return slow;
     }
 
-    // Merge two sorted lists
     private ListNode merge(ListNode l1, ListNode l2) {
-        ListNode dummy = new ListNode(-1);
+        ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
 
         while (l1 != null && l2 != null) {
-            if (l1.val <= l2.val) {
+            if (l1.val < l2.val) {
                 cur.next = l1;
                 l1 = l1.next;
             } else {
@@ -60,8 +58,16 @@ class Solution {
             cur = cur.next;
         }
 
-        cur.next = (l1 == null) ? l2 : l1;
+        if (l1 != null) {
+            cur.next = l1;
+        } else {
+            cur.next = l2;
+        }
+
         return dummy.next;
     }
 }
+
+
+
 
