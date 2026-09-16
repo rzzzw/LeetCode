@@ -26,28 +26,54 @@ len = 3 -- 'app':
 
 
  */
-
+// Breadth-First Search
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = toSet(wordDict);
-        boolean[] M = new boolean[s.length() + 1];
-        M[0] = true;
-        for (int len = 1; len <= s.length(); len++) {
-            for (int i = 0; i < len; i++) {
-                if (M[i] && set.contains(s.substring(i, len))) {
-                    M[len] = true;
-                    break;
+        Set<String> words = new HashSet<>(wordDict);
+        Queue<Integer> queue = new ArrayDeque<>();
+        boolean[] seen = new boolean[s.length() + 1];
+        queue.add(0);
+
+        while (!queue.isEmpty()) {
+            int start = queue.poll();
+            if (start == s.length()) {
+                return true;
+            }
+            for (int end = start + 1; end <= s.length(); end++) {
+                if (seen[end]) {
+                    continue;
+                }
+                if (words.contains(s.substring(start, end))) {
+                    seen[end] = true;
+                    queue.add(end);
                 }
             }
         }
-        return M[s.length()];
+        return false;
     }
+}
 
-    private Set<String> toSet(List<String> list) {
-        Set<String> set = new HashSet<>();
-        for (String s : list) {
-            set.add(s);
-        }
-        return set;
-    }
-} 
+// class Solution {
+//     public boolean wordBreak(String s, List<String> wordDict) {
+//         Set<String> set = toSet(wordDict);
+//         boolean[] M = new boolean[s.length() + 1];
+//         M[0] = true;
+//         for (int len = 1; len <= s.length(); len++) {
+//             for (int i = 0; i < len; i++) {
+//                 if (M[i] && set.contains(s.substring(i, len))) {
+//                     M[len] = true;
+//                     break;
+//                 }
+//             }
+//         }
+//         return M[s.length()];
+//     }
+
+//     private Set<String> toSet(List<String> list) {
+//         Set<String> set = new HashSet<>();
+//         for (String s : list) {
+//             set.add(s);
+//         }
+//         return set;
+//     }
+// } 
