@@ -14,31 +14,31 @@ To achieve O(1), combine
 
 
 class LRUCache {
-
     class Node {
-        int key, value;
-        Node prev, next;
-        Node (int k, int v) {
-            key = k;
-            value = v;
+        int key;
+        int value;
+        Node prev;
+        Node next;
+        Node(int key, int value) {
+            this.key = key;
+            this.value = value;
         }
     }
 
     private int capacity;
     private Map<Integer, Node> map;
-    private Node head, tail;
+    private Node head;
+    private Node tail;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
         map = new HashMap<>();
-
-        // dummy nodes
         head = new Node(0, 0);
         tail = new Node(0, 0);
         head.next = tail;
         tail.prev = head;
-    }
 
+    }
     public int get(int key) {
         if (!map.containsKey(key)) {
             return -1;
@@ -64,7 +64,7 @@ class LRUCache {
             map.put(key, node);
         }
     }
-    
+
     private void moveToFront(Node node) {
         remove(node);
         addToFront(node);
@@ -77,13 +77,16 @@ class LRUCache {
 
     private void addToFront(Node node) {
         node.next = head.next;
-        node.prev = head;
-        head.next.prev = node;
         head.next = node;
-
+        node.prev = head;
+        node.next.prev = node;
+//         node.next = head.next;
+//         node.prev = head;
+//         head.next.prev = node;
+//         head.next = node;        
     }
-} 
 
+}
 
 
 /**
