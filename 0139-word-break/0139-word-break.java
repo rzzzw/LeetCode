@@ -26,6 +26,25 @@ len = 3 -- 'app':
 
 
  */
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>(wordDict);
+        boolean[] M = new boolean[s.length() + 1];
+        M[0] = true;
+        for (int len = 1; len <= s.length(); len++) {
+            for (int i = 0; i < len; i++) {
+                if (M[i] && set.contains(s.substring(i, len))) { // length of [i, len) can't be longer than maxLen <=> i + maxLen <= len
+                    M[len] = true;
+                    break;
+                }
+            }
+        }
+        return M[s.length()];
+    }
+}
+
+
 /**
 Breadth-First Search
 Time complexity: n^3
@@ -56,22 +75,3 @@ Time complexity: n^3
 //     }
 // }
 
-/**
-DP 
- */
-class Solution {
-    public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = new HashSet<>(wordDict);
-        boolean[] M = new boolean[s.length() + 1];
-        M[0] = true;
-        for (int len = 1; len <= s.length(); len++) {
-            for (int i = 0; i < len; i++) {
-                if (M[i] && set.contains(s.substring(i, len))) {
-                    M[len] = true;
-                    break;
-                }
-            }
-        }
-        return M[s.length()];
-    }
-}
