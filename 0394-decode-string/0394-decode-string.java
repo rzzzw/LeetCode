@@ -12,18 +12,18 @@ class Solution {
 
         for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
-                num = num * 10 + (c - '0');
-            }
-            else if (c == '[') {
+                num = num * 10  + (c - '0');
+            } 
+            else if (c == '['){
                 countStack.push(num);
                 stringStack.push(cur);
                 cur = new StringBuilder();
                 num = 0;
             }
-            else if (c == ']') {
+            else if (c == ']'){
                 int times = countStack.pop();
                 StringBuilder prev = stringStack.pop();
-                for (int i= 0; i < times; i++) {
+                for (int i = 0; i < times; i++) {
                     prev.append(cur);
                 }
                 cur = prev;
@@ -31,10 +31,11 @@ class Solution {
             else {
                 cur.append(c);
             }
-        } 
+        }
         return cur.toString();
     }
 }
+
 
 // class Solution {
 //     public String decodeString(String s) {
