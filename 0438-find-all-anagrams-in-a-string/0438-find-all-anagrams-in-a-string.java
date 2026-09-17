@@ -13,15 +13,15 @@ Key trick (very interview-relevant) - Instead of comparing entire arrays each ti
 Time: O(n)
 Space: O(1)
  */
-
-
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> res = new ArrayList<>();
-        if (s == null || p == null || s.length() == 0 || p.length() == 0) {
+        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
+            return res;
+        } 
+        if (p.length() > s.length()) {
             return res;
         }
-        if (s.length() < p.length()) return res;
         int[] charNeed = new int[26];
         int[] window = new int[26];
         int required = 0;
@@ -30,39 +30,41 @@ class Solution {
             charNeed[c - 'a']++;
         }
 
-        for (int n : charNeed) {
-            if (n > 0) {
+        for (int c : charNeed) {    
+            if (c > 0) {
                 required++;
             }
         }
 
-        int formed = 0;
-        int left = 0;
+        int matched = 0;
+        int i = 0;  // window: i...j
 
-        for (int right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
+        for (int j = 0; j < s.length(); j++) {
+            char c = s.charAt(j);
             int idx = c - 'a';
+
             window[idx]++;
             if (window[idx] == charNeed[idx]) {
-                formed++;
+                matched++;
             }
 
-            if (right - left + 1 > p.length()) {
-                char leftChar = s.charAt(left);
+            if (j - i + 1 > p.length()) {
+                char leftChar = s.charAt(i);
                 int leftIdx = leftChar - 'a';
                 if (window[leftIdx] == charNeed[leftIdx]) {
-                    formed--;
+                    matched--;
                 }
                 window[leftIdx]--;
-                left++;
-            } 
-
-            if (formed == required) {
-                res.add(left);
+                i++;
             }
+
+            if(matched == required) {
+                res.add(i);
+            }
+
         }
         return res;
-        
+
     }
 }
 
