@@ -26,7 +26,7 @@ len = 3 -- 'app':
 
 
  */
-
+// Optimized DP -- TC: n*m^2
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> set = new HashSet<>(wordDict);
@@ -39,11 +39,11 @@ class Solution {
             maxLen = Math.max(maxLen, word.length());
         }
 
-        for (int len = 1; len <= s.length(); len++) {
+        for (int len = 1; len <= s.length(); len++) { // n
             // Only look back as far as the longest word in the dictionary
             int startLimit = Math.max(0, len - maxLen); 
-            for (int i = len - 1; i >= startLimit; i--) {
-                if (M[i] && set.contains(s.substring(i, len))) {
+            for (int i = len - 1; i >= startLimit; i--) { // tc: m - the variable count of i won't be larger than the length of the longest word
+                if (M[i] && set.contains(s.substring(i, len))) { // m
                     M[len] = true;
                     break;
                 }
@@ -53,6 +53,14 @@ class Solution {
     }
 } 
 /*
+
+     maxLen = 5
+        len = 1,2,3,4,5,6,7,8,9,10
+ startLimit = 0,0,0,0,0,1,2,3,4,5
+    i_upper = 0,1,2,3,4,5,6,7,8,9      
+    i_lower = 0,0,0,0,0,1,2,3,4,5
+i_var_count = 1,2,3,4,5,5,5,5,5,5  => the variable count of i won't be larger than 5(length of the longest word)
+
 len     1234567...
 idx     0123456...  
         applepenapple
@@ -78,7 +86,7 @@ M[1] && pplep
         =>  M[6] = false
 
 */
-
+// DP -- TC: n^3
 // class Solution {
 //     public boolean wordBreak(String s, List<String> wordDict) {
 //         Set<String> set = new HashSet<>(wordDict);
