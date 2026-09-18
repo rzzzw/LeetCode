@@ -8,8 +8,7 @@ class Solution {
 
         int r = 0;
         int c = cols - 1; // start from top-right
-
-        while (r < rows && c >= 0) {
+        while(r < rows && c >= 0) {
             int val = matrix[r][c];
             if (val == target) {
                 return true;
@@ -22,3 +21,6 @@ class Solution {
         return false;
     }
 }
+
+// time: O(m + n)
+// space: O(1)
