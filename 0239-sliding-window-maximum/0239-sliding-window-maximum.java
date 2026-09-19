@@ -36,6 +36,7 @@ res:    3 3 5 5 6
 */
 
 
+
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if (nums == null || nums.length == 0 || k == 0) {
@@ -46,7 +47,6 @@ class Solution {
         Deque<Integer> deque = new ArrayDeque<>(); // store indices
 
         for (int i = 0; i < n; i++) {
-
             // 1. remove indices out of window
             if (!deque.isEmpty() && deque.peekFirst() <= i - k) {
                 deque.pollFirst(); 
@@ -62,13 +62,10 @@ class Solution {
 
             // 4. Record max when window is formed
             if (i >= k - 1) {
-                res[i - k + 1] = nums[deque.peekFirst()];
+                res[i - k + 1] = nums[deque.peekFirst()]; 
             }
         }
         return res;
-
-
     }
 }
-
 
