@@ -1,13 +1,13 @@
-
 class Solution {
     public int countSubstrings(String s) {
         int n = s.length();
         boolean[][] dp = new boolean[n][n];
         int res = 0;
+
         for (int len = 1; len <= n; len++) {
-            for (int i = 0; i <= n - len; i++) { // n 和 len 都是长度 
+            for (int i = 0; i <= n - len; i++) {    // n 和 len 都是长度
                 int j = i + len - 1;
-                if(s.charAt(i) == s.charAt(j)) {
+                if (s.charAt(i) == s.charAt(j)) {
                     if (j - i <= 2 || dp[i + 1][j - 1]) {
                         dp[i][j] = true;
                         res++;
@@ -16,7 +16,6 @@ class Solution {
             }
         }
         return res;
-
     }
 }
 
