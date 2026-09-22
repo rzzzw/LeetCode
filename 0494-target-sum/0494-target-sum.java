@@ -29,32 +29,70 @@ dfs(idx, sum) = number of ways to reach target using nums[idx ... n-1] given my 
 
 dfs(idx, sum) = dfs(idx + 1, sum + nums[idx]) + dfs(idx + 1, sum - nums[idx])
 
+Complexity: 
+Let S = sum of all nums. Possible sums range approximately from: -S ... 0 ... +S. So there are at most: 2S + 1 different sums.
+And there are n possible indices. Therefore the number of unique states is: n × (2S + 1)
+
+There are n possible index levels, and at each level there are at most 2S + 1 possible current sums. Therefore there are O(nS) unique (idx, sum) states.
+
+Time:  O(nS)  
+Space: O(nS)
  */
+
+// class Solution {
+//     public int findTargetSumWays(int[] nums, int target) {
+//         Map<String, Integer> memo = new HashMap<>();
+//         return dfs(nums, target, 0, 0, memo);
+//     }
+
+//     private int dfs(int[] nums, int target, int idx, int sum, Map<String, Integer> memo) {
+//         if (idx == nums.length) {
+//             return sum == target ? 1 : 0;
+//         }
+
+//         String key = idx + "," + sum;
+
+//         if (memo.containsKey(key)) {
+//             return memo.get(key);
+//         }
+
+//         int add = dfs(nums, target, idx + 1, sum + nums[idx], memo);
+//         int subtract = dfs(nums, target, idx + 1, sum - nums[idx], memo);
+
+//         int ways = add + subtract;
+//         memo.put(key, ways);
+
+//         return ways;
+//     }
+// }
+
 
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
-        Map<String, Integer> memo = new HashMap<>();
-        return dfs(nums, target, 0, 0, memo);
-    }
-
-    private int dfs(int[] nums, int target, int idx, int sum, Map<String, Integer> memo) {
-        if (idx == nums.length) {
-            return sum == target ? 1 : 0;
+        int totalSum = 0;
+        for (int num : nums) {
+            totalSum += num;
         }
 
-        String key = idx + "," + sum;
+        if (Math.abs(target) > totalSum) {
+            return 0;
+        }
+        if ((totalSum + target) % 2 != 0) {
+            return 0;
+        }
+        int subsetSum = (totalSum + target) / 2;
 
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        int[] dp = new int[subsetSum + 1];
+        dp[0] = 1;
+
+        for (int n : nums) {
+            for (int s = subsetSum; s >= n; s--) {
+                dp[s] += dp[s - n];
+            }
         }
 
-        int add = dfs(nums, target, idx + 1, sum + nums[idx], memo);
-        int subtract = dfs(nums, target, idx + 1, sum - nums[idx], memo);
+        return dp[subsetSum];
 
-        int ways = add + subtract;
-        memo.put(key, ways);
-
-        return ways;
     }
 }
 
