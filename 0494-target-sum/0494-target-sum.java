@@ -15,15 +15,14 @@ class Solution {
             return;
         }
 
-        // "-"
-        sum += nums[idx] * (-1);
-        helper(nums, target, idx + 1, sum, count);
-        sum -= nums[idx] * (-1);
-
         // "+"
         sum += nums[idx];
         helper(nums, target, idx + 1, sum, count);
+        sum -= nums[idx];
 
+        // "-"
+        sum += nums[idx] * (-1);
+        helper(nums, target, idx + 1, sum, count);
     }
 
 }
