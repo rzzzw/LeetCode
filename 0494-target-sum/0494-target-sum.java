@@ -1,3 +1,5 @@
+
+// DFS/backtracking O(2^n) <- every number gives you two choices, + or -.
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
@@ -16,13 +18,15 @@ class Solution {
         }
 
         // "+"
-        sum += nums[idx];
-        helper(nums, target, idx + 1, sum, count);
-        sum -= nums[idx];
+        // sum += nums[idx];
+        // helper(nums, target, idx + 1, sum, count);
+        // sum -= nums[idx];
+        helper(nums, target, idx + 1, sum + nums[idx], count);
 
         // "-"
-        sum += nums[idx] * (-1);
-        helper(nums, target, idx + 1, sum, count);
+        // sum += nums[idx] * (-1);
+        // helper(nums, target, idx + 1, sum, count);
+        helper(nums, target, idx + 1, sum - nums[idx], count);
     }
 
 }
