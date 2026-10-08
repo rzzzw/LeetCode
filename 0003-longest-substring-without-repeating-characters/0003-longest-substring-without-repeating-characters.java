@@ -4,11 +4,11 @@ class Solution {
             return 0;
         }
         char[] arr = s.toCharArray();
-        Set<Character> set = new HashSet<Character>();
+        Set<Character> set = new HashSet<>();
         int longest = 0;
-        int l = 0;     
+        int l = 0;
         for (int r = 0; r < arr.length; r++) {
-            while (set.contains(arr[r])) {
+            while(set.contains(arr[r])){
                 set.remove(arr[l]);
                 l++;
             }
@@ -18,3 +18,4 @@ class Solution {
         return longest;
     }
 }
+
