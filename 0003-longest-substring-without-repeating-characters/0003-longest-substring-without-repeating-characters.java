@@ -24,14 +24,13 @@ class Solution {
             return 0;
         }    
         int[] lastSeen = new int[128];
-        Arrays.fill(lastSeen, -1);
-        int left = -1;
+        int left = 0;
         int longest = 0;
         for (int r = 0; r < s.length(); r++) {
             char ch = s.charAt(r);
             left = Math.max(left, lastSeen[ch]);
-            longest = Math.max(longest, r - left);
-            lastSeen[ch] = r;
+            longest = Math.max(longest, r - left + 1);
+            lastSeen[ch] = r + 1;
         }    
         return longest;
     }
